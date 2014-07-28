@@ -1,0 +1,84 @@
+import std.stdio;
+
+import harud;
+void main() {
+   void  errorCallback(uint error_number, uint detail_number) {
+      writefln("err %x, %s, (num %x)"
+            , error_number
+            , getErrorDescription(error_number), 
+            detail_number);
+   }
+
+   string[] fontList = [
+      "Courier",
+      "Courier-Bold",
+      "Courier-Oblique",
+      "Courier-BoldOblique",
+      "Helvetica",
+      "Helvetica-Bold",
+      "Helvetica-Oblique",
+      "Helvetica-BoldOblique",
+      "Times-Roman",
+      "Times-Bold",
+      "Times-Italic",
+      "Times-BoldItalic",
+      "Symbol",
+      "ZapfDingbats"
+         ];
+   writeln("libhpdf-", getVersion());
+
+   try {
+      enum string page_title = "FontDemo";
+
+      Doc pdf = new Doc(&errorCallback);
+
+      Page page = pdf.addPage();
+
+      float height = page.getHeight();
+      float width = page.getWidth();
+
+      /* Print the lines of the page. */
+      page.setLineWidth(1);
+      page.rectangle(50, 50, width - 100, height - 110);
+      page.stroke();
+
+      /* Print the title of the page (with positioning center). */
+      HaruFont helvetica = pdf.getFont("Helvetica"); 
+      page.setFontAndSize(helvetica, 24);
+
+      float tw = page.textWidth(page_title);
+      page.beginText();
+      page.textOut((width - tw) / 2, height - 50, page_title);
+      page.endText();
+
+      /* output subtitle. */
+      page.beginText();
+      page.setFontAndSize(helvetica, 16);
+      page.textOut(60, height - 80, "<Standerd Type1 fonts samples>");
+      page.endText();
+
+      page.beginText();
+      page.moveTextPos(60, height - 105);
+
+      for (int i = 0; i < fontList.length; i++) {
+         enum string samp_text = "abcdefgABCDEFG12345!#$%&+-@?";
+         HaruFont font = pdf.getFont(fontList[i]);
+
+         /* print a label of text */
+         page.setFontAndSize(helvetica, 9);
+         page.showText(fontList[i]);
+         page.moveTextPos(0, -18);
+
+         /* print a sample text. */
+         page.setFontAndSize(font, 20);
+         page.showText(samp_text);
+         page.moveTextPos(0, -20);
+      }
+
+      page.endText();
+
+      pdf.saveToFile("./font.pdf");
+   } catch (Exception exc) {
+      writeln(exc);
+   }
+}
