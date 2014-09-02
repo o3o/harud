@@ -8,17 +8,17 @@ import harud.c;
 
 import harud.haruobject;
 
-import harud.harudestination;
+import harud.destination;
 import harud.annotation;
-import harud.harufont;
-import harud.haruimage;
-import harud.haruencoder;
+import harud.font;
+import harud.image;
+import harud.encoder;
 
 /**
  * The Page class
  */
 
-class Page : IHaruObject {
+class Page: IHaruObject {
    protected HPDF_Page _page;
 
    this(HPDF_Page page) {
@@ -31,7 +31,7 @@ class Page : IHaruObject {
     * Returns:
     * when getWidth() succeed, it returns the width of a page. Otherwise it returns 0.
     */
-   @property HPDF_REAL width() {
+   @property float width() {
       return HPDF_Page_GetWidth(this._page);
    }
 
@@ -41,22 +41,29 @@ class Page : IHaruObject {
     * Params:
     * value = the new page width. Valid value are between 3 and 14400
     */
-   @property void width(HPDF_REAL value) {
-      HPDF_STATUS status = HPDF_Page_SetWidth(this._page, value);
-      if (status > 0) {
-         throw new ErrnoException(getErrorDescription(status));
-      }
+   @property void width(float value) {
+      HPDF_Page_SetWidth(this._page, value);
    }
 
+   /**
+    * Gets the height of a page.
+    *
+    */
+   @property float height() {
+      return HPDF_Page_GetHeight(this._page);
+   }
+
+ 
    /**
     * Changes the height of a page
     *
     * Params:
     * value = the new page height. Valid value are between 3 and 14400
     */
-   HPDF_STATUS setHeight(HPDF_REAL value) {
-      return HPDF_Page_SetHeight(this._page, value);
+   @property void height(float value) {
+      HPDF_Page_SetHeight(this._page, value);
    }
+
 
    /**
     * Changes the size and direction of a page to a predefined size
@@ -92,7 +99,7 @@ class Page : IHaruObject {
     * Params:
     * angle = Specify the rotation angle of the page. It must be a multiple of 90 Degrees.
     */
-   HPDF_STATUS setRotate(HPDF_UINT16 angle) {
+   HPDF_STATUS setRotate(ushort angle) {
       return HPDF_Page_SetRotate(this._page, angle);
    }
 
@@ -102,19 +109,19 @@ class Page : IHaruObject {
     * Returns:
     * when getHeight() succeed, it returns the height of a page. Otherwise it returns 0.
     */
-   HPDF_REAL getHeight() {
+   float getHeight() {
       return HPDF_Page_GetHeight(this._page);
    }
 
    /**
-    * Creates a new HaruDestination instance for the page
+    * Creates a new Destination instance for the page
     *
     * Returns:
-    * Returns an instance of a HaruDestination object. If it failed, it returns null.
+    * Returns an instance of a Destination object. If it failed, it returns null.
     */
-   HaruDestination createDestination() {
+   Destination createDestination() {
       HPDF_Destination destination = HPDF_Page_CreateDestination(this._page);
-      return new HaruDestination(destination);
+      return new Destination(destination);
    }
 
    /**
@@ -123,12 +130,12 @@ class Page : IHaruObject {
     * Params:
     * rect = A Rectangle where the annotation is displayed.
     * text = The text to be displayed.
-    * encoder = An HaruEncoder instance which is used to encode the text. If it is null, PDFDocEncoding is used.
+    * encoder = An Encoder instance which is used to encode the text. If it is null, PDFDocEncoding is used.
     *
     * Returns:
     * returns an instance of a Annotation object. If it failed, it returns null.
     */
-   Annotation createTextAnnot(HaruRect rect, string text, HaruEncoder encoder = null) {
+   Annotation createTextAnnot(Rect rect, string text, Encoder encoder = null) {
       HPDF_Encoder _encoder = null;
       if (encoder !is null) {
          _encoder = encoder.getHandle();
@@ -148,8 +155,9 @@ class Page : IHaruObject {
     * Returns:
     * returns an instance of a Annotation object. If it failed, it returns null.
     */
-   Annotation createLinkAnnot(HaruRect rect, HaruDestination dst) {
-      HPDF_Annotation annotation = HPDF_Page_CreateLinkAnnot(this._page, rect, dst.destination);
+   Annotation createLinkAnnot(Rect rect, Destination dst) {
+      HPDF_Annotation annotation = HPDF_Page_CreateLinkAnnot(this._page, rect,
+            dst.destinationHandle);
       return new Annotation(annotation);
    }
 
@@ -165,7 +173,7 @@ class Page : IHaruObject {
     *
     * returns an instance of a Annotation object. If it failed, it returns null.
     */
-   Annotation createURILinkAnnot(HaruRect rect, string uri) {
+   Annotation createURILinkAnnot(Rect rect, string uri) {
       HPDF_Annotation annotation = HPDF_Page_CreateURILinkAnnot(this._page, rect, uri.toStringz());
       return new Annotation(annotation);
    }
@@ -181,7 +189,7 @@ class Page : IHaruObject {
     * character spacing and word spacing. 
     * Otherwise it returns ZERO and error-handler is called.
     */
-   HPDF_REAL textWidth(string text) {
+   float textWidth(string text) {
       return HPDF_Page_TextWidth(this._page, text.toStringz());
    }
 
@@ -197,7 +205,7 @@ class Page : IHaruObject {
     * Return:
     * When HPDF_Page_Font_MeasureText() succeed, it returns the byte length which can be included within the specified width in current fontsize, character spacing and word spacing. Otherwise it returns ZERO and error-handler is called.
     */
-   HPDF_UINT measureText(string text, HPDF_REAL width, bool wordwrap, HPDF_REAL* real_width) {
+   uint measureText(string text, float width, bool wordwrap, float* real_width) {
       return HPDF_Page_MeasureText(this._page, text.toStringz(), width, cast(uint) wordwrap, real_width);
    }
 
@@ -207,7 +215,7 @@ class Page : IHaruObject {
     * Returns:
     * when getGMode() succeed, it returns the current graphics mode of the page. Otherwise it returns 0.
     */
-   HPDF_UINT16 getGMode() {
+   ushort getGMode() {
       return HPDF_Page_GetGMode(this._page);
    }
 
@@ -215,9 +223,9 @@ class Page : IHaruObject {
     * Gets the current position for path painting. An application can invoke getCurrentPos() only when graphics mode is HPDF_GMODE_PATH_OBJECT.
     *
     * Returns:
-    * when getCurrentPos() succeed, it returns a HaruPoint struct indicating the current position for path painting of the page. Otherwise it returns a HaruPoint struct of {0, 0}.
+    * when getCurrentPos() succeed, it returns a Point struct indicating the current position for path painting of the page. Otherwise it returns a Point struct of {0, 0}.
     */
-   HaruPoint getCurrentPos() {
+   Point getCurrentPos() {
       return HPDF_Page_GetCurrentPos(this._page);
    }
 
@@ -225,22 +233,22 @@ class Page : IHaruObject {
     * Gets the current position for text showing. An application can invoke getCurrentTextPos() only when graphics mode is HPDF_GMODE_TEXT_OBJECT.
     *
     * Returns:
-    * when getCurrentTextPos() succeed, it returns a HaruPoint struct indicating the current position for text showing of the page.
-    * Otherwise it returns a HaruPoint struct of {0, 0}.
+    * when getCurrentTextPos() succeed, it returns a Point struct indicating the current position for text showing of the page.
+    * Otherwise it returns a Point struct of {0, 0}.
     */
-   HaruPoint getCurrentTextPos() {
+   Point getCurrentTextPos() {
       return HPDF_Page_GetCurrentTextPos(this._page);
    }
 
    /**
-    * Gets a HaruFont instance of the page's current font.
+    * Gets a Font instance of the page's current font.
     *
     * Returns:
-    * when getCurrentFont() succeed, it returns a HaruFont instance of the page's current font. Otherwise it returns null.
+    * when getCurrentFont() succeed, it returns a Font instance of the page's current font. Otherwise it returns null.
     */
-   HaruFont getCurrentFont() {
+   Font getCurrentFont() {
       HPDF_Font font = HPDF_Page_GetCurrentFont(this._page);
-      return new HaruFont(font);
+      return new Font(font);
    }
 
    /**
@@ -249,7 +257,7 @@ class Page : IHaruObject {
     * Returns:
     * when getCurrentFont() succeed, it returns the size of the page's current font. Otherwise it returns 0.
     */
-   HPDF_REAL getCurrentFontSize() {
+   float getCurrentFontSize() {
       return HPDF_Page_GetCurrentFontSize(this._page);
    }
 
@@ -257,20 +265,10 @@ class Page : IHaruObject {
     * Gets the current transformation matrix of the page.
     *
     * Returns:
-    * when getTransMatrix() succeed, it returns a HaruTransMatrix struct of current transformation matrix of the page
+    * when getTransMatrix() succeed, it returns a TransMatrix struct of current transformation matrix of the page
     */
-   HaruTransMatrix getTransMatrix() {
+   TransMatrix getTransMatrix() {
       return HPDF_Page_GetTransMatrix(this._page);
-   }
-
-   /**
-    * Gets the current line width of the page.
-    *
-    * Returns:
-    * when getLineWidth() succeed, it returns the current line width for path painting of the page. Otherwise it returns HPDF_DEF_LINEWIDTH.
-    */
-   HPDF_REAL getLineWidth() {
-      return HPDF_Page_GetLineWidth(this._page);
    }
 
    /**
@@ -299,7 +297,7 @@ class Page : IHaruObject {
     * Returns:
     * when getLineJoin() succeed, it returns the current value of the page's miter limit. Otherwise it returns HPDF_DEF_MITERLIMIT.
     */
-   HPDF_REAL getMiterLimit() {
+   float getMiterLimit() {
       return HPDF_Page_GetMiterLimit(this._page);
    }
 
@@ -307,9 +305,9 @@ class Page : IHaruObject {
     * Gets the current pattern of the page.
     *
     * Returns:
-    * when getMiterLimit() succeeds, it returns a HaruDashMode struct of the current pattern of the page.
+    * when getMiterLimit() succeeds, it returns a DashMode struct of the current pattern of the page.
     */
-   HaruDashMode getDash() {
+   DashMode getDash() {
       return HPDF_Page_GetDash(this._page);
    }
 
@@ -319,7 +317,7 @@ class Page : IHaruObject {
     * Return:
     * when getFlat() succeed, it returns the current value of the page's miter limit. Otherwise it returns HPDF_DEF_FLATNESS.
     */
-   HPDF_REAL getFlat() {
+   float getFlat() {
       return HPDF_Page_GetFlat(this._page);
    }
 
@@ -329,7 +327,7 @@ class Page : IHaruObject {
     * Returns:
     * when getCharSpace() succeed, it returns the current value of the page's character spacing. Otherwise it returns 0.
     */
-   HPDF_REAL getCharSpace() {
+   float getCharSpace() {
       return HPDF_Page_GetCharSpace(this._page);
    }
 
@@ -339,7 +337,7 @@ class Page : IHaruObject {
     * Returns:
     * when getWordSpace() succeed, it returns the current value of the page's word spacing. Otherwise it returns 0.
     */
-   HPDF_REAL getWordSpace() {
+   float getWordSpace() {
       return HPDF_Page_GetWordSpace(this._page);
    }
 
@@ -349,7 +347,7 @@ class Page : IHaruObject {
     * Returns:
     * when getHorizontalScalling() succeed, it returns the current value of the page's horizontal scalling. Otherwise it returns HPDF_DEF_HSCALING.
     */
-   HPDF_REAL getHorizontalScalling() {
+   float getHorizontalScalling() {
       return HPDF_Page_GetHorizontalScalling(this._page);
    }
 
@@ -359,7 +357,7 @@ class Page : IHaruObject {
     * Returns:
     * when getTextLeading() succeed, it returns the current value of the line spacing. Otherwise it returns 0.
     */
-   HPDF_REAL getTextLeading() {
+   float getTextLeading() {
       return HPDF_Page_GetTextLeading(this._page);
    }
 
@@ -369,7 +367,7 @@ class Page : IHaruObject {
     * Returns:
     * when getTextRenderingMode() succeed, it returns the current value of the text rendering mode. Otherwise it returns 0.
     */
-   HPDF_REAL getTextRenderingMode() {
+   float getTextRenderingMode() {
       return HPDF_Page_GetTextRenderingMode(this._page);
    }
 
@@ -379,7 +377,7 @@ class Page : IHaruObject {
     * Returns:
     * when getTextRise() succeed, it returns the current value of the text rising. Otherwise it returns 0.
     */
-   HPDF_REAL getTextRise() {
+   float getTextRise() {
       return HPDF_Page_GetTextRise(this._page);
    }
 
@@ -429,7 +427,7 @@ class Page : IHaruObject {
     * Returns:
     * when getGrayFill() succeed, it returns the current value of the page's filling color. Otherwise it returns 0.
     */
-   HPDF_REAL getGrayFill() {
+   float getGrayFill() {
       return HPDF_Page_GetGrayFill(this._page);
    }
 
@@ -439,7 +437,7 @@ class Page : IHaruObject {
     * Returns:
     * when getGrayStroke() succeed, it returns the current value of the page's stroking color. Otherwise it returns 0.
     */
-   HPDF_REAL getGrayStroke() {
+   float getGrayStroke() {
       return HPDF_Page_GetGrayStroke(this._page);
    }
 
@@ -449,7 +447,7 @@ class Page : IHaruObject {
     * Returns:
     * when getStrokingColorSpace() succeed, it returns the current value of the page's stroking color space. Otherwise it returns HPDF_CS_EOF.
     */
-   HaruColorSpace getStrokingColorSpace() {
+   ColorSpace getStrokingColorSpace() {
       return HPDF_Page_GetStrokingColorSpace(this._page);
    }
 
@@ -459,7 +457,7 @@ class Page : IHaruObject {
     * Returns:
     * when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space. Otherwise it returns HPDF_CS_EOF.
     */
-   HaruColorSpace getFillingColorSpace() {
+   ColorSpace getFillingColorSpace() {
       return HPDF_Page_GetFillingColorSpace(this._page);
    }
 
@@ -467,9 +465,9 @@ class Page : IHaruObject {
     * Gets the current text transformation matrix of the page.
     *
     * Returns:
-    * when getTextMatrix() succeed, it returns a HaruTransMatrix struct of current text transformation matrix of the page.
+    * when getTextMatrix() succeed, it returns a TransMatrix struct of current text transformation matrix of the page.
     */
-   HaruTransMatrix getTextMatrix() {
+   TransMatrix getTextMatrix() {
       return HPDF_Page_GetTextMatrix(this._page);
    }
 
@@ -479,7 +477,7 @@ class Page : IHaruObject {
     * Returns:
     * when getGStateDepth() succeed, it returns the number of the page's graphics state stack. Otherwise it returns 0.
     */
-   HPDF_UINT getGStateDepth() {
+   uint getGStateDepth() {
       return HPDF_Page_GetGStateDepth(this._page);
    }
 
@@ -511,7 +509,7 @@ class Page : IHaruObject {
     * trans_time = The duration of the transition effect. Default value is 1(second).
     *
     */
-   HPDF_STATUS setSlideShow(HaruTransitionStyle type, HPDF_REAL disp_time, HPDF_REAL trans_time) {
+   HPDF_STATUS setSlideShow(HaruTransitionStyle type, float disp_time, float trans_time) {
       return HPDF_Page_SetSlideShow(this._page, type, disp_time, trans_time);
    }
 
@@ -529,7 +527,7 @@ class Page : IHaruObject {
     * ang2 = The angle of the end of the arc. It must be greater than ang1.
     *
     */
-   HPDF_STATUS arc(HPDF_REAL x, HPDF_REAL y, HPDF_REAL ray, HPDF_REAL ang1, HPDF_REAL ang2) {
+   HPDF_STATUS arc(float x, float y, float ray, float ang1, float ang2) {
       return HPDF_Page_Arc(this._page, x, y, ray, ang1, ang2);
    }
 
@@ -555,7 +553,7 @@ class Page : IHaruObject {
     * Before - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_PATH_OBJECT.<br />
     * After - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS circle(HPDF_REAL x, HPDF_REAL y, HPDF_REAL ray) {
+   HPDF_STATUS circle(float x, float y, float ray) {
       return HPDF_Page_Circle(this._page, x, y, ray);
    }
 
@@ -611,7 +609,7 @@ class Page : IHaruObject {
     * Params:
     * a, b, c, d, x, y = The transformation matrix to concatenate.
     */
-   HPDF_STATUS concat(HPDF_REAL a, HPDF_REAL b, HPDF_REAL c, HPDF_REAL d, HPDF_REAL x, HPDF_REAL y) {
+   HPDF_STATUS concat(float a, float b, float c, float d, float x, float y) {
       return HPDF_Page_Concat(this._page, a, b, c, d, x, y);
    }
 
@@ -624,7 +622,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS curveTo(HPDF_REAL x1, HPDF_REAL y1, HPDF_REAL x2, HPDF_REAL y2, HPDF_REAL x3, HPDF_REAL y3) {
+   HPDF_STATUS curveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
       return HPDF_Page_CurveTo(this._page, x1, y1, x2, y2, x3, y3);
    }
 
@@ -637,7 +635,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS curveTo2(HPDF_REAL x2, HPDF_REAL y2, HPDF_REAL x3, HPDF_REAL y3) {
+   HPDF_STATUS curveTo2(float x2, float y2, float x3, float y3) {
       return HPDF_Page_CurveTo2(this._page, x2, y2, x3, y3);
    }
 
@@ -650,7 +648,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS curveTo3(HPDF_REAL x1, HPDF_REAL y1, HPDF_REAL x3, HPDF_REAL y3) {
+   HPDF_STATUS curveTo3(float x1, float y1, float x3, float y3) {
       return HPDF_Page_CurveTo3(this._page, x1, y1, x3, y3);
    }
 
@@ -666,7 +664,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION.
     */
-   HPDF_STATUS drawImage(HaruImage image, HPDF_REAL x, HPDF_REAL y, HPDF_REAL width, HPDF_REAL height) {
+   HPDF_STATUS drawImage(Image image, float x, float y, float width, float height) {
       return HPDF_Page_DrawImage(this._page, image.getHandle(), x, y, width, height);
    }
 
@@ -680,7 +678,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS ellipse(HPDF_REAL x, HPDF_REAL y, HPDF_REAL xray, HPDF_REAL yray) {
+   HPDF_STATUS ellipse(float x, float y, float xray, float yray) {
       return HPDF_Page_Ellipse(this._page, x, y, xray, yray);
    }
 
@@ -802,7 +800,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS lineTo(HPDF_REAL x, HPDF_REAL y) {
+   HPDF_STATUS lineTo(float x, float y) {
       return HPDF_Page_LineTo(this._page, x, y);
    }
 
@@ -815,8 +813,8 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS moveTextPos(HPDF_REAL x, HPDF_REAL y, bool set_leading = false) {
-      if (set_leading) {
+   HPDF_STATUS moveTextPos(float x, float y, bool setLeading = false) {
+      if (setLeading) {
          return HPDF_Page_MoveTextPos2(this._page, x, y);
       }
 
@@ -833,7 +831,7 @@ class Page : IHaruObject {
     * Before - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_PATH_OBJECT.
     * After - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS moveTo(HPDF_REAL x, HPDF_REAL y) {
+   HPDF_STATUS moveTo(float x, float y) {
       return HPDF_Page_MoveTo(this._page, x, y);
    }
 
@@ -857,7 +855,7 @@ class Page : IHaruObject {
     * Before - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_PATH_OBJECT.
     * After - HPDF_GMODE_PATH_OBJECT.
     */
-   HPDF_STATUS rectangle(HPDF_REAL x, HPDF_REAL y, HPDF_REAL width, HPDF_REAL height) {
+   HPDF_STATUS rectangle(float x, float y, float width, float height) {
       return HPDF_Page_Rectangle(this._page, x, y, width, height);
    }
 
@@ -870,7 +868,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setCharSpace(HPDF_REAL value) {
+   HPDF_STATUS setCharSpace(float value) {
       return HPDF_Page_SetCharSpace(this._page, value);
    }
 
@@ -883,7 +881,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setCMYKFill(HPDF_REAL c, HPDF_REAL m, HPDF_REAL y, HPDF_REAL k) {
+   HPDF_STATUS setCMYKFill(float c, float m, float y, float k) {
       return HPDF_Page_SetCMYKFill(this._page, c, m, y, k);
    }
 
@@ -896,7 +894,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setCMYKStroke(HPDF_REAL c, HPDF_REAL m, HPDF_REAL y, HPDF_REAL k) {
+   HPDF_STATUS setCMYKStroke(float c, float m, float y, float k) {
       return HPDF_Page_SetCMYKStroke(this._page, c, m, y, k);
    }
 
@@ -911,7 +909,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setDash(HPDF_UINT16* dash_ptn, HPDF_UINT num_param, HPDF_UINT phase) {
+   HPDF_STATUS setDash(ushort* dash_ptn, uint num_param, uint phase) {
       return HPDF_Page_SetDash(this._page, dash_ptn, num_param, phase);
    }
 
@@ -937,7 +935,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setGrayFill(HPDF_REAL gray) {
+   HPDF_STATUS setGrayFill(float gray) {
       return HPDF_Page_SetGrayFill(this._page, gray);
    }
 
@@ -950,7 +948,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setGrayStroke(HPDF_REAL gray) {
+   HPDF_STATUS setGrayStroke(float gray) {
       return HPDF_Page_SetGrayStroke(this._page, gray);
    }
 
@@ -964,7 +962,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setFontAndSize(HaruFont font, HPDF_REAL size) {
+   HPDF_STATUS setFontAndSize(Font font, float size) {
       return HPDF_Page_SetFontAndSize(this._page, font.getHandle(), size);
    }
 
@@ -977,9 +975,19 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setHorizontalScalling(HPDF_REAL value) {
+   HPDF_STATUS setHorizontalScalling(float value) {
       return HPDF_Page_SetHorizontalScalling(this._page, value);
    }
+   /**
+    * Gets the current line width of the page.
+    *
+    * Returns:
+    * when getLineWidth() succeed, it returns the current line width for path painting of the page. Otherwise it returns HPDF_DEF_LINEWIDTH.
+    */
+   @property float lineWidth() {
+      return HPDF_Page_GetLineWidth(this._page);
+   }
+
 
    /**
     * Sets the width of the line used to stroke a path.
@@ -990,8 +998,8 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setLineWidth(HPDF_REAL line_width) {
-      return HPDF_Page_SetLineWidth(this._page, line_width);
+   @property void lineWidth(float line_width) {
+      HPDF_Page_SetLineWidth(this._page, line_width);
    }
 
    /**
@@ -1023,7 +1031,7 @@ class Page : IHaruObject {
    /**
     * Sets the miter limit
     */
-   HPDF_STATUS setMiterLimit(HPDF_REAL miter_limit) {
+   HPDF_STATUS setMiterLimit(float miter_limit) {
       return HPDF_Page_SetMiterLimit(this._page, miter_limit);
    }
 
@@ -1033,14 +1041,14 @@ class Page : IHaruObject {
     * Params:
     * value = The value of text leading (initial value is 0).
     */
-   HPDF_STATUS setTextLeading(HPDF_REAL value) {
+   HPDF_STATUS setTextLeading(float value) {
       return HPDF_Page_SetTextLeading(this._page, value);
    }
 
    /**
     * Sets the text matrix
     */
-   HPDF_STATUS setTextMatrix(HPDF_REAL a, HPDF_REAL b, HPDF_REAL c, HPDF_REAL d, HPDF_REAL x, HPDF_REAL y) {
+   HPDF_STATUS setTextMatrix(float a, float b, float c, float d, float x, float y) {
       return HPDF_Page_SetTextMatrix(this._page, a, b, c, d, x, y);
    }
 
@@ -1066,7 +1074,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setTextRise(HPDF_REAL value) {
+   HPDF_STATUS setTextRise(float value) {
       return HPDF_Page_SetTextRise(this._page, value);
    }
 
@@ -1079,7 +1087,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setRGBFill(HPDF_REAL r, HPDF_REAL g, HPDF_REAL b) {
+   HPDF_STATUS setRGBFill(float r, float g, float b) {
       return HPDF_Page_SetRGBFill(this._page, r, g, b);
    }
 
@@ -1092,7 +1100,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setRGBStroke(HPDF_REAL r, HPDF_REAL g, HPDF_REAL b) {
+   HPDF_STATUS setRGBStroke(float r, float g, float b) {
       return HPDF_Page_SetRGBStroke(this._page, r, g, b);
    }
 
@@ -1105,7 +1113,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_PAGE_DESCRIPTION or HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS setWordSpace(HPDF_REAL value) {
+   HPDF_STATUS setWordSpace(float value) {
       return HPDF_Page_SetWordSpace(this._page, value);
    }
 
@@ -1122,7 +1130,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS showTextNextLine(string text, HPDF_REAL word_space = 0.0, HPDF_REAL char_space = 0.0) {
+   HPDF_STATUS showTextNextLine(string text, float word_space = 0.0, float char_space = 0.0) {
       /**
         if( word_space || char_space )
         {
@@ -1153,7 +1161,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS textOut(HPDF_REAL xpos, HPDF_REAL ypos, string text) {
+   HPDF_STATUS textOut(float xpos, float ypos, string text) {
       assert(text.length > 0);
       return HPDF_Page_TextOut(this._page, xpos, ypos, text.toStringz());
    }
@@ -1170,7 +1178,7 @@ class Page : IHaruObject {
     * Graphics Mode
     * Before and after - HPDF_GMODE_TEXT_OBJECT.
     */
-   HPDF_STATUS textRect(HPDF_REAL left, HPDF_REAL top, HPDF_REAL right, HPDF_REAL bottom, string text, HaruTextAlignment align_, HPDF_UINT* len) {
+   HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment align_, uint* len) {
       return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), align_ , len);
    }
 

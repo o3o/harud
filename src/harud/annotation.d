@@ -5,7 +5,7 @@ import harud.haruobject;
 import harud.c;
 //FIXimport harud.c.types;
 
-class Annotation : IHaruObject {
+class Annotation: IHaruObject {
    protected HPDF_Annotation _annotation;
 
    this(HPDF_Annotation annotation) {
@@ -30,7 +30,7 @@ class Annotation : IHaruObject {
    *   dash_on = The dash style.
    *   dash_off = The dash style
    */
-   HPDF_STATUS setBorderStyle(HPDF_REAL width, HPDF_UINT16 dash_on, HPDF_UINT16 dash_off) {
+   HPDF_STATUS setBorderStyle(float width, ushort dash_on, ushort dash_off) {
       return HPDF_LinkAnnot_SetBorderStyle(this._annotation, width, dash_on, dash_off);
    }
 

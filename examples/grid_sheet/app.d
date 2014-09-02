@@ -24,9 +24,10 @@ void main() {
 }
 
 void printGrid(Page page) {
-   HPDF_REAL height = page.getHeight();
-   HPDF_REAL width = page.getWidth();
-   HPDF_UINT x, y;
+   float height = page.height();
+   writeln("h:", height);
+   float width = page.width();
+   uint x, y;
 
    //page.setGrayFill(0.5);
    //page.setGrayStroke(0.8);

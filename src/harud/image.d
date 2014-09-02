@@ -1,14 +1,11 @@
-module harud.haruimage;
+module harud.image;
 
 import std.conv;
 
 import harud.haruobject;
 import harud.c;
 
-/**
-* HaruImage class
-*/
-class HaruImage : IHaruObject {
+class Image: IHaruObject {
    protected HPDF_Image _image;
 
    this(HPDF_Image image) {
@@ -19,9 +16,9 @@ class HaruImage : IHaruObject {
    * Gets the size of the image of an image object.
    *
    * Return:
-   *   when getSize() succeed, it returns a HaruPoint struct which includes the size of the image. Otherwise, it returns a HaruPoint struct whose value is (0, 0).
+   *   when getSize() succeed, it returns a Point struct which includes the size of the image. Otherwise, it returns a Point struct whose value is (0, 0).
    */
-   HaruPoint getSize() {
+   @property Point size() {
       return HPDF_Image_GetSize(this._image);
    }
 
@@ -31,7 +28,7 @@ class HaruImage : IHaruObject {
    * Return:
    *   when getWidth() succeed, it returns the width of the image. Otherwise, it returns 0.
    */
-   HPDF_UINT getWidth() {
+   @property uint width() {
       return HPDF_Image_GetWidth(this._image);
    }
 
@@ -41,7 +38,7 @@ class HaruImage : IHaruObject {
    * Return:
    *   when getHeight() succeed, it returns the height of the image. Otherwise, it returns 0.
    */
-   HPDF_UINT getHeight() {
+   @property uint height() {
       return HPDF_Image_GetHeight(this._image);
    }
 
@@ -49,7 +46,7 @@ class HaruImage : IHaruObject {
    * Gets the number of bits used to describe each color component.
    *
    */
-   HPDF_UINT getBitsPerComponent() {
+   @property uint bitsPerComponent() {
       return HPDF_Image_GetBitsPerComponent(this._image);
    }
 
@@ -64,7 +61,7 @@ class HaruImage : IHaruObject {
    *   <li>"DeviceCMYK"</li>
    *   <li>"Indexed"</li>
    */
-   string getColorSpace() {
+   @property string colorSpace() {
       return to!string(HPDF_Image_GetColorSpace(this._image));
    }
 
@@ -79,20 +76,19 @@ class HaruImage : IHaruObject {
    *   bmin = The lower limit of Blue. It must be between 0 and 255.
    *   bmax = The upper limit of Blue. It must be between 0 and 255.
    */
-   HPDF_STATUS setColorMask(
-      HPDF_UINT    rmin,
-      HPDF_UINT    rmax,
-      HPDF_UINT    gmin,
-      HPDF_UINT    gmax,
-      HPDF_UINT    bmin,
-      HPDF_UINT    bmax) {
+   HPDF_STATUS setColorMask( uint rmin,
+         uint rmax,
+         uint gmin,
+         uint gmax,
+         uint bmin,
+         uint bmax) {
       return HPDF_Image_SetColorMask(this._image,
-                                     rmin,
-                                     rmax,
-                                     gmin,
-                                     gmax,
-                                     bmin,
-                                     bmax);
+            rmin,
+            rmax,
+            gmin,
+            gmax,
+            bmin,
+            bmax);
    }
 
 

@@ -13,7 +13,7 @@ enum int HPDF_NOERROR = 0;
 /* buffer size which is required when we convert to character string. */
 enum int HPDF_TMP_BUF_SIZ = 512;
 enum int HPDF_SHORT_BUF_SIZ = 32;
-enum int HPDF_REAL_LEN = 11;
+enum int HPDF_FLOAT_LEN = 11;
 enum int HPDF_INT_LEN = 11;
 enum int HPDF_TEXT_DEFAULT_LEN = 256;
 enum int HPDF_UNICODE_HEADER_LEN = 2;
@@ -49,7 +49,6 @@ enum int HPDF_BS_DEF_WIDTH = 1;
 enum float HPDF_DEF_PAGE_WIDTH = 595.276F;
 enum float HPDF_DEF_PAGE_HEIGHT = 841.89F;
 
-/*---------------------------------------------------------------------------*/
 /*----- compression mode ----------------------------------------------------*/
 
 enum int HPDF_COMP_NONE = 0x00;
@@ -62,15 +61,6 @@ enum int HPDF_COMP_ALL = 0x0F;
  */
 enum int HPDF_COMP_MASK = 0xFF;
 
-
-/*----------------------------------------------------------------------------*/
-/*----- permission flags (only Revision 2 is supported)-----------------------*/
-
-enum int HPDF_ENABLE_READ = 0;
-enum int HPDF_ENABLE_PRINT = 4;
-enum int HPDF_ENABLE_EDIT_ALL = 8;
-enum int HPDF_ENABLE_COPY = 16;
-enum int HPDF_ENABLE_EDIT = 32;
 
 
 /*----------------------------------------------------------------------------*/
@@ -372,7 +362,6 @@ enum string HPDF_COUNTRY_ZR = "ZR"; /* ZAIRE */
 enum string HPDF_COUNTRY_ZM = "ZM"; /* ZAMBIA */
 enum string HPDF_COUNTRY_ZW = "ZW"; /* ZIMBABWE */
 
-/*----------------------------------------------------------------------------*/
 /*----- lang code definition -------------------------------------------------*/
 
 enum string HPDF_LANG_AA = "aa"; /* Afar */

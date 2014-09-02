@@ -1,14 +1,12 @@
-module harud.harufont;
+module harud.font;
+
 import std.conv;
+import std.string;
 
 import harud.haruobject;
-//import harud.doc;
 import harud.c;
-//FIXimport harud.c.types;
-/**
-* This class handles the font
-*/
-class HaruFont : IHaruObject {
+
+class Font: IHaruObject {
    protected HPDF_Font _font;
 
    this(HPDF_Font font) {
@@ -23,7 +21,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the font name on success. Otherwise, returns null.
    */
-   string getFontName() {
+   @property string fontName() {
       return to!string(HPDF_Font_GetFontName(this._font));
    }
 
@@ -33,7 +31,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the encoding name of the font on success. Otherwise, returns null.
    */
-   string getEncodingName() {
+   @property string encodingName() {
       return to!string(HPDF_Font_GetEncodingName(this._font));
    }
 
@@ -41,7 +39,7 @@ class HaruFont : IHaruObject {
    * Gets the width of a Unicode character in a specific font. Actual width of the character on the page can be calculated as follows:
    * Example:
    *   ---------------------------------------------------------------------------
-   *   char_width = HaruFont::GetUnicodeWidth ( UNICODE );
+   *   char_width = Font::GetUnicodeWidth ( UNICODE );
    *   float actual_width = char_width * FONT_SIZE / 1000;
    *   ---------------------------------------------------------------------------
    *
@@ -51,7 +49,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the character width on success. Otherwise, returns null.
    */
-   HPDF_INT getUnicodeWidth(HPDF_UNICODE code) {
+   int getUnicodeWidth(HPDF_UNICODE code) {
       return HPDF_Font_GetUnicodeWidth(this._font, code);
    }
 
@@ -72,7 +70,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the font vertical ascent on success. Otherwise, returns 0.
    */
-   HPDF_INT getAscent() {
+   @property int ascent() {
       return HPDF_Font_GetAscent(this._font);
    }
 
@@ -82,7 +80,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the font vertical descent on success. Otherwise, returns 0.
    */
-   HPDF_INT getDescent() {
+   @property int descent() {
       return HPDF_Font_GetDescent(this._font);
    }
 
@@ -92,7 +90,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the font x-height value on success. Otherwise, returns 0.
    */
-   HPDF_UINT getXHeight() {
+   @property uint xHeight() {
       return HPDF_Font_GetXHeight(this._font);
    }
 
@@ -102,7 +100,7 @@ class HaruFont : IHaruObject {
    * Return:
    *   the font cap height on success. Otherwise, returns 0.
    */
-   HPDF_UINT getCapHeight() {
+   @property uint capHeight() {
       return HPDF_Font_GetCapHeight(this._font);
    }
 
@@ -114,11 +112,11 @@ class HaruFont : IHaruObject {
    *   len = The byte length of the text.
    *
    * Return:
-   *   On success, returns a HaruTextWidth struct including calculation result.<br />
-   *   Otherwise, returns HaruTextWidth struct whose attributes are all 0.
+   *   On success, returns a TextWidth struct including calculation result.<br />
+   *   Otherwise, returns TextWidth struct whose attributes are all 0.
    */
-   HaruTextWidth textWidth(char[] text, HPDF_UINT len) {
-      return HPDF_Font_TextWidth(this._font, cast(char*)text, len);
+   TextWidth textWidth(string text, uint len) {
+      return HPDF_Font_TextWidth(this._font, text.toStringz(), len);
    }
 
    /**
@@ -137,22 +135,22 @@ class HaruFont : IHaruObject {
    * Return:
    *   On success, returns byte length which can be included within specified width. Otherwise, returns 0.
    */
-   HPDF_UINT measureText(char[] text,
-                         HPDF_UINT          len,
-                         HPDF_REAL          width,
-                         HPDF_REAL          font_size,
-                         HPDF_REAL          char_space,
-                         HPDF_REAL          word_space,
-                         HPDF_BOOL          wordwrap,
-                         HPDF_REAL         *real_width) {
+   uint measureText(string text,
+                         uint len,
+                         float width,
+                         float font_size,
+                         float char_space,
+                         float word_space,
+                         bool wordwrap,
+                         float* real_width) {
       return HPDF_Font_MeasureText(this._font,
-                                   cast(char*) text,
+                                   text.toStringz,
                                    len,
                                    width,
                                    font_size,
                                    char_space,
                                    word_space,
-                                   wordwrap,
+                                   wordwrap ? HPDF_TRUE : HPDF_FALSE,
                                    real_width);
    }
 

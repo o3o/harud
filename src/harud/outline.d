@@ -1,17 +1,14 @@
-module harud.haruoutline;
+module harud.outline;
 
 import harud.haruobject;
-//fix import harud.doc;
+import harud.destination;
 import harud.c;
 
-/**
-* HaruOutline class
-*/
-class HaruOutline : IHaruObject {
+class Outline: IHaruObject {
    private HPDF_Outline _outline;
 
    this(HPDF_Outline outline) {
-      _outline =  outline;
+      _outline = outline;
    }
 
    /**
@@ -30,8 +27,9 @@ class HaruOutline : IHaruObject {
    * Params:
    *   dst = Specify the handle of an destination object.
    */
-   HPDF_STATUS setDestination(HPDF_Destination dst) {
-      return HPDF_Outline_SetDestination(this._outline, dst);
+   HPDF_STATUS setDestination(Destination dst) {
+      assert(dst !is null, "dst not null");
+      return HPDF_Outline_SetDestination(this._outline, dst.destinationHandle);
    }
 
    public HPDF_HANDLE getHandle() {

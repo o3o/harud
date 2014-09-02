@@ -1,35 +1,27 @@
-NAME = libharud.a 
+NAME = encoding_list
 VERSION = 0.1.0
-IS_LIB = true
+#IS_LIB = true
 
-ROOT_SOURCE_DIR = src
+ROOT_SOURCE_DIR = .
 
 getSources = $(shell find $(ROOT_SOURCE_DIR) -name "*.d")
-#SRC = $(wildcard $(ROOT_SOURCE_DIR)/$(NAME)/*.d)
 SRC = $(getSources) 
 
-#LIB += $(D_DIR)/serial-port/libserial-port.a
-#LIB += $(D_DIR)/dejector/libdejector.a
-#LIB += $(D_DIR)/GtkD/libgtkd-2.a
-#LIB += $(D_DIR)/SDLang-D/libsdlang-d.a
-#LIB += $(D_DIR)/ddb/libddb.a
+LIB += ../../bin/libharud.a
 
-#INCLUDES += -I$(D_DIR)/dejector/source
-#INCLUDES += -I$(D_DIR)/GtkD/src
-#INCLUDES += -I$(D_DIR)/ddb/source
-#INCLUDES += -I$(D_DIR)/SDLang-D/src
+INCLUDES += -I../../src
 
 DFLAGS += $(if $(IS_LIB), -lib, )
 ## -debug compile in debug code
 DFLAGS += -debug
 ## -g add symbolic debug info
-#DFLAGS += -g 
+DFLAGS += -g 
 
 ## -w  warnings as errors (compilation will halt)
 DFLAGS += -w
 
 ##-wi warnings as messages (compilation will continue)
-DFLAGS += -wi
+#DFLAGS += -wi
 
 DFLAGS += -m64
 
@@ -68,12 +60,11 @@ PKG_SRC = $(PKG) $(SRC) makefile
 DEFAULT: all
 
 #################
-BIN = bin
+BIN = .
 DMD = dmd
 BASE_NAME = $(basename $(NAME))
-NAME_TEST = $(BASE_NAME)-test 
+TEST_NAME = $(BASE_NAME)-test 
 DSCAN = ~/dscanner
-CTAGS = ~/d/d2tags/d2tags
 .PHONY: all clean clobber test run
 
 all: builddir $(BIN)/$(NAME)
@@ -86,13 +77,14 @@ $(BIN)/$(NAME): $(SRC) $(LIB)| builddir
 
 run: all
 	$(BIN)/$(NAME)
+	xpdf ./$(NAME).pdf
 
 ## se si usa unit_threaded
 ## make test T=nome_test
-test: $(BIN)/$(NAME_TEST)
-	@$(BIN)/$(NAME_TEST) $(T)
+test: $(BIN)/$(TEST_NAME)
+	@$(BIN)/$(TEST_NAME) $(T)
 
-$(BIN)/$(NAME_TEST): $(SRC_TEST) $(LIB_TEST)| builddir
+$(BIN)/$(TEST_NAME): $(SRC_TEST) $(LIB_TEST)| builddir
 	$(DMD) $^ $(DFLAGS_TEST) $(INCLUDES_TEST) $(LDFLAGS) $(VERSION_FLAG) -of$@
 
 pkgdir:
@@ -105,13 +97,7 @@ pkg: $(PKG) | pkgdir
 pkgsrc: $(PKG_SRC) | pkgdir
 	tar -jcf pkg/$(BASE_NAME)-$(VERSION)-src.tar.bz2 $^
 
-tags: tags.json 
-	$(CTAGS) $^ > tags
-
-tags.json: $(SRC)
-	$(DMD) $^ $(DFLAGS) $(INCLUDES) $(LDFLAGS) $(VERSION_FLAG) -Xf$@
-
-tagsd: $(SRC)
+tags: $(SRC)
 	$(DSCAN) --ctags -R src > tags
 
 style:
@@ -131,6 +117,5 @@ var:
 	@echo LDFLAGS: $(LDFLAGS)
 	@echo VERSION: $(VERSION_FLAG)
 	@echo
-	@echo NAME_TEST: $(NAME_TEST)
 	@echo SRC_TEST: $(SRC_TEST)
 	@echo INCLUDES_TEST: $(INCLUDES_TEST)

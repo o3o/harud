@@ -1,11 +1,11 @@
-module harud.haruencoder;
+module harud.encoder;
 
 import harud.haruobject;
 //fix import harud.doc;
 import harud.c;
 //FIXimport harud.c.types;
 
-class HaruEncoder : IHaruObject {
+class Encoder: IHaruObject {
    protected HPDF_Encoder _encoder;
 
    this(HPDF_Encoder encoder) {
@@ -16,7 +16,7 @@ class HaruEncoder : IHaruObject {
    * Gets the type of an encoding object.
    *
    * Return:
-   *   a HaruEncoder value
+   *   a Encoder value
    */
    HaruEncoderType getType() {
       return HPDF_Encoder_GetType(this._encoder);
@@ -28,7 +28,7 @@ class HaruEncoder : IHaruObject {
    * Return:
    *    a HaruEncoderType value
    */
-   HaruByteType getByteType(char[] text, HPDF_UINT index) {
+   HaruByteType getByteType(char[] text, uint index) {
       return HPDF_Encoder_GetByteType(this._encoder, cast(char*) text, index);
    }
 
@@ -41,7 +41,7 @@ class HaruEncoder : IHaruObject {
    * Return:
    *   the converted character to unicode
    */
-   HPDF_UNICODE getUnicode(HPDF_UINT16 code) {
+   HPDF_UNICODE getUnicode(ushort code) {
       return HPDF_Encoder_GetUnicode(this._encoder, code);
    }
 

@@ -1,7 +1,7 @@
 {
 	"name": "harud",
 	"description": "D binding to libharu",
-	"copyright": "Copyright © 2014, dao",
+	"copyright": "Copyright © 2014, o3o",
 	"authors": ["Orfeo Da Via'"],
    "libs": ["hpdf"], 
 	"dependencies": {

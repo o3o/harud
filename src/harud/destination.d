@@ -1,16 +1,16 @@
-module harud.harudestination;
+module harud.destination;
 
-//import harud.doc;
 import harud.c;
-//FIXimport harud.c.types;
-/**
-* HaruDestination class
-*/
-class HaruDestination {
+
+class Destination {
    private HPDF_Destination _destination;
 
    this(HPDF_Destination destination) {
       _destination =  destination;
+   }
+
+   @property HPDF_Destination destinationHandle() {
+      return this._destination;
    }
 
    /**
@@ -21,7 +21,7 @@ class HaruDestination {
    *   top = The top coordinates of the page.
    *   zoom = The page magnified factor. The value must be between 0.08(8%) to 32(%).
    */
-   HPDF_STATUS setXYZ(HPDF_REAL left, HPDF_REAL top, HPDF_REAL zoom) {
+   HPDF_STATUS setXYZ(float left, float top, float zoom) {
       return HPDF_Destination_SetXYZ(this._destination, left, top, zoom);
    }
 
@@ -39,7 +39,7 @@ class HaruDestination {
    * Params:
    *   top = The top coordinates of the page.
    */
-   HPDF_STATUS setFitH(HPDF_REAL top) {
+   HPDF_STATUS setFitH(float top) {
       return HPDF_Destination_SetFitH(this._destination, top);
    }
 
@@ -49,7 +49,7 @@ class HaruDestination {
    * Params:
    *   left = The left coordinates of the page.
    */
-   HPDF_STATUS setFitV(HPDF_REAL left) {
+   HPDF_STATUS setFitV(float left) {
       return HPDF_Destination_SetFitV(this._destination, left);
    }
 
@@ -63,7 +63,7 @@ class HaruDestination {
    *   top = The top coordinates of the page.
    *
    */
-   HPDF_STATUS setFitR(HPDF_REAL left, HPDF_REAL bottom, HPDF_REAL right, HPDF_REAL top) {
+   HPDF_STATUS setFitR(float left, float bottom, float right, float top) {
       return HPDF_Destination_SetFitR(this._destination, left, bottom, right, top);
    }
 
@@ -81,7 +81,7 @@ class HaruDestination {
    * Params:
    *   top = The top coordinates of the page.
    */
-   HPDF_STATUS setFitBH(HPDF_REAL top) {
+   HPDF_STATUS setFitBH(float top) {
       return HPDF_Destination_SetFitBH(this._destination, top);
    }
 
@@ -91,15 +91,8 @@ class HaruDestination {
    * Params:
    *   left - The left coordinates of the page.
    */
-   HPDF_STATUS setFitBV(HPDF_REAL left) {
+   HPDF_STATUS setFitBV(float left) {
       return HPDF_Destination_SetFitBV(this._destination, left);
    }
-
-
-
-   HPDF_Destination destination() {
-      return this._destination;
-   }
-
 
 }

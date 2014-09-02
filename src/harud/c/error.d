@@ -125,136 +125,130 @@ enum uint INVALID_ICC_COMPONENT_NUM = 0x1085;
 
 string getErrorDescription(uint errorNo) {
    switch (errorNo) {
-      case ARRAY_COUNT_ERR: return "ARRAY_COUNT_ERR";
-      case ARRAY_ITEM_NOT_FOUND: return "ARRAY_ITEM_NOT_FOUND";
-      case ARRAY_ITEM_UNEXPECTED_TYPE: return
-                                            "ARRAY_ITEM_UNEXPECTED_TYPE";
-      case BINARY_LENGTH_ERR: return "BINARY_LENGTH_ERR";
-      case CANNOT_GET_PALLET: return "CANNOT_GET_PALLET";
-      case DICT_COUNT_ERR: return "DICT_COUNT_ERR";
-      case DICT_ITEM_NOT_FOUND: return "DICT_ITEM_NOT_FOUND";
-      case DICT_ITEM_UNEXPECTED_TYPE: return
-                                           "DICT_ITEM_UNEXPECTED_TYPE";
-      case DICT_STREAM_LENGTH_NOT_FOUND: return
-                                              "DICT_STREAM_LENGTH_NOT_FOUND";
-      case DOC_ENCRYPTDICT_NOT_FOUND: return
-                                           "DOC_ENCRYPTDICT_NOT_FOUND";
-      case DOC_INVALID_OBJECT: return "DOC_INVALID_OBJECT";
-      case DUPLICATE_REGISTRATION: return "DUPLICATE_REGISTRATION";
-      case EXCEED_JWW_CODE_NUM_LIMIT: return
-                                           "EXCEED_JWW_CODE_NUM_LIMIT";
-      case ENCRYPT_INVALID_PASSWORD: return
-                                          "ENCRYPT_INVALID_PASSWORD";
-      case ERR_UNKNOWN_CLASS: return "ERR_UNKNOWN_CLASS";
-      case EXCEED_GSTATE_LIMIT: return "EXCEED_GSTATE_LIMIT";
-      case FAILD_TO_ALLOC_MEM: return "FAILD_TO_ALLOC_MEM";
-      case FILE_IO_ERROR: return "FILE_IO_ERROR";
-      case FILE_OPEN_ERROR: return "FILE_OPEN_ERROR";
-      case FONT_EXISTS: return "FONT_EXISTS";
-      case FONT_INVALID_WIDTHS_TABLE: return
-                                           "FONT_INVALID_WIDTHS_TABLE";
-      case INVALID_AFM_HEADER: return "INVALID_AFM_HEADER";
-      case INVALID_ANNOTATION: return "INVALID_ANNOTATION";
-      case INVALID_BIT_PER_COMPONENT: return
-                                           "INVALID_BIT_PER_COMPONENT";
-      case INVALID_CHAR_MATRICS_DATA: return
-                                           "INVALID_CHAR_MATRICS_DATA";
-      case INVALID_COLOR_SPACE: return "INVALID_COLOR_SPACE";
-      case INVALID_COMPRESSION_MODE: return
-                                          "INVALID_COMPRESSION_MODE";
-      case INVALID_DATE_TIME: return "INVALID_DATE_TIME";
-      case INVALID_DESTINATION: return "INVALID_DESTINATION";
-      case INVALID_DOCUMENT: return "INVALID_DOCUMENT";
-      case INVALID_DOCUMENT_STATE: return "INVALID_DOCUMENT_STATE";
-      case INVALID_ENCODER: return "INVALID_ENCODER";
-      case INVALID_ENCODER_TYPE: return "INVALID_ENCODER_TYPE";
-      case INVALID_ENCODING_NAME: return "INVALID_ENCODING_NAME";
-      case INVALID_ENCRYPT_KEY_LEN: return
-                                         "INVALID_ENCRYPT_KEY_LEN";
-      case INVALID_FONTDEF_DATA: return "INVALID_FONTDEF_DATA";
-      case INVALID_FONTDEF_TYPE: return "INVALID_FONTDEF_TYPE";
-      case INVALID_FONT_NAME: return "INVALID_FONT_NAME";
-      case INVALID_IMAGE: return "INVALID_IMAGE";
-      case INVALID_JPEG_DATA: return "INVALID_JPEG_DATA";
-      case INVALID_N_DATA: return "INVALID_N_DATA";
-      case INVALID_OBJECT: return "INVALID_OBJECT";
-      case INVALID_OBJ_ID: return "INVALID_OBJ_ID";
-      case INVALID_OPERATION: return "INVALID_OPERATION";
-      case INVALID_OUTLINE: return "INVALID_OUTLINE";
-      case INVALID_PAGE: return "INVALID_PAGE";
-      case INVALID_PAGES: return "INVALID_PAGES";
-      case INVALID_PARAMETER: return "INVALID_PARAMETER";
-      case INVALID_PNG_IMAGE: return "INVALID_PNG_IMAGE";
-      case INVALID_STREAM: return "INVALID_STREAM";
-      case MISSING_FILE_NAME_ENTRY: return
-                                         "MISSING_FILE_NAME_ENTRY";
-      case INVALID_TTC_FILE: return "INVALID_TTC_FILE";
-      case INVALID_TTC_INDEX: return "INVALID_TTC_INDEX";
-      case INVALID_WX_DATA: return "INVALID_WX_DATA";
-      case ITEM_NOT_FOUND: return "ITEM_NOT_FOUND";
-      case LIBPNG_ERROR: return "LIBPNG_ERROR";
-      case NAME_INVALID_VALUE: return "NAME_INVALID_VALUE";
-      case NAME_OUT_OF_RANGE: return "NAME_OUT_OF_RANGE";
-      case PAGE_INVALID_PARAM_COUNT: return
-                                          "PAGE_INVALID_PARAM_COUNT";
-      case PAGES_MISSING_KIDS_ENTRY: return
-                                          "PAGES_MISSING_KIDS_ENTRY";
-      case PAGE_CANNOT_FIND_OBJECT: return
-                                         "PAGE_CANNOT_FIND_OBJECT";
-      case PAGE_CANNOT_GET_ROOT_PAGES: return
-                                            "PAGE_CANNOT_GET_ROOT_PAGES";
-      case PAGE_CANNOT_RESTORE_GSTATE: return
-                                            "PAGE_CANNOT_RESTORE_GSTATE";
-      case PAGE_CANNOT_SET_PARENT: return "PAGE_CANNOT_SET_PARENT";
-      case PAGE_FONT_NOT_FOUND: return "PAGE_FONT_NOT_FOUND";
-      case PAGE_INVALID_FONT: return "PAGE_INVALID_FONT";
-      case PAGE_INVALID_FONT_SIZE: return "PAGE_INVALID_FONT_SIZE";
-      case PAGE_INVALID_GMODE: return "PAGE_INVALID_GMODE";
-      case PAGE_INVALID_INDEX: return "PAGE_INVALID_INDEX";
-      case PAGE_INVALID_ROTATE_VALUE: return
-                                           "PAGE_INVALID_ROTATE_VALUE";
-      case PAGE_INVALID_SIZE: return "PAGE_INVALID_SIZE";
-      case PAGE_INVALID_XOBJECT: return "PAGE_INVALID_XOBJECT";
-      case PAGE_OUT_OF_RANGE: return "PAGE_OUT_OF_RANGE";
-      case REAL_OUT_OF_RANGE: return "REAL_OUT_OF_RANGE";
-      case STREAM_EOF: return "STREAM_EOF";
-      case STREAM_READLN_CONTINUE: return "STREAM_READLN_CONTINUE";
-      case STRING_OUT_OF_RANGE: return "STRING_OUT_OF_RANGE";
-      case THIS_FUNC_WAS_SKIPPED: return "THIS_FUNC_WAS_SKIPPED";
-      case TTF_CANNOT_EMBEDDING_FONT: return
-                                           "TTF_CANNOT_EMBEDDING_FONT";
-      case TTF_INVALID_CMAP: return "TTF_INVALID_CMAP";
-      case TTF_INVALID_FOMAT: return "TTF_INVALID_FOMAT";
-      case TTF_MISSING_TABLE: return "TTF_MISSING_TABLE";
-      case UNSUPPORTED_FONT_TYPE: return "UNSUPPORTED_FONT_TYPE";
-      case UNSUPPORTED_FUNC: return "UNSUPPORTED_FUNC";
-      case UNSUPPORTED_JPEG_FORMAT: return
-                                         "UNSUPPORTED_JPEG_FORMAT";
-      case UNSUPPORTED_TYPE1_FONT: return "UNSUPPORTED_TYPE1_FONT";
-      case XREF_COUNT_ERR: return "XREF_COUNT_ERR";
-      case ZLIB_ERROR: return "ZLIB_ERROR";
-      case INVALID_PAGE_INDEX: return "INVALID_PAGE_INDEX";
-      case INVALID_URI: return "INVALID_URI";
-      case PAGE_LAYOUT_OUT_OF_RANGE: return "PAGE_LAYOUT_OUT_OF_RANGE";
-      case PAGE_MODE_OUT_OF_RANGE: return "PAGE_MODE_OUT_OF_RANGE";
-      case PAGE_NUM_STYLE_OUT_OF_RANGE: return "PAGE_NUM_STYLE_OUT_OF_RANGE";
-      case ANNOT_INVALID_ICON: return "ANNOT_INVALID_ICON";
-      case ANNOT_INVALID_BORDER_STYLE: return "ANNOT_INVALID_BORDER_STYLE";
-      case PAGE_INVALID_DIRECTION: return "PAGE_INVALID_DIRECTION";
-      case INVALID_FONT: return "INVALID_FONT";
-      case PAGE_INSUFFICIENT_SPACE: return "PAGE_INSUFFICIENT_SPACE";
-      case PAGE_INVALID_DISPLAY_TIME: return "PAGE_INVALID_DISPLAY_TIME";
-      case PAGE_INVALID_TRANSITION_TIME: return "PAGE_INVALID_TRANSITION_TIME";
-      case INVALID_PAGE_SLIDESHOW_TYPE: return "INVALID_PAGE_SLIDESHOW_TYPE";
-      case EXT_GSTATE_OUT_OF_RANGE: return "EXT_GSTATE_OUT_OF_RANGE";
-      case INVALID_EXT_GSTATE: return "INVALID_EXT_GSTATE";
-      case EXT_GSTATE_READ_ONLY: return "EXT_GSTATE_READ_ONLY";
-      case INVALID_U3D_DATA: return "INVALID_U3D_DATA";
-      case NAME_CANNOT_GET_NAMES: return "NAME_CANNOT_GET_NAMES";
-      case INVALID_ICC_COMPONENT_NUM: return "INVALID_ICC_COMPONENT_NUM";
-
+      case ARRAY_COUNT_ERR: return "Array count err";
+      case ARRAY_ITEM_NOT_FOUND: return "Array item not found";
+      case ARRAY_ITEM_UNEXPECTED_TYPE: return "Array item unexpected type";
+      case BINARY_LENGTH_ERR: return "Binary length error";
+      case CANNOT_GET_PALLET: return "Cannot get pallet";
+      case DICT_COUNT_ERR: return "Dict count err";
+      case DICT_ITEM_NOT_FOUND: return "Dict item not found";
+      case DICT_ITEM_UNEXPECTED_TYPE: return "Dict item unexpected type";
+      case DICT_STREAM_LENGTH_NOT_FOUND: return "Dict stream length not found";
+      case DOC_ENCRYPTDICT_NOT_FOUND: return "Doc encryptdict not found";
+      case DOC_INVALID_OBJECT: return "Doc invalid object";
+      case DUPLICATE_REGISTRATION: return "Duplicate registration";
+      case EXCEED_JWW_CODE_NUM_LIMIT: return "Exceed JWW code num limit";
+      case ENCRYPT_INVALID_PASSWORD: return "Encrypt invalid password";
+      case ERR_UNKNOWN_CLASS: return "Err unknown class";
+      case EXCEED_GSTATE_LIMIT: return "Exceed gstate limit";
+      case FAILD_TO_ALLOC_MEM: return "Faild to alloc mem";
+      case FILE_IO_ERROR: return "File IO error";
+      case FILE_OPEN_ERROR: return "File open error";
+      case FONT_EXISTS: return "Font exists";
+      case FONT_INVALID_WIDTHS_TABLE: return "Font invalid widths table";
+      case INVALID_AFM_HEADER: return "Invalid afm header";
+      case INVALID_ANNOTATION: return "Invalid annotation";
+      case INVALID_BIT_PER_COMPONENT: return "Invalid bit per component";
+      case INVALID_CHAR_MATRICS_DATA: return "Invalid char matrics data";
+      case INVALID_COLOR_SPACE: return "Invalid color space";
+      case INVALID_COMPRESSION_MODE: return "Invalid compression mode";
+      case INVALID_DATE_TIME: return "Invalid date time";
+      case INVALID_DESTINATION: return "Invalid destination";
+      case INVALID_DOCUMENT: return "Invalid document";
+      case INVALID_DOCUMENT_STATE: return "Invalid document state";
+      case INVALID_ENCODER: return "Invalid encoder";
+      case INVALID_ENCODER_TYPE: return "Invalid encoder type";
+      case INVALID_ENCODING_NAME: return "Invalid encoding name";
+      case INVALID_ENCRYPT_KEY_LEN: return "Invalid encrypt key len";
+      case INVALID_FONTDEF_DATA: return "Invalid fontdef data";
+      case INVALID_FONTDEF_TYPE: return "Invalid fontdef type";
+      case INVALID_FONT_NAME: return "Invalid font name";
+      case INVALID_IMAGE: return "Invalid image";
+      case INVALID_JPEG_DATA: return "Invalid JPEG data";
+      case INVALID_N_DATA: return "Invalid n data";
+      case INVALID_OBJECT: return "Invalid object";
+      case INVALID_OBJ_ID: return "Invalid object id";
+      case INVALID_OPERATION: return "Invalid operation";
+      case INVALID_OUTLINE: return "Invalid outline";
+      case INVALID_PAGE: return "Invalid page";
+      case INVALID_PAGES: return "Invalid pages";
+      case INVALID_PARAMETER: return "Invalid parameter";
+      case INVALID_PNG_IMAGE: return "Invalid PNG image";
+      case INVALID_STREAM: return "Invalid stream";
+      case MISSING_FILE_NAME_ENTRY: return "Missing file name entry";
+      case INVALID_TTC_FILE: return "Invalid TTC file";
+      case INVALID_TTC_INDEX: return "Invalid TTC index";
+      case INVALID_WX_DATA: return "Invalid wx data";
+      case ITEM_NOT_FOUND: return "Item not found";
+      case LIBPNG_ERROR: return "Libpng error";
+      case NAME_INVALID_VALUE: return "Name invalid value";
+      case NAME_OUT_OF_RANGE: return "Name out of range";
+      case PAGE_INVALID_PARAM_COUNT: return "Page invalid param count";
+      case PAGES_MISSING_KIDS_ENTRY: return "Pages missing kids entry";
+      case PAGE_CANNOT_FIND_OBJECT: return "Page cannot find object";
+      case PAGE_CANNOT_GET_ROOT_PAGES: return "Page cannot get root pages";
+      case PAGE_CANNOT_RESTORE_GSTATE: return "Page cannot restore gstate";
+      case PAGE_CANNOT_SET_PARENT: return "Page cannot set parent";
+      case PAGE_FONT_NOT_FOUND: return "Page font not found";
+      case PAGE_INVALID_FONT: return "Page invalid font";
+      case PAGE_INVALID_FONT_SIZE: return "Page invalid font size";
+      case PAGE_INVALID_GMODE: return "Page invalid gmode";
+      case PAGE_INVALID_INDEX: return "Page invalid index";
+      case PAGE_INVALID_ROTATE_VALUE: return "Page invalid rotate value";
+      case PAGE_INVALID_SIZE: return "Page invalid size";
+      case PAGE_INVALID_XOBJECT: return "Page invalid xobject";
+      case PAGE_OUT_OF_RANGE: return "Page out of range";
+      case REAL_OUT_OF_RANGE: return "Real out of range";
+      case STREAM_EOF: return "Stream EOF";
+      case STREAM_READLN_CONTINUE: return "Stream readln continue";
+      case STRING_OUT_OF_RANGE: return "String out of range";
+      case THIS_FUNC_WAS_SKIPPED: return "This function was skipped";
+      case TTF_CANNOT_EMBEDDING_FONT: return "TTF cannot embedding font";
+      case TTF_INVALID_CMAP: return "TTF invalid cmap";
+      case TTF_INVALID_FOMAT: return "TTF invalid fomat";
+      case TTF_MISSING_TABLE: return "TTF missing table";
+      case UNSUPPORTED_FONT_TYPE: return "Unsupported font type";
+      case UNSUPPORTED_FUNC: return "Unsupported func";
+      case UNSUPPORTED_JPEG_FORMAT: return "Unsupported jpeg format";
+      case UNSUPPORTED_TYPE1_FONT: return "Unsupported type1_font";
+      case XREF_COUNT_ERR: return "Xref count err";
+      case ZLIB_ERROR: return "ZLIB error";
+      case INVALID_PAGE_INDEX: return "Invalid page index";
+      case INVALID_URI: return "Invalid URI";
+      case PAGE_LAYOUT_OUT_OF_RANGE: return "Page layout out of range";
+      case PAGE_MODE_OUT_OF_RANGE: return "Page mode out of range";
+      case PAGE_NUM_STYLE_OUT_OF_RANGE: return "Page num style out of range";
+      case ANNOT_INVALID_ICON: return "Annot invalid icon";
+      case ANNOT_INVALID_BORDER_STYLE: return "Annot invalid border style";
+      case PAGE_INVALID_DIRECTION: return "Page invalid direction";
+      case INVALID_FONT: return "Invalid font";
+      case PAGE_INSUFFICIENT_SPACE: return "Page insufficient space";
+      case PAGE_INVALID_DISPLAY_TIME: return "Page invalid display time";
+      case PAGE_INVALID_TRANSITION_TIME: return "Page invalid transition time";
+      case INVALID_PAGE_SLIDESHOW_TYPE: return "Invalid page slideshow type";
+      case EXT_GSTATE_OUT_OF_RANGE: return "Ext gstate out of range";
+      case INVALID_EXT_GSTATE: return "Invalid ext gstate";
+      case EXT_GSTATE_READ_ONLY: return "Ext gstate read only";
+      case INVALID_U3D_DATA: return "Invalid U3D data";
+      case NAME_CANNOT_GET_NAMES: return "Name cannot get names";
+      case INVALID_ICC_COMPONENT_NUM: return "Invalid ICc component num";
 
       default: return "Unknown";
    }
+}
+
+class HarudException: Exception {
+   this(uint errCode) {
+      this.errCode = errCode;
+      super(getErrorDescription(errCode));
+   }
+
+   this(string msg, string file = __FILE__, int line = __LINE__) {
+      super(msg, file, line);
+   }
+   
+   private uint _errCode;
+   @property uint errCode() const pure nothrow { return _errCode; }
+   @property void errCode(uint rhs) pure nothrow { _errCode = rhs; }
 }
 
