@@ -3,7 +3,7 @@ harud
 
 A D binding to libharu.
 
-The project is a reactivation of the dharu project on dsource repository (http://dsource.org/projects/dmocks/)
+The project is a reactivation of the dharu project on [dsource repository](http://dsource.org/projects/aki/)/
 
 ## Note for Windows user
 You need to convert the lib file to OMF. 
@@ -21,5 +21,5 @@ See directory `examples/`
 
 * [dsource repository](http://www.dsource.org/projects/aki/)
 * [libharu](http://libharu.org/)
-* [coffimplib download](ftp://ftp.digitalmars.com/coffimplib.zip)
+* coffimplib download (ftp://ftp.digitalmars.com/coffimplib.zip)
 * [coffimplib man page](http://digitalmars.com/ctg/coffimplib.html)
