@@ -30,7 +30,7 @@ void printGrid(Page page) {
    uint x, y;
 
    //page.setGrayFill(0.5);
-   //page.setGrayStroke(0.8);
+   page.setGrayStroke(0.8);
    y = 0;
    while (y < height) {
       page.setWidth(y);
@@ -43,7 +43,7 @@ void printGrid(Page page) {
          page.setGrayStroke(0.5);
 
          page.moveTo(0, y);
-         page.lineTo(5, y);
+         page.lineTo(25, y);
          page.stroke();
 
          page.setGrayStroke(0.8);
@@ -66,8 +66,8 @@ void printGrid(Page page) {
          page.lineTo(x, 5);
          page.stroke();
 
-         page.moveTo( x, height);
-         page.lineTo( x, height - 5);
+         page.moveTo(x, height);
+         page.lineTo(x, height - 25);
          page.stroke();
 
          page.setGrayStroke(0.8);
@@ -81,7 +81,7 @@ void printGrid(Page page) {
    while (y < height) {
       if (y % 10 == 0 && y > 0) {
          page.beginText();
-         page.moveTextPos(5, y - 2);
+         page.moveTextPos(25, y - 2);
 
          page.showText(to!string(y));
          page.endText;
@@ -101,7 +101,7 @@ void printGrid(Page page) {
          page.endText;
 
          page.beginText;
-         page.moveTextPos(x, height - 10);
+         page.moveTextPos(x, height - 30);
          page.showText(to!string(x));
          page.endText();
       }
