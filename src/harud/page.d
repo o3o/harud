@@ -17,7 +17,6 @@ import harud.encoder;
 /**
  * The Page class
  */
-
 class Page: IHaruObject {
    protected HPDF_Page _page;
 
@@ -48,12 +47,13 @@ class Page: IHaruObject {
    /**
     * Gets the height of a page.
     *
+    * Returns:
+    * when succeed, it returns the height of a page. Otherwise it returns 0.
     */
    @property float height() {
       return HPDF_Page_GetHeight(this._page);
    }
 
- 
    /**
     * Changes the height of a page
     *
@@ -63,7 +63,6 @@ class Page: IHaruObject {
    @property void height(float value) {
       HPDF_Page_SetHeight(this._page, value);
    }
-
 
    /**
     * Changes the size and direction of a page to a predefined size
@@ -101,16 +100,6 @@ class Page: IHaruObject {
     */
    HPDF_STATUS setRotate(ushort angle) {
       return HPDF_Page_SetRotate(this._page, angle);
-   }
-
-   /**
-    * Gets the height of a page.
-    *
-    * Returns:
-    * when getHeight() succeed, it returns the height of a page. Otherwise it returns 0.
-    */
-   float getHeight() {
-      return HPDF_Page_GetHeight(this._page);
    }
 
    /**
@@ -982,12 +971,12 @@ class Page: IHaruObject {
     * Gets the current line width of the page.
     *
     * Returns:
-    * when getLineWidth() succeed, it returns the current line width for path painting of the page. Otherwise it returns HPDF_DEF_LINEWIDTH.
+    * when getLineWidth() succeed, it returns the current line width for path painting of the page. 
+    * Otherwise it returns HPDF_DEF_LINEWIDTH.
     */
    @property float lineWidth() {
       return HPDF_Page_GetLineWidth(this._page);
    }
-
 
    /**
     * Sets the width of the line used to stroke a path.

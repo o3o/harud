@@ -13,7 +13,7 @@ void main() {
    }
 
    Doc pdf = new Doc(&errorCallback);   ///  New pdf document
-   HaruFont helvetica = pdf.getFont("Helvetica"); 
+   Font helvetica = pdf.getFont("Helvetica"); 
 
    Page page = pdf.addPage(); /// Add a new page to the document
 
@@ -114,10 +114,10 @@ void printGrid(Page page) {
 
 private void setWidth(Page page, double y) {
    if (y % 10 == 0)
-      page.setLineWidth(0.5);
+      page.lineWidth = 0.5;
    else {
-      if (page.getLineWidth != 0.25) {
-         page.setLineWidth(0.25);
+      if (page.lineWidth != 0.25) {
+         page.lineWidth = 0.25;
       }
    }
 }

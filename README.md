@@ -5,14 +5,6 @@ A D binding to libharu.
 
 The project is a reactivation of the dharu project on [dsource repository](http://dsource.org/projects/aki/).
 
-## Note for Windows user
-You need to convert the original lib file `libhpdf` to OMF:
-
-```
-$ coffimplib libhpdf.lib -f 
-```
-
-then copy to your `lib` path.
 
 ## Use
 See directory `examples/` and [wiki](https://github.com/o3o/harud/wiki).

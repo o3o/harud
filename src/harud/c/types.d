@@ -74,8 +74,6 @@ struct Rect {
 
 alias HaruBox = Rect;
 
-/* HPDF_Date struct
- */
 struct HaruDate {
    int year;
    int month;
@@ -392,18 +390,19 @@ enum HaruTextAlignment {
    justify
 }
 
-/* permission flags (only Revision 2 is supported)
-   read  user can read the document
-   print user can print the document</li>
-   edit user can edit the contents of the document other than annotations, form fields
-   copy user can copy the text and the graphics of the document
-   editAll user can add or modify the annotations and form fields of the document
+/**
+  Permission flags (only Revision 2 is supported)
  */
 enum Permission: uint {
+   ///  user can read the document
    read = 0, 
+   /// user can print the document
    print = 4,
+   /// user can add or modify the annotations and form fields of the document
    editAll = 8,
+   /// user can copy the text and the graphics of the document
    copy = 16,
+   /// user can edit the contents of the document other than annotations, form fields
    edit = 32
 }
 

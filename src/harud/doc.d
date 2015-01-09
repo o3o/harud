@@ -32,7 +32,11 @@ class Doc: IHaruObject {
     * Creates a new Doc instance with a delegate which is invoked when an
     * error occurred.
     *
-    * The delegate must be in the form of void error_callback( uint error_no, uint detail_no ), where error_no it's the number's error and detail_no it's the detail's number
+    * The delegate must be in the form of 
+    * ---
+    * void error_callback(uint error_no, uint detail_no)
+    * ---
+    , where error_no it's the number's error and detail_no it's the detail's number
     *
     * Params:
     * _dlg = The delegate wich is invoked
@@ -44,11 +48,10 @@ class Doc: IHaruObject {
     * ------------------------------------
     * void error_handler(uint error_no, uint detail_no) {
     *    writefln("error_no: %s, detail_no: %s", error_no, detail_no);
-    *    }
+    * }
     * Doc document = new Doc( &errorHandler );
     * ------------------------------------
     */
-
    this(void delegate(HPDF_STATUS error_no, HPDF_STATUS detail_no) _dlg) {
       dlg = _dlg;
       this._doc = HPDF_New(&errorHandler, cast(void*) this);
@@ -59,7 +62,7 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Saves the document to a file
+    * Saves the document to a file.
     *
     * Params:
     * filename = The name of the file to save
@@ -69,14 +72,14 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Saves the document to a temporary stream
+    * Saves the document to a temporary stream.
     */
    HPDF_STATUS saveToStream() {
       return HPDF_SaveToStream(this._doc);
    }
 
    /**
-    * Gets the size of the temporary stream of the document
+    * Gets the size of the temporary stream of the document.
     *
     * Returns: the size of the temporary stream
     */
@@ -108,7 +111,9 @@ class Doc: IHaruObject {
     * Params:
     * document = The instance of Doc to check
     *
-    * Returns: If the specified document handle is valid, it returns true. Otherwise, it returns false and error-handler is called
+    * Returns: 
+    * If the specified document handle is valid, it returns true. 
+    * Otherwise, it returns false and error-handler is called.
     */
    static bool hasDoc(Doc document) {
       return (HPDF_HasDoc(document._doc) != 0) ;
@@ -151,16 +156,16 @@ class Doc: IHaruObject {
     * Additionally, the state that there are a lot of "Page" object under one "Pages" object is not good, because it causes performance degradation of a viewer application.
     *
     * An application can change the setting of a pages tree by invoking setPagesConfiguration(). 
-    * If page_per_pages parameter is set to more than zero, a two-tier pages tree is created. 
-    * A root "Pages" object can own 8191 "Pages" object, and each lower "Pages" object can own page_per_pages "Page" objects. 
-    * As a result, the maximum number of pages becomes 8191 * page_per_pages page. 
+    * If pagePerPages parameter is set to more than zero, a two-tier pages tree is created. 
+    * A root "Pages" object can own 8191 "Pages" object, and each lower "Pages" object can own pagePerPages "Page" objects. 
+    * As a result, the maximum number of pages becomes 8191 * pagePerPages page. 
     * An application cannot invoke setPageConfiguration() after a page is added to document
     *
     * Params:
-    * page_per_pages = Specify the numbers of pages that a "Pages" object can own
+    * pagePerPages = Specify the numbers of pages that a "Pages" object can own
     */
-   HPDF_STATUS setPagesConfiguration(uint page_per_pages) {
-      return HPDF_SetPagesConfiguration(this._doc, page_per_pages);
+   HPDF_STATUS setPagesConfiguration(uint pagePerPages) {
+      return HPDF_SetPagesConfiguration(this._doc, pagePerPages);
    }
 
    /**
@@ -256,6 +261,16 @@ class Doc: IHaruObject {
       return new Page(HPDF_InsertPage(this._doc, target.getHandle()));
    }
 
+   /**
+    * Gets a Font instance of the requested font
+    *
+    * Params:
+    * fontName = a valid font name
+    *
+    * Returns:
+    * when getFont() succeeds, it returns the instance of a Font object. 
+    * Otherwise, it returns null and error-handler is called.
+    */
    Font getFont(string fontName) 
       in {
          assert(fontName.length > 0);
@@ -272,7 +287,8 @@ class Doc: IHaruObject {
     * encodingName = a valid encoding name
     *
     * Returns:
-    * when getFont() succeeds, it returns the instance of a Font object. Otherwise, it returns null and error-handler is called
+    * when getFont() succeeds, it returns the instance of a Font object. 
+    * Otherwise, it returns null and error-handler is called
     */
    Font getFont(string fontName, string encodingName) 
       in {
@@ -302,13 +318,14 @@ class Doc: IHaruObject {
 
    /**
     * Loads a TrueType font from an external file and register it to a document object
-    0*
+    *
     * Params:
     * filename = A path of a TrueType font file (.ttf)
     * embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
     *
     * Returns:
-    * when loadTTFontFromFile() succeeds, it returns the name of a font. Otherwise, it returns null and error-handler is called
+    * when loadTTFontFromFile() succeeds, it returns the name of a font. 
+    * Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, bool embedding = false) {
       return to!string(HPDF_LoadTTFontFromFile(this._doc

@@ -126,7 +126,7 @@ void drawGraph(Page page) {
    }
 }
 
-void drawFonts (Page page) {
+void drawFonts(Page page) {
    int i;
    int j;
 

@@ -1,122 +1,68 @@
-NAME = hello
+NAME = hello 
 VERSION = 0.1.0
-#IS_LIB = true
 
 ROOT_SOURCE_DIR = .
-
-getSources = $(shell find $(ROOT_SOURCE_DIR) -name "*.d")
 SRC = $(getSources) 
-
-LIB += ../../bin/libharud.a
-
-
-INCLUDES += -I../../src
-
-DFLAGS += $(if $(IS_LIB), -lib, )
-## -debug compile in debug code
-DFLAGS += -debug
-## -g add symbolic debug info
-#DFLAGS += -g 
-
-## -w  warnings as errors (compilation will halt)
-DFLAGS += -w
-
-##-wi warnings as messages (compilation will continue)
-#DFLAGS += -wi
-
-DFLAGS += -m64
-
-LDFLAGS = -L-lhpdf 
-## si usa make VERS=x
-VERSION_FLAG = $(if $(VERS), -version=$(VERS), )
-
-#################
-# TEST 
-#################
-
 SRC_TEST = $(SRC)
+#oppure	
 #SRC_TEST = $(filter-out $(ROOT_SOURCE_DIR)/app.d, $(SRC)) 
 #SRC_TEST += $(wildcard tests/*.d)
 
-## oppure
-#SRC_TEST = $(wildcard $(ROOT_SOURCE_DIR)/$(NAME)/*.d)
-#SRC_TEST += $(wildcard tests/*.d)
-
-LIB_TEST += $(LIB)
-#LIB_TEST =  $(D_DIR)/dunit/libdunit.a
-#LIB_TEST += $(D_DIR)/DMocks-revived/libdmocks-revived.a
-#LIB_TEST += $(D_DIR)/unit-threaded/libunit-threaded.a
-
-INCLUDES_TEST += $(INCLUDES)
-#INCLUDES_TEST += -I$(D_DIR)/dunit/source
-#INCLUDES_TEST += -I$(D_DIR)/DMocks-revived
-#INCLUDES_TEST += -I$(D_DIR)/unit-threaded/source
+# Compiler flag
+# -----------
+DFLAGS += -debug #compile in debug code
+#DFLAGS += -g # add symbolic debug info
+#DFLAGS += -w # warnings as errors (compilation will halt)
+DFLAGS += -wi # warnings as messages (compilation will continue)
 
 DFLAGS_TEST += -unittest
 # DFLAGS_TEST += -main -quiet
 
+# Linker flag
+# -----------
+# LDFLAGS += 
+# LDFLAGS += -L-L/usr/lib/
+
+# Version flag
+# -----------
+# VERSION_FLAG = -version=use_gtk
+
+# Packages
+# -----------
 PKG = $(wildcard $(BIN)/$(NAME))
 PKG_SRC = $(PKG) $(SRC) makefile
 
-DEFAULT: all
+# -----------
+# Libraries
+# -----------
 
-#################
-BIN = .
-DMD = dmd
-BASE_NAME = $(basename $(NAME))
-TEST_NAME = $(BASE_NAME)-test 
-DSCAN = ~/dscanner
-.PHONY: all clean clobber test run
 
-all: builddir $(BIN)/$(NAME)
+# harud
+# https://github.com/o3o/harud
+LIB += $(D_DIR)/harud/bin/libharud.a
+INCLUDES += -I$(D_DIR)/harud/src
+LDFLAGS += -L-lhpdf 
 
-builddir:
-	@mkdir -p $(BIN)
+# -----------
+# Test  library
+# -----------
 
-$(BIN)/$(NAME): $(SRC) $(LIB)| builddir
-	$(DMD) $^ $(DFLAGS) $(INCLUDES) $(LDFLAGS) $(VERSION_FLAG) -of$@
+# unit-threaded
+# -----------
+#LIB_TEST += $(D_DIR)/unit-threaded/libunit-threaded.a
+#INCLUDES_TEST += -I$(D_DIR)/unit-threaded/source
 
-run: all
-	$(BIN)/$(NAME)
-	xpdf ./$(NAME).pdf
+# dunit
+# -----------
+#LIB_TEST =  $(D_DIR)/dunit/libdunit.a
+#INCLUDES_TEST += -I$(D_DIR)/dunit/source
 
-## se si usa unit_threaded
-## make test T=nome_test
-test: $(BIN)/$(TEST_NAME)
-	@$(BIN)/$(TEST_NAME) $(T)
+# dmocks-revived
+# -----------
+#LIB_TEST += $(D_DIR)/DMocks-revived/libdmocks-revived.a
+#INCLUDES_TEST += -I$(D_DIR)/DMocks-revived
 
-$(BIN)/$(TEST_NAME): $(SRC_TEST) $(LIB_TEST)| builddir
-	$(DMD) $^ $(DFLAGS_TEST) $(INCLUDES_TEST) $(LDFLAGS) $(VERSION_FLAG) -of$@
+LIB_TEST += $(LIB)
+INCLUDES_TEST += $(INCLUDES)
 
-pkgdir:
-	@mkdir -p pkg
-
-pkg: $(PKG) | pkgdir
-	tar -jcf pkg/$(BASE_NAME)-$(VERSION).tar.bz2 $^
-	zip pkg/$(BASE_NAME)-$(VERSION).zip $^
-
-pkgsrc: $(PKG_SRC) | pkgdir
-	tar -jcf pkg/$(BASE_NAME)-$(VERSION)-src.tar.bz2 $^
-
-tags: $(SRC)
-	$(DSCAN) --ctags -R src > tags
-
-style:
-	$(DSCAN) --styleCheck -R src/
-
-clean:
-	-rm -f $(BIN)/*.o
-	-rm -f $(BIN)/__*
-
-clobber:
-	-rm -f $(BIN)/*
-
-var:
-	@echo SRC:$(SRC)
-	@echo INCLUDES: $(INCLUDES)
-	@echo DFLAGS: $(DFLAGS)
-	@echo LDFLAGS: $(LDFLAGS)
-	@echo VERSION: $(VERSION_FLAG)
-	@echo
-	@echo SRC_TEST: $(SRC_TEST)
-	@echo INCLUDES_TEST: $(INCLUDES_TEST)
+include common.mk

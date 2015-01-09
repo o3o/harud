@@ -1,0 +1,57 @@
+# NON usare make di Mars ma GnuMake
+# Non e' previsto test pkg
+NAME = hello.exe
+VERSION = 0.1.0
+
+SRC = $(wildcard *.d)
+D_DIR = ../../..
+
+# Library
+# -----------
+
+
+# harud
+# -----------
+LIB += $(D_DIR)/harud/bin/harud.lib
+LIB += $(D_DIR)/harud/lib/libhpdf.lib
+INCLUDES += -I$(D_DIR)/harud/src
+
+# Compiler flag
+# -----------
+DFLAGS += -lib
+DFLAGS += -debug #compile in debug code
+#DFLAGS += -g # add symbolic debug info
+#DFLAGS += -w # warnings as errors (compilation will halt)
+DFLAGS += -wi # warnings as messages (compilation will continue)
+
+# Linker flag
+# -----------
+#LDFLAGS += 
+
+DEFAULT: all
+#################
+BIN = bin
+DMD = dmd
+
+.PHONY: all clean clobber 
+
+all: $(BIN)/$(NAME)
+
+$(BIN)/$(NAME): $(SRC) $(LIB)
+	$(DMD) $^ $(DFLAGS) $(INCLUDES) $(LDFLAGS) $(VERSION_FLAG) -of$@
+
+run: all
+	$(BIN)/$(NAME)
+
+var:
+	@echo SRC:
+	@echo $(SRC)
+	@echo
+	@echo INCLUDES:
+	@echo $(INCLUDES)
+	@echo
+	@echo DFLAGS:
+	@echo $(DFLAGS)
+	@echo
+	@echo VERSION:
+	@echo $(VERSION_FLAG)
