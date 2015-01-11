@@ -8,3 +8,4 @@ public import harud.encoder;
 public import harud.annotation;
 public import harud.outline;
 public import harud.destination;
+public import harud.error;

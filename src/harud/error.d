@@ -1,4 +1,7 @@
-module harud.c.error;
+/**
+* This module defines error code and functions related to exceptions and general error handling. 
+*/
+module harud.error;
 
 /* error-code */
 enum uint ARRAY_COUNT_ERR = 0x1001;
@@ -122,7 +125,14 @@ enum uint INVALID_U3D_DATA = 0x1083;
 enum uint NAME_CANNOT_GET_NAMES = 0x1084;
 enum uint INVALID_ICC_COMPONENT_NUM = 0x1085;
 
-
+/**
+* Returns a error description from error code
+*
+* Params:  errorNo = error number
+*			 
+*
+* Returns: Error description value
+*/
 string getErrorDescription(uint errorNo) {
    switch (errorNo) {
       case ARRAY_COUNT_ERR: return "Array count err";
@@ -237,6 +247,9 @@ string getErrorDescription(uint errorNo) {
    }
 }
 
+/**
+* Thrown if errors that set errno occur.
+*/
 class HarudException: Exception {
    this(uint errCode) {
       this.errCode = errCode;
@@ -251,4 +264,3 @@ class HarudException: Exception {
    @property uint errCode() const pure nothrow { return _errCode; }
    @property void errCode(uint rhs) pure nothrow { _errCode = rhs; }
 }
-
