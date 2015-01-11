@@ -4,6 +4,7 @@ import std.conv;
 import std.string;
 
 import harud.haruobject;
+import harud.error;
 import harud.c;
 import harud.page;
 import harud.font;
@@ -11,7 +12,9 @@ import harud.encoder;
 import harud.outline;
 import harud.image;
 
-
+/**
+* Document object class
+*/
 class Doc: IHaruObject {
    protected HPDF_Doc _doc;
    protected void delegate(HPDF_STATUS, HPDF_STATUS) dlg;

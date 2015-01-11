@@ -14,52 +14,21 @@ alias HPDF_XObject = HPDF_HANDLE;
 alias HPDF_Annotation = HPDF_HANDLE;
 alias HPDF_ExtGState = HPDF_HANDLE;
 
-/* native OS integer types */
-// FIX: alias PDF_INT = int;
-// FIX: alias PDF_UINT = uint;
-
-
-/* 32bit integer types */
-// FIX:  alias int32 = int;
-// FIX: alias PDF_UINT32 = uint;
-
-
-/* 16bit integer types */
-// FIX: alias int16 = short;
-// FIX: alias ushort = ushort;
-
-
-/* 8bit integer types */
-// FIX:  alias PDF_INT8 = byte;
-// FIX: alias PDF_UINT8 = ubyte;
-
-
-/* 8bit binary types */
-// FIX: alias PDF_BYTE = ubyte;
-
-
-/* float type (32bit IEEE754) */
-// FIX: alias HPDF_REAL = float;
-
-
-/* double type (64bit IEEE754) */
-// FIX: alias PDF_DOUBLE = double;
-
 
 /* boolean type (0: False, !0: True) */
 alias HPDF_BOOL = int;
 
 
-/* error-no type (32bit unsigned integer) */
+/** errorNo type (32bit unsigned integer) */
 alias HPDF_STATUS = uint;
 
 
-/* charactor-code type (16bit) */
+/** charactor-code type (16bit) */
 alias HPDF_CID = ushort;
 alias HPDF_UNICODE = ushort;
 
 
-/* HPDF_Point struct */
+/** HPDF_Point struct */
 struct Point {
    float x;
    float y;
@@ -88,7 +57,7 @@ struct HaruDate {
 
 
 enum HaruInfoType {
-   /* date-time type parameters */
+   /** date-time type parameters */
    creationDate = 0,
    modDate,
 
@@ -121,7 +90,7 @@ enum HaruEncryptMode {
 struct TextWidth {
    uint numchars;
 
-   /* don't use this value (it may be change in the feature).
+   /** don't use this value (it may be change in the feature).
       use numspace as alternated. */
    uint numwords;
 
@@ -174,7 +143,7 @@ struct HaruCMYKColor {
    float k;
 }
 
-// The line cap style
+/// The line cap style
 enum HaruLineCap {
    buttEnd = 0,
    roundEnd,
@@ -182,7 +151,7 @@ enum HaruLineCap {
    lineCapEof
 }
 
-// The line join style 
+/// The line join style 
 enum HaruLineJoin {
    miterJoin = 0,
    roundJoin,
@@ -190,7 +159,7 @@ enum HaruLineJoin {
    linejoinEof
 }
 
-// The text rendering mode 
+/// The text rendering mode 
 enum HaruTextRenderingMode {
    fill = 0,
    stroke,
@@ -326,7 +295,7 @@ enum HaruBlendMode {
    eof
 }
 
-// slide show 
+/// slide show 
 enum HaruTransitionStyle {
    wipeRight = 0,
    wipeUp,
@@ -392,7 +361,7 @@ enum HaruTextAlignment {
 
 /**
   Permission flags (only Revision 2 is supported)
- */
+*/
 enum Permission: uint {
    ///  user can read the document
    read = 0, 
@@ -406,3 +375,16 @@ enum Permission: uint {
    edit = 32
 }
 
+/**
+* Graphics mode
+*/
+enum GMode: ushort {
+   unknown = 0,
+   pageDescription = 0x0001,
+   pathObject = 0x0002,
+   textObject = 0x0004,
+   clippingPath = 0x0008,
+   shading = 0x0010,
+   inlineImage = 0x0020,
+   externalObject = 0x0040
+}

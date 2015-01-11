@@ -10,14 +10,6 @@ extern(C) {
     */
    HPDF_Doc HPDF_New(void* error, void* user_data);
 
-   /**
-     HPDF_Doc HPDF_NewEx  (HPDF_Error_Handler user_error_fn,
-     HPDF_Alloc_Func user_alloc_fn,
-     HPDF_Free_Func user_free_fn,
-     uint mem_pool_buf_size,
-     void* user_data);
-    */
-
    void HPDF_Free(HPDF_Doc pdf);
 
    HPDF_STATUS HPDF_NewDoc(HPDF_Doc pdf);
@@ -46,10 +38,9 @@ extern(C) {
 
    const(char)* HPDF_GetVersion();
 
-   /*************************
+   /*
     * Pages Handling
-    *************************/
-
+    */
    HPDF_STATUS HPDF_SetPagesConfiguration(HPDF_Doc pdf, uint page_per_pages);
 
    HPDF_STATUS HPDF_SetPageLayout(HPDF_Doc pdf, PageLayout layout);
@@ -95,10 +86,9 @@ extern(C) {
 
    HPDF_STATUS HPDF_UseCNTFonts(HPDF_Doc pdf);
 
-   /**********************************
+   /*
     * Encodings
-    **********************************/
-
+    */
    HPDF_Encoder HPDF_GetEncoder(HPDF_Doc pdf, const(char)* encoding_name);
 
    HPDF_Encoder HPDF_GetCurrentEncoder(HPDF_Doc pdf);
@@ -114,9 +104,9 @@ extern(C) {
    HPDF_STATUS HPDF_UseCNTEncodings(HPDF_Doc pdf);
 
 
-   /***********************
-    * Other Functions
-    ***********************/
+   /*
+    *Other Functions
+    */
 
    HPDF_Outline HPDF_CreateOutline(HPDF_Doc pdf, HPDF_Outline parent, const(char)* title, HPDF_Encoder encoder);
 
@@ -155,11 +145,9 @@ extern(C) {
 
 
 
-   /**************************************************************
-    *
+   /*
     * HPDF_Page
-    *
-    **************************************************************/
+    */
    HPDF_STATUS HPDF_Page_SetWidth(HPDF_Page page, float value);
 
    HPDF_STATUS HPDF_Page_SetHeight(HPDF_Page page, float value);
@@ -260,10 +248,9 @@ extern(C) {
          float trans_time);
 
 
-   /**********************************************
+   /*
     * Graphics
-    **********************************************/
-
+    */
    HPDF_STATUS HPDF_Page_Arc(HPDF_Page page,
          float x,
          float y,
@@ -465,9 +452,9 @@ extern(C) {
          uint* len);
 
 
-   /********************************************
+   /*
     * Font
-    ********************************************/
+    */
 
    const(char)* HPDF_Font_GetFontName(HPDF_Font font);
 
@@ -499,9 +486,9 @@ extern(C) {
          HPDF_BOOL wordwrap,
          float* real_width);
 
-   /***************************************************
+   /*
     * Encoding
-    ***************************************************/
+    */
 
 
    HaruEncoderType HPDF_Encoder_GetType(HPDF_Encoder encoder);
@@ -516,9 +503,9 @@ extern(C) {
    HaruWritingMode HPDF_Encoder_GetWritingMode(HPDF_Encoder encoder);
 
 
-   /***************************************************
+   /*
     * Annotation
-    ***************************************************/
+    */
 
    HPDF_STATUS HPDF_LinkAnnot_SetHighlightMode(HPDF_Annotation annot,
          HaruAnnotHighlightMode mode);
@@ -534,9 +521,9 @@ extern(C) {
    HPDF_STATUS HPDF_TextAnnot_SetOpened(HPDF_Annotation annot,
          HPDF_BOOL open);
 
-   /****************************************
+   /*
     * Outline
-    ****************************************/
+    */
 
    HPDF_STATUS HPDF_Outline_SetOpened(HPDF_Outline outline,
          HPDF_BOOL opened);
@@ -544,9 +531,9 @@ extern(C) {
    HPDF_STATUS HPDF_Outline_SetDestination(HPDF_Outline outline,
          HPDF_Destination dst);
 
-   /**************************************
+   /*
     * Destination
-    **************************************/
+    */
 
    HPDF_STATUS HPDF_Destination_SetXYZ(HPDF_Destination dst,
          float left,
@@ -575,10 +562,9 @@ extern(C) {
    HPDF_STATUS HPDF_Destination_SetFitBV(HPDF_Destination dst,
          float top);
 
-   /*******************************************************
+   /*
     * Image
-    *******************************************************/
-
+    */
    Point HPDF_Image_GetSize(HPDF_Image image);
 
    uint HPDF_Image_GetWidth(HPDF_Image image);

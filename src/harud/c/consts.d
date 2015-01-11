@@ -501,12 +501,4 @@ enum string HPDF_LANG_ZH = "zh"; /* Chinese */
 enum string HPDF_LANG_ZU = "zu"; /* Zulu */
 
 
-/*----- Graphis mode ---------------------------------------------------------*/
 
-enum int HPDF_GMODE_PAGE_DESCRIPTION = 0x0001;
-enum int HPDF_GMODE_PATH_OBJECT = 0x0002;
-enum int HPDF_GMODE_TEXT_OBJECT = 0x0004;
-enum int HPDF_GMODE_CLIPPING_PATH = 0x0008;
-enum int HPDF_GMODE_SHADING = 0x0010;
-enum int HPDF_GMODE_INLINE_IMAGE = 0x0020;
-enum int HPDF_GMODE_EXTERNAL_OBJECT = 0x0040;
