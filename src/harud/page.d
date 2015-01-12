@@ -1,6 +1,7 @@
 module harud.page;
 
 import std.conv;
+import std.stdio;
 import std.string;
 import std.exception; // for ErrNoException
 
@@ -308,13 +309,14 @@ class Page: IHaruObject {
     * Sets the line join style in the page.
     *
     * Params:
-    * lineJoin = The line join style (one of the following).
+    * join = The line join style.
     *
-    * Graphics Mode
+    * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
     */
-   @property void lineJoin(HaruLineJoin lineJoin) {
-      HPDF_Page_SetLineJoin(this._page, lineJoin);
+   @property void lineJoin(HaruLineJoin join) {
+      auto st =  HPDF_Page_SetLineJoin(this._page, join);
+      writeln(st);
    }
 
    /**
@@ -398,7 +400,7 @@ class Page: IHaruObject {
     * value = The character spacing (initial value is 0).
     */
    @property void charSpace(float value) {
-       HPDF_Page_SetCharSpace(this._page, value);
+      HPDF_Page_SetCharSpace(this._page, value);
    }
 
    /**
@@ -521,7 +523,7 @@ class Page: IHaruObject {
 
    /**
     * Gets the current value of the page's filling color. 
-    
+
     * getRGBFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_RGB.
     *
     * Returns:
@@ -551,7 +553,7 @@ class Page: IHaruObject {
     *
     * Returns:
     * when getRGBStroke() succeed, it returns the current value of the page's stroking color. 
-   * Otherwise it returns {0, 0, 0}.
+    * Otherwise it returns {0, 0, 0}.
     */
    HaruRGBColor getRGBStroke() {
       return HPDF_Page_GetRGBStroke(this._page);

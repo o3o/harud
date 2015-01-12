@@ -69,6 +69,53 @@ void main() {
       page.lineWidth = 30;
       page.setRGBStroke(0.0, 0.5, 0.0);
 
+      /* Line Join Style */
+      page.lineWidth = 30;
+      page.setRGBStroke(0.0, 0.0, 0.5);
+
+      page.lineJoin = HaruLineJoin.bevelJoin;
+      //page.lineJoin = HaruLineJoin.miterJoin;
+      page.drawHat(120, 300);
+
+      page.beginText();
+      page.moveTextPos(60, 360);
+      page.showText("PDF_MITER_JOIN");
+      page.endText();
+
+      page.lineJoin = HaruLineJoin.roundJoin;
+      writeln("LJ ", page.lineJoin);
+      
+      page.drawHat(120, 195);
+
+      page.beginText();
+      page.moveTextPos(60, 255);
+      page.showText("PDF_ROUND_JOIN");
+      page.endText();
+
+
+      page.lineJoin = HaruLineJoin.bevelJoin;
+      page.drawHat(120, 90);
+
+      page.beginText();
+      page.moveTextPos(60, 150);
+      page.showText("PDF_BEVEL_JOIN");
+      page.endText();
+
+      /* Draw Rectangle */
+      page.lineWidth = 2;
+      page.setRGBStroke(0, 0, 0);
+      page.setRGBFill(0.75, 0.0, 0.0);
+
+      drawRect(page, 300, 770, "Stroke");
+      page.stroke;
+
+      drawRect(page, 300, 720, "Fill");
+      page.fill;
+
+      drawRect(page, 300, 670, "Fill then Stroke");
+      page.fillStroke;
+
+
       pdf.saveToFile("./line.pdf");
    } catch (Exception exc) {
       writeln(exc);
@@ -79,8 +126,15 @@ void drawBorder(Page page) {
    page.lineWidth = 1;
    page.rectangle(50, 50, page.width - 100, page.height - 110);
    page.stroke();
-
 }
+
+void drawHat(Page page, float x, float y) {
+   page.moveTo(x, y);
+   page.lineTo(x + 40, y + 40);
+   page.lineTo(x + 40 * 2, y);
+   page.stroke();
+}
+
 void drawLine(Page page, float x, float y, string label) {
    writeln(label);
 
