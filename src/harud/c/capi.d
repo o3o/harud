@@ -451,11 +451,9 @@ extern(C) {
          HaruTextAlignment alig,
          uint* len);
 
-
    /*
     * Font
     */
-
    const(char)* HPDF_Font_GetFontName(HPDF_Font font);
 
    const(char)* HPDF_Font_GetEncodingName(HPDF_Font font);

@@ -27,8 +27,6 @@ class Doc: IHaruObject {
    this() {
       void delegate(uint, uint) stdErrorHandler = delegate void(uint e, uint d) { throw new HarudException(e); };
       this(stdErrorHandler);
-      //dlg = delegate void(HPDF_STATUS e, HPDF_STATUS d) { throw new HarudException(e); };
-      //this._doc = HPDF_New(&errorHandler, cast(void*) this);
    }
 
    /**
@@ -154,9 +152,11 @@ class Doc: IHaruObject {
 
    /**
     * In the default setting, a Doc object has one "Pages" object as root of pages. 
+    *
     * All "Page" objects are created as a kid of the "Pages" object. 
     * Since a "Pages" object can own only 8191 kids objects, the maximum number of pages are 8191 page. 
-    * Additionally, the state that there are a lot of "Page" object under one "Pages" object is not good, because it causes performance degradation of a viewer application.
+    * Additionally, the state that there are a lot of "Page" object under
+    * one"Pages" object is not good, because it causes performance degradation of a viewer application.
     *
     * An application can change the setting of a pages tree by invoking setPagesConfiguration(). 
     * If pagePerPages parameter is set to more than zero, a two-tier pages tree is created. 
@@ -172,28 +172,29 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Sets how the page should be displayed. If this attribute is not set, the setting of the viewer application is used
-    *
-    * Params:
-    * layout = One of the following values:
-    *
-    * <li>PageLayout.SINGLE - Only one page is displayed.</li>
-    * <li>PageLayout.ONE_COLUMN - Display the pages in one column.</li>
-    * <li>PageLayout.TWO_COLUMN_LEFT - Display in two columns. Odd page number is displayed left</li>
-    * <li>PageLayout.TWO_COLUMN_RIGHT - Display in two columns. Odd page number is displayed right</li>
-    */
-   HPDF_STATUS setPageLayout(PageLayout layout) {
-      return HPDF_SetPageLayout(this._doc, layout);
-   }
-
-   /**
     * Returns the current setting for page layout
     *
     * Returns:
     * the current setting for page layout
     */
-   PageLayout getPageLayout() {
+   @property PageLayout pageLayout() {
       return HPDF_GetPageLayout(this._doc);
+   }
+   /**
+    * Sets how the page should be displayed. 
+    *
+    * If this attribute is not set, the setting of the viewer application is used
+    *
+    * Params:
+    * layout = One of the following values:
+    *
+    * <li>PageLayout.single - Only one page is displayed.</li>
+    * <li>PageLayout.oneColumn - Display the pages in one column.</li>
+    * <li>PageLayout.twoColumnLeft - Display in two columns. Odd page number is displayed left</li>
+    * <li>PageLayout.twoColumnRight - Display in two columns. Odd page number is displayed right</li>
+    */
+   @property void pageLayout(PageLayout layout) {
+       HPDF_SetPageLayout(this._doc, layout);
    }
 
    /**
@@ -432,7 +433,9 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables simplified Chinese fonts. After useCNSFonts() is involed, an application can use the following simplified Chinese fonts
+    * Enables simplified Chinese fonts. 
+    * 
+    * After useCNSFonts() is involed, an application can use the following simplified Chinese fonts
     *
     * <li>SimSun</li>
     * <li>SimSun,Bold</li>
@@ -449,7 +452,9 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables traditional Chinese fonts. After useCNTFonts() is involed, an application can use the following traditional Chinese fonts
+    * Enables traditional Chinese fonts.
+    * 
+    * After useCNTFonts() is involed, an application can use the following traditional Chinese fonts
     *
     * <li>MingLiU</li>
     * <li>MingLiU,Bold</li>
@@ -471,8 +476,7 @@ class Doc: IHaruObject {
     * when getEncoder() succeeds, it returns an instance of a Encoder object. Otherwise, it returns null and error-handler is called
     */
    Encoder getEncoder(string encodingName) {
-      HPDF_Encoder encoder = HPDF_GetEncoder(this._doc ,
-            encodingName.toStringz());
+      HPDF_Encoder encoder = HPDF_GetEncoder(this._doc, encodingName.toStringz());
       return new Encoder(encoder);
    }
 
@@ -500,7 +504,9 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables Japanese encodings. After useJPEncodings() is invoked, an application can use the following Japanese encodings:
+    * Enables Japanese encodings. 
+    * 
+    * After useJPEncodings() is invoked, an application can use the following Japanese encodings:
     *
     * <li>90ms-RKSJ-H</li>
     * <li>90ms-RKSJ-V</li>
@@ -514,7 +520,7 @@ class Doc: IHaruObject {
 
    /**
     * Enables Korean encodings. 
-    
+    *
     * After useKREncodings() is involed, an application can use the following Korean encodings:
     *
     * <li>KSC-EUC-H</li>
@@ -529,7 +535,7 @@ class Doc: IHaruObject {
 
    /**
     * Enables simplified Chinese encodings. 
-    
+    *
     * After useCNSEncodings() is involed, an application can use the following simplified Chinese encodings
     *
     * <li>GB-EUC-H</li>
@@ -585,7 +591,8 @@ class Doc: IHaruObject {
     * deferred = if the load of the image must be referred
     *
     * Returns:
-    * when loadPngImageFromFile() succeeds, it returns an instance of a Image object. Otherwise, it returns null and error-handler is called.
+    * when loadPngImageFromFile() succeeds, it returns an instance of a Image object. 
+    * Otherwise, it returns null and error-handler is called.
     */
    Image loadPngImageFromFile(string filename, bool deferred = false) {
       HPDF_Image image = null;
@@ -598,7 +605,9 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Loads an image which has "raw" image format. This function loads the data without any conversion. So it is usually faster than the other functions.
+    * Loads an image which has "raw" image format. 
+    * 
+    * This function loads the data without any conversion. So it is usually faster than the other functions.
     *
     * Params:
     * filename = A path to a image file.
@@ -790,7 +799,10 @@ class Doc: IHaruObject {
    }
 }
 
+/**
+* Get version
+*
+*/
 string getVersion() {
    return to!string(HPDF_GetVersion());
 }
-
