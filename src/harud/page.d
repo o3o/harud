@@ -315,9 +315,19 @@ class Page: IHaruObject {
     * Before and after - GMode.pageDescription or GMode.textObject.
     */
    @property void lineJoin(HaruLineJoin join) {
-      auto st =  HPDF_Page_SetLineJoin(this._page, join);
-      writeln(st);
+      HPDF_Page_SetLineJoin(this._page, join);
    }
+
+   unittest {
+      import harud.doc;
+
+      Doc pdf = new Doc();
+      Page page = pdf.addPage();
+      writeln("lineJoin: ", page.lineJoin);
+      page.lineJoin = HaruLineJoin.roundJoin;
+      writeln("lineJoin: ", page.lineJoin);
+   }
+
 
    /**
     * Gets the current value of the page's miter limit.
@@ -328,6 +338,13 @@ class Page: IHaruObject {
     */
    @property float miterLimit() {
       return HPDF_Page_GetMiterLimit(this._page);
+   }
+
+   /**
+    * Sets the miter limit
+    */
+   @property void miterLimit(float miterLim) {
+      HPDF_Page_SetMiterLimit(this._page, miterLim);
    }
 
    /**
@@ -343,30 +360,65 @@ class Page: IHaruObject {
    /**
     * Sets the dash pattern for lines in the page.
     *
-    * Params:
-    * dashPattern = Pattern of dashes and gaps used to stroke paths.
-    * numElem = Number of elements in dashPattern. 0 <= num_param <= 8.
-    * phase = The phase in which the pattern begins (default is 0).
-    *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
+    *
+    * Params:
+    * dashPattern = Pattern of dashes and gaps used to stroke paths. It's a
+    * repeating sequence of dash length, gap length, dash length etc, which are
+    * cycled through when stroking the line.
+    * phase = Initial offset in which the pattern begins (default is 0).
     */
-   HPDF_STATUS setDash(ushort[] dashPattern, uint numElem, uint phase) 
+   HPDF_STATUS setDash(ushort[] dashPattern, uint phase) 
       in {
-         assert(numElem >= 0, "numElem should be not negative");
-         assert(numElem < 9, "numElem should be lesser than 9");
+         assert(dashPattern !is null);
+         assert(dashPattern.length < 9, "numElem should be lesser than 9");
       } body {
-         return HPDF_Page_SetDash(this._page, dashPattern.ptr, numElem, phase);
+         return HPDF_Page_SetDash(this._page
+               , dashPattern.ptr
+               , to!(uint)(dashPattern.length)
+               , phase);
       }
 
-   HPDF_STATUS setDashPtr(ushort* dashPattern, uint numElem, uint phase) 
-      in {
-         assert(numElem >= 0, "numElem should be not negative");
-         assert(numElem < 9, "numElem should be lesser than 9");
-      } body {
-         return HPDF_Page_SetDash(this._page, dashPattern, numElem, phase);
-      }
+   /**
+   * Sets the dash pattern to solid line
+   */
+   HPDF_STATUS setSolid() {
+      enum ushort[] NN = [0, 0, 0, 0, 0, 0, 0, 0];
+      return HPDF_Page_SetDash(this._page, NN.ptr, 0, 0);
+   }
 
+   /**
+   * Sets the dash pattern to dotted line
+   */
+   HPDF_STATUS setDotted() {
+      enum ushort[] DOTTED = [2];
+      return setDash(DOTTED, 0);
+   }
+
+   /**
+   * Sets the dash pattern to dash-dash-dot line
+   */
+   HPDF_STATUS setDashDashDot() {
+      enum ushort[] DASH_DASH_DOT = [2, 2, 2, 2, 8, 2];
+      return setDash(DASH_DASH_DOT, 0);
+   }
+
+   /**
+   * Sets the dash pattern to dash-dot line
+   */
+   HPDF_STATUS setDashDot() {
+      enum ushort[] DASH_DOT = [2, 2, 8, 2];
+      return setDash(DASH_DOT, 0);
+   }
+
+   /**
+   * Sets the dash pattern to dashed line
+   */
+   HPDF_STATUS setDashed() {
+      enum ushort[] DASHED = [4];
+      return setDash(DASHED, 0);
+   }
 
    /**
     * Gets the current value of the page's flatness.
@@ -394,7 +446,7 @@ class Page: IHaruObject {
     * Sets the character spacing for text.
     *
     * ## Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION or GMode.TEXT_OBJECT.
+    * Before and after - GMode.pageDescription or GMode.textObject.
     *
     * Params:
     * value = The character spacing (initial value is 0).
@@ -445,7 +497,7 @@ class Page: IHaruObject {
     * value = The value of horizontal scalling (scaling) (initially 100).
     *
     * ## Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION or GMode.TEXT_OBJECT.
+    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    @property void horizontalScalling(float value) {
       HPDF_Page_SetHorizontalScalling(this._page, value);
@@ -476,23 +528,39 @@ class Page: IHaruObject {
     * Gets the current value of the page's text rendering mode.
     *
     * Returns:
-    * when succeed, it returns the current value of the text rendering mode. Otherwise it returns 0.
+    * when succeed, it returns the current value of the text rendering mode. 
+    * Otherwise it returns 0.
     */
-   @property float getTextRenderingMode() {
+   @property HaruTextRenderingMode textRenderingMode() {
       return HPDF_Page_GetTextRenderingMode(this._page);
    }
 
    /**
     * Sets the text rendering mode. The initial value of text rendering mode is HPDF_FILL.
     *
-    * Params:
-    * mode = The text rendering mode (one of the following values)
-    *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
+    *
+    * Params:
+    * mode = The text rendering mode (one of the following values)
     */
-   HPDF_STATUS setTextRenderingMode(HaruTextRenderingMode mode) {
-      return HPDF_Page_SetTextRenderingMode(this._page, mode);
+   @property void textRenderingMode(HaruTextRenderingMode mode) {
+      HPDF_Page_SetTextRenderingMode(this._page, mode);
+   }
+
+   unittest {
+      import harud.doc;
+
+      Doc pdf = new Doc();
+      Page page = pdf.addPage();
+      writeln(page.textRenderingMode());
+      page.textRenderingMode = HaruTextRenderingMode.stroke;
+      writeln(page.textRenderingMode);
+      assert(page.textRenderingMode == HaruTextRenderingMode.stroke);
+      page.textRenderingMode = HaruTextRenderingMode.clipping;
+      assert(page.textRenderingMode == HaruTextRenderingMode.clipping);
+      writeln(page.textRenderingMode);
+
    }
 
    /**
@@ -520,7 +588,6 @@ class Page: IHaruObject {
       HPDF_Page_SetTextRise(this._page, value);
    }
 
-
    /**
     * Gets the current value of the page's filling color. 
 
@@ -539,7 +606,7 @@ class Page: IHaruObject {
     * Params:
     * r, g, b = The level of each color element. They must be between 0 and 1. (See "Colors")
     *
-    * Graphics Mode
+    * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
     */
    HPDF_STATUS setRGBFill(float r, float g, float b) {
@@ -563,9 +630,11 @@ class Page: IHaruObject {
     * Sets the stroking color.
     *
     * Params:
-    * r, g, b = The level of each color element. They must be between 0 and 1. (See "Colors")
+    * r = The level of red color element. They must be between 0 and 1. (See "Colors")
+    * g = The level of green color element. They must be between 0 and 1. (See "Colors")
+    * b = The level of blue color element. They must be between 0 and 1. (See "Colors")
     *
-    * Graphics Mode
+    * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
     */
    HPDF_STATUS setRGBStroke(float r, float g, float b) {
@@ -625,7 +694,6 @@ class Page: IHaruObject {
       HPDF_Page_SetGrayFill(this._page, gray);
    }
 
-
    /**
     * Gets the current value of the page's stroking color. 
     * 
@@ -646,12 +714,11 @@ class Page: IHaruObject {
     * value = The value of the gray level between 0 and 1.
     *
     * ## Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION or GMode.TEXT_OBJECT.
+    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    @property void grayStroke(float gray) {
       HPDF_Page_SetGrayStroke(this._page, gray);
    }
-
 
    /**
     * Gets the current value of the page's stroking color space.
@@ -667,7 +734,8 @@ class Page: IHaruObject {
     * Gets the current value of the page's stroking color space.
     *
     * Returns:
-    * when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space. Otherwise it returns HPDF_CS_EOF.
+    * when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space. 
+    * Otherwise it returns HPDF_CS_EOF.
     */
    ColorSpace getFillingColorSpace() {
       return HPDF_Page_GetFillingColorSpace(this._page);
@@ -687,7 +755,8 @@ class Page: IHaruObject {
     * Gets the number of the page's graphics state stack.
     *
     * Returns:
-    * when getGStateDepth() succeed, it returns the number of the page's graphics state stack. Otherwise it returns 0.
+    * when getGStateDepth() succeed, it returns the number of the page's graphics state stack. 
+    * Otherwise it returns 0.
     */
    uint getGStateDepth() {
       return HPDF_Page_GetGStateDepth(this._page);
@@ -728,7 +797,7 @@ class Page: IHaruObject {
    /**
     * Appends a circle arc to the current path.
     *
-    * Graphics Mode
+    * ## Graphics Mode
     * Before - GMode.pageDescription or GMode.pathObject.
     * After - GMode.pathObject.
     *
@@ -746,7 +815,7 @@ class Page: IHaruObject {
    /**
     * Begins a text object and sets the text position to (0, 0).
     *
-    * Graphics Mode
+    * ## Graphics Mode
     * Before - GMode.pageDescription.
     * After - GMode.textObject.
     */
@@ -761,9 +830,9 @@ class Page: IHaruObject {
     * x, y = The center point of the circle.
     * radius = The radius of the circle.
     *
-    * Graphics Mode
+    * ## Graphics Mode
     * Before - GMode.pageDescription or GMode.pathObject.
-    * After - GMode.PATH_OBJECT.
+    * After - GMode.pathObject.
     */
    HPDF_STATUS circle(float x, float y, float ray) {
       return HPDF_Page_Circle(this._page, x, y, ray);
@@ -797,8 +866,8 @@ class Page: IHaruObject {
    /**
     * Appends a straight line from the current point to the start point of sub path. The current point is moved to the start point of sub path
     *
-    * Graphics Mode
-    * Before and after - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pathObject.
     */
    HPDF_STATUS closePath() {
       return HPDF_Page_ClosePath(this._page);
@@ -807,27 +876,21 @@ class Page: IHaruObject {
    /**
     * Closes the current path. Then, it paints the path.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before - GMode.pathObject.<br />
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS closePathStroke() {
       return HPDF_Page_ClosePathStroke(this._page);
    }
 
-   /**
-     HPDF_STATUS ClosePathEoillStroke()
-     {
-     return HPDF_Page_ClosePathEoillStroke(this._page);
-     }
-    */
 
    /**
     * Closes the current path, fills the current path using the nonzero winding number rule, then paints the path.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before - GMode.pathObjec.
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS closePathFillStroke() {
       return HPDF_Page_ClosePathFillStroke(this._page);
@@ -849,8 +912,8 @@ class Page: IHaruObject {
     * Params:
     * x1, y1, x2, y2, x3, y3 = The control points for a Bézier curve.
     *
-    * Graphics Mode
-    * Before and after - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pathObject.
     */
    HPDF_STATUS curveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
       return HPDF_Page_CurveTo(this._page, x1, y1, x2, y2, x3, y3);
@@ -862,21 +925,23 @@ class Page: IHaruObject {
     * Params:
     * x2, y2, x3, y3 = Control points for Bézier curve, along with current point.
     *
-    * Graphics Mode
-    * Before and after - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pathObject.
     */
    HPDF_STATUS curveTo2(float x2, float y2, float x3, float y3) {
       return HPDF_Page_CurveTo2(this._page, x2, y2, x3, y3);
    }
 
    /**
-    * Appends a Bézier curve to the current path using two spesified points. The point (x1, y1) and the point (x3, y3) are used as the control points for a Bézier curve and current point is moved to the point (x3, y3)
+    * Appends a Bézier curve to the current path using two spesified points. 
+    *
+    * The point (x1, y1) and the point (x3, y3) are used as the control points for a Bézier curve and current point is moved to the point (x3, y3)
     *
     * Params:
     * x1, y1, x3, y3 = The control points for a Bézier curve.
     *
-    * Graphics Mode
-    * Before and after - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pathObject.
     */
    HPDF_STATUS curveTo3(float x1, float y1, float x3, float y3) {
       return HPDF_Page_CurveTo3(this._page, x1, y1, x3, y3);
@@ -891,8 +956,8 @@ class Page: IHaruObject {
     * width = The width of the region where image is displayed.
     * height = The width of the region where image is displayed.
     *
-    * Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before and after - GMode.pageDescription.
     */
    HPDF_STATUS drawImage(Image image, float x, float y, float width, float height) {
       return HPDF_Page_DrawImage(this._page, image.getHandle(), x, y, width, height);
@@ -905,8 +970,8 @@ class Page: IHaruObject {
     * x, y = The center point of the ellipse.
     * x_radius, y_radius = Horizontal and vertical radii of the ellipse.
     *
-    * Graphics Mode
-    * Before and after - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pathObject.
     */
    HPDF_STATUS ellipse(float x, float y, float xray, float yray) {
       return HPDF_Page_Ellipse(this._page, x, y, xray, yray);
@@ -915,9 +980,9 @@ class Page: IHaruObject {
    /**
     * Ends the path object without filling or painting.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before - GMode.pathObject.
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS endPath() {
       return HPDF_Page_EndPath(this._page);
@@ -926,9 +991,9 @@ class Page: IHaruObject {
    /**
     * Ends a text object.
     *
-    * Graphic Mode
-    * Before: GMode.TEXT_OBJECT.<br />
-    * After: GMode.PAGE_DESCRIPTION.
+    * ## Graphic Mode
+    * Before: GMode.textObject.
+    * After: GMode.pageDescription.
     */
    HPDF_STATUS endText() {
       return HPDF_Page_EndText(this._page);
@@ -941,9 +1006,9 @@ class Page: IHaruObject {
    /**
     * Fills the current path using the even-odd rule.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.<br />
+    * ## Graphics Mode
+    * Before - GMode.pathObject.
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS eofill() {
       return HPDF_Page_Eofill(this._page);
@@ -952,9 +1017,9 @@ class Page: IHaruObject {
    /**
     * Fills the current path using the even-odd rule, then paints the path.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.<br />
+    * ## Graphics Mode
+    * Before - GMode.pathObject
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS eofillStroke() {
       return HPDF_Page_EofillStroke(this._page);
@@ -963,9 +1028,9 @@ class Page: IHaruObject {
    /**
     * Fills the current path using the nonzero winding number rule.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.<br />
+    * ## Graphics Mode
+    * Before - GMode.pathObject.
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS fill() {
       return HPDF_Page_Fill(this._page);
@@ -974,9 +1039,9 @@ class Page: IHaruObject {
    /**
     * Fills the current path using the nonzero winding number rule, then paints the path.
     *
-    * Graphics Mode
-    * Before - GMode.PATH_OBJECT.<br />
-    * After - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before - GMode.pathObject.<br />
+    * After - GMode.pageDescription.
     */
    HPDF_STATUS fillStroke() {
       return HPDF_Page_FillStroke(this._page);
@@ -985,8 +1050,8 @@ class Page: IHaruObject {
    /**
     * Restore the graphics state which is saved by HPDF_Page_GSave().
     *
-    * Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before and after - GMode.pageDescription.
     */
    HPDF_STATUS gRestore() {
       return HPDF_Page_GRestore(this._page);
@@ -1014,8 +1079,8 @@ class Page: IHaruObject {
     * <li>Transformation Matrix</li>
     * <li>Word Spacing</li>
     *
-    * Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION.
+    * ## Graphics Mode
+    * Before and after - GMode.pageDescription.
     */
    HPDF_STATUS gSave() {
       return HPDF_Page_GSave(this._page);
@@ -1027,8 +1092,8 @@ class Page: IHaruObject {
     * Params:
     * x, y = The end point of the path
     *
-    * Graphics Mode
-    * Before and after - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pathObject.
     */
    HPDF_STATUS lineTo(float x, float y) {
       return HPDF_Page_LineTo(this._page, x, y);
@@ -1040,8 +1105,8 @@ class Page: IHaruObject {
     * Params:
     * x, y = The offset to new text position.
     *
-    * Graphics Mode
-    * Before and after - GMode.TEXT_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.textObject.
     */
    HPDF_STATUS moveTextPos(float x, float y, bool setLeading = false) {
       if (setLeading) {
@@ -1052,14 +1117,16 @@ class Page: IHaruObject {
    }
 
    /**
-    * Starts a new subpath and move the current point for drawing path, HPDF_Page_MoveTo() sets the start point for the path to the point (x, y).
+    * Starts a new subpath and move the current point for drawing path, 
+    * moveTo() sets the start point for the path to the point (x, y).
     *
     * Params:
-    * x, y = The start point for drawing path
+    * x = The x coordinate of start point for drawing path
+    * y = The y coordinate of start point for drawing path
     *
-    * Graphics Mode
-    * Before - GMode.PAGE_DESCRIPTION or GMode.PATH_OBJECT.
-    * After - GMode.PATH_OBJECT.
+    * ## Graphics Mode
+    * Before - GMode.pageDescription or GMode.pathObject.
+    * After - GMode.pathObject.
     */
    HPDF_STATUS moveTo(float x, float y) {
       return HPDF_Page_MoveTo(this._page, x, y);
@@ -1067,7 +1134,6 @@ class Page: IHaruObject {
 
    /**
     * Moves to the next line.
-    *
     */
    HPDF_STATUS moveToNextLine() {
       return HPDF_Page_MoveToNextLine(this._page);
@@ -1097,8 +1163,8 @@ class Page: IHaruObject {
     * Params:
     * c, m, y, k = The level of each color element. They must be between 0 and 1.
     *
-    * Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION or GMode.TEXT_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    HPDF_STATUS setCMYKFill(float c, float m, float y, float k) {
       return HPDF_Page_SetCMYKFill(this._page, c, m, y, k);
@@ -1110,12 +1176,13 @@ class Page: IHaruObject {
     * Params:
     * c, m, y, k = The level of each color element. They must be between 0 and 1.
     *
-    * Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION or GMode.TEXT_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    HPDF_STATUS setCMYKStroke(float c, float m, float y, float k) {
       return HPDF_Page_SetCMYKStroke(this._page, c, m, y, k);
    }
+
    /**
     * Applyies the graphics state to the page.
     *
@@ -1160,18 +1227,11 @@ class Page: IHaruObject {
     * Params:
     * line_width = The line width to use (default is 1).
     *
-    * Graphics Mode
-    * Before and after - GMode.PAGE_DESCRIPTION or GMode.TEXT_OBJECT.
+    * ## Graphics Mode
+    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    @property void lineWidth(float line_width) {
       HPDF_Page_SetLineWidth(this._page, line_width);
-   }
-
-   /**
-    * Sets the miter limit
-    */
-   HPDF_STATUS setMiterLimit(float miter_limit) {
-      return HPDF_Page_SetMiterLimit(this._page, miter_limit);
    }
 
    /**
@@ -1197,12 +1257,6 @@ class Page: IHaruObject {
     *
     */
    HPDF_STATUS showTextNextLine(string text, float word_space = 0.0, float char_space = 0.0) {
-      /**
-        if( word_space || char_space )
-        {
-        return HPDF_Page_ShowTextNextLineEx(this._page, word_space, char_space, text);
-        }
-       */
       return HPDF_Page_ShowTextNextLine(this._page, text.toStringz());
    }
 

@@ -32,25 +32,6 @@ void main() {
       page.lineWidth = 2.0;
       page.drawLine(60, 710, "line width = 2.0");
 
-      /* Line dash pattern */
-      page.lineWidth = 1.0;
-
-      enum ushort[] NN = [0];
-      enum ushort[] DASH_MODE1 = [3];
-      enum ushort[] DASH_MODE2 = [3, 7];
-      enum ushort[] DASH_MODE3 = [8, 7, 2, 7];
-
-      auto st = page.setDash(DASH_MODE1, 1, 1);
-      writeln("st: ", st);
-      
-      drawLine(page, 60, 680, "dash_ptn=[3], phase=1 -- 2 on, 3 off, 3 on...");
-
-      page.setDash(DASH_MODE2, 2, 2);
-      drawLine(page, 60, 650, "dash_ptn=[7, 3], phase=2 -- 5 on 3 off, 7 on,...");
-
-      page.setDash(DASH_MODE3, 4, 0);
-      drawLine(page, 60, 620, "dash_ptn=[8, 7, 2, 7], phase=0");
-      //fix page.setDash(NN, 4, 0);
 
       /* set big green line */
       page.lineWidth = 30;
@@ -69,12 +50,14 @@ void main() {
       page.lineWidth = 30;
       page.setRGBStroke(0.0, 0.5, 0.0);
 
+      /* Line dash pattern */
+         testLineDashPattern(page);
+
       /* Line Join Style */
       page.lineWidth = 30;
       page.setRGBStroke(0.0, 0.0, 0.5);
 
-      page.lineJoin = HaruLineJoin.bevelJoin;
-      //page.lineJoin = HaruLineJoin.miterJoin;
+      page.lineJoin = HaruLineJoin.miterJoin;
       page.drawHat(120, 300);
 
       page.beginText();
@@ -84,7 +67,7 @@ void main() {
 
       page.lineJoin = HaruLineJoin.roundJoin;
       writeln("LJ ", page.lineJoin);
-      
+
       page.drawHat(120, 195);
 
       page.beginText();
@@ -120,6 +103,27 @@ void main() {
    } catch (Exception exc) {
       writeln(exc);
    }
+}
+
+private void testLineDashPattern(Page page) {
+   /* Line dash pattern */
+   page.lineWidth = 1.0;
+
+   enum ushort[] NN = [0, 0, 0, 0, 0, 0, 0, 0];
+   enum ushort[] DASH_MODE1 = [3];
+   enum ushort[] DASH_MODE2 = [3, 7];
+   enum ushort[] DASH_MODE3 = [8, 7, 2, 7];
+
+   page.setDash(DASH_MODE1, 1);
+
+   drawLine(page, 60, 680, "dash_ptn=[3], phase=1 -- 2 on, 3 off, 3 on...");
+
+   page.setDash(DASH_MODE2,  2);
+   drawLine(page, 60, 650, "dash_ptn=[7, 3], phase=2 -- 5 on 3 off, 7 on,...");
+
+   page.setDash(DASH_MODE3, 0);
+   drawLine(page, 60, 620, "dash_ptn=[8, 7, 2, 7], phase=0");
+   page.setSolid();
 }
 
 void drawBorder(Page page) {
@@ -166,3 +170,4 @@ void drawRect(Page page, float x, float y, string label) {
    page.endText();
    page.rectangle(x, y - 40, 220, 25);
 }
+

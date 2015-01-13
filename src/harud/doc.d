@@ -13,7 +13,7 @@ import harud.outline;
 import harud.image;
 
 /**
-* Document object class
+*  PDF Document Class
 */
 class Doc: IHaruObject {
    protected HPDF_Doc _doc;

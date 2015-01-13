@@ -218,7 +218,7 @@ extern(C) {
 
    float HPDF_Page_GetTextLeading(HPDF_Page page);
 
-   float HPDF_Page_GetTextRenderingMode(HPDF_Page page);
+   HaruTextRenderingMode HPDF_Page_GetTextRenderingMode(HPDF_Page page);
 
    float HPDF_Page_GetTextRise(HPDF_Page page);
 

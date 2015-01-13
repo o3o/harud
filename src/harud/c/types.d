@@ -156,7 +156,6 @@ enum HaruLineJoin {
    miterJoin = 0,
    roundJoin,
    bevelJoin,
-   linejoinEof
 }
 
 /// The text rendering mode 
@@ -168,8 +167,7 @@ enum HaruTextRenderingMode {
    fillClipping,
    strokeClipping,
    fillStrokeClipping,
-   clipping,
-   renderingModeEof
+   clipping
 }
 
 enum HaruWritingMode {
