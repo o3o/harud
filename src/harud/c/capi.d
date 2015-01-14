@@ -504,7 +504,6 @@ extern(C) {
    /*
     * Annotation
     */
-
    HPDF_STATUS HPDF_LinkAnnot_SetHighlightMode(HPDF_Annotation annot,
          HaruAnnotHighlightMode mode);
 

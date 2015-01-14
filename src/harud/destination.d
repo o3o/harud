@@ -1,7 +1,9 @@
 module harud.destination;
 
 import harud.c;
-
+/**
+* Haru PDF Destination Class. 
+*/
 class Destination {
    private HPDF_Destination _destination;
 
@@ -26,15 +28,15 @@ class Destination {
    }
 
    /**
-   * Sets the appearance of the page to displaying entire page within the window
-   *
+   * Sets the appearance of the page to displadescriptionying entire page within the window
    */
    HPDF_STATUS setFit() {
       return HPDF_Destination_SetFit(this._destination);
    }
 
    /**
-   * Defines the appearance of a page to magnifying to fit the width of the page within the window and setting the top position of the page to the value of the "top" parameter.
+   * Defines the appearance of a page to magnifying to fit the width of the page within the window and setting 
+   * the top position of the page to the value of the "top" parameter.
    *
    * Params:
    *   top = The top coordinates of the page.
@@ -44,7 +46,9 @@ class Destination {
    }
 
    /**
-   * Defines the appearance of a page to magnifying to fit the height of the page within the window and setting the left position of the page to the value of the "left" parameter.
+   * Defines the appearance of a page to magnifying to fit the 
+   * height of the page within the window and setting the left 
+   * position of the page to the value of the "left" parameter.
    *
    * Params:
    *   left = The left coordinates of the page.
@@ -94,5 +98,4 @@ class Destination {
    HPDF_STATUS setFitBV(float left) {
       return HPDF_Destination_SetFitBV(this._destination, left);
    }
-
 }

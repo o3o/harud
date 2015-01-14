@@ -107,7 +107,7 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Checks if the document is valid
+    * Checks if the document is valid.
     *
     * Params:
     * document = The instance of Doc to check
@@ -121,7 +121,9 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Sets a user-defined error delegate. If a function call fails, the error delegate is called.
+    * Sets a user-defined error delegate. 
+    *
+    * If a function call fails, the error delegate is called.
     *
     * Params:
     * _dlg = The delegate to invoke
@@ -135,7 +137,7 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Returns the last error code of specified document object
+    * Returns the last error code.
     */
    HPDF_STATUS getError() {
       return HPDF_GetError(this._doc);
@@ -180,6 +182,7 @@ class Doc: IHaruObject {
    @property PageLayout pageLayout() {
       return HPDF_GetPageLayout(this._doc);
    }
+
    /**
     * Sets how the page should be displayed. 
     *
@@ -198,6 +201,16 @@ class Doc: IHaruObject {
    }
 
    /**
+    * Returns the current setting for page mode
+    *
+    * Returns:
+    * the current setting for page mode.
+    */
+   @property PageMode pageMode() {
+      return HPDF_GetPageMode(this._doc);
+   }
+
+   /**
     * Sets how the document should be displayed
     *
     * Params:
@@ -212,15 +225,6 @@ class Doc: IHaruObject {
       HPDF_SetPageMode(this._doc, mode);
    }
 
-   /**
-    * Returns the current setting for page mode
-    *
-    * Returns:
-    * the current setting for page mode.
-    */
-   @property PageMode pageMode() {
-      return HPDF_GetPageMode(this._doc);
-   }
 
    /**
     * Set the first page to appear when a document is opened.
@@ -704,14 +708,18 @@ class Doc: IHaruObject {
     * Params:
     * type = one of the following:
     *
-    * <li>HaruInfo.AUTHOR</li>
-    * <li>HaruInfo.CREATOR</li>
-    * <li>HaruInfo.TITLE</li>
-    * <li>HaruInfo.SUBJECT</li>
-    * <li>HaruInfo.KEYWORDS</li>
+    * $(UL
+    * $(LI HaruInfo.author)
+    * $(LI HaruInfo.creator)
+    * $(LI HaruInfo.title)
+    * $(LI HaruInfo.subject)
+    * $(LI HaruInfo.keywords)
+    * )
     *
     * Returns:
-    * when getInfoAttr() succeeds, it returns the string value of the info dictionary. If the infomation has not been set or an error has occurred, it returns null
+    * when succeeds, it returns the string value of the info dictionary. 
+    * If the infomation has not been set or an error has occurred, it returns
+    * null.
     */
    string getInfoAttr(HaruInfoType type) {
       return to!string(HPDF_GetInfoAttr(this._doc, type));
@@ -719,11 +727,14 @@ class Doc: IHaruObject {
 
    /**
     * Sets a datetime attribute in the info dictionary.
-    * pdf = the handle of a document object.
+    * 
+    * Params:
     * type = one of the following attributes:
     *
-    * <li>HaruInfo.CREATION_DATE</li>
-    * <li>HaruInfo.MOD_DATE</li>
+    * $(UL 
+    * $(LI HaruInfo.CREATION_DATE)
+    * $(LI HaruInfo.MOD_DATE)
+    * )
     *
     * value - The new value for the attribute.
     *
@@ -750,28 +761,22 @@ class Doc: IHaruObject {
     * Set the permission flags for the document
     *
     * Params:
-    * permission - One or more of the following, "ored" together:
+    * permission = One or more of the $(LINK2
+    * harud/c/types/HaruPermission.html, HaruPermission) "ored" together
     *
-    * <li>HPDF_ENABLE_READ = user can read the document</li>
-    * <li>HPDF_ENABLE_PRINT = user can print the document</li>
-    * <li>HPDF_ENABLE_EDIT = user can edit the contents of the document other than annotations, form fields</li>
-    * <li>HPDF_ENABLE_COPY = user can copy the text and the graphics of the document</li>
-    * <li>HPDF_ENABLE_EDIT_ALL = user can add or modify the annotations and form fields of the document</li>
     */
-   @property void permission(Permission permission) {
-      HPDF_SetPermission(this._doc, permission);
+   HPDF_STATUS setPermission(HaruPermission permission) {
+      return HPDF_SetPermission(this._doc, permission);
    }
 
    /**
     * Set the encryption mode. As the side effect, ups the version of PDF to 1.4 when the mode is set to HaruEncryptMode.R3
     *
     * Params:
-    * mode - One of the following:
-    *
-    * <li>HaruEncryptMode.R2 = Use "Revision 2" algorithm. "key_len" automatically set to 5 (40 bits).</li>
-    * <li>HaruEncryptMode.R3 = Use "Revision 3" algorithm. "key_len" can be 5 (40 bits) to 16 (128bits).</li>
-    *
-    * key_len = Specify the byte length of encryption key. Only valid for HaruEncryptMode.R3. Between 5 (40 bits) and 16 (128 bits) can be specified
+    * mode = One  of the $(LINK2
+    * harud/c/types/HaruEncryptMode.html, HaruEncryptMode) 
+    * keyLen = Specify the byte length of encryption key. 
+    * Only valid for HaruEncryptMode.R3. Between 5 (40 bits) and 16 (128 bits) can be specified
     *
     */
    HPDF_STATUS setEncryptionMode(HaruEncryptMode mode, uint keyLen) {
@@ -782,16 +787,10 @@ class Doc: IHaruObject {
     * Set the mode of compression.
     *
     * Params:
-    * mode - One or more of the following or'ed together:
-    *
-    * <li>CompressionMode.none - No compression.</li>
-    * <li>CompressionMode.text - Compress the contents stream of the page.</li>
-    * <li>CompressionMode.image - Compress the streams of the image objects.</li>
-    * <li>CompressionMode.metadata - Other stream datas (fonts, cmaps and so on) are compressed.</li>
-    * <li>CompressionMode.all - All stream datas are compressed (CompressionMode.text | CompressionMode.IMAGE | CompressionMode.METADATA).</li>
+    * mode = Compression mode $(LINK2 harud/c/types/CompressionMode.html, CompressionMode) 
     */
-   @property void compressionMode(CompressionMode mode) {
-      HPDF_SetCompressionMode(this._doc, mode);
+    HPDF_STATUS setCompressionMode(CompressionMode mode) {
+      return HPDF_SetCompressionMode(this._doc, mode);
    }
 
    HPDF_HANDLE getHandle() {
@@ -801,7 +800,6 @@ class Doc: IHaruObject {
 
 /**
 * Get version
-*
 */
 string getVersion() {
    return to!string(HPDF_GetVersion());

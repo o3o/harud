@@ -18,7 +18,6 @@ alias HPDF_ExtGState = HPDF_HANDLE;
 /* boolean type (0: False, !0: True) */
 alias HPDF_BOOL = int;
 
-
 /** errorNo type (32bit unsigned integer) */
 alias HPDF_STATUS = uint;
 
@@ -43,6 +42,9 @@ struct Rect {
 
 alias HaruBox = Rect;
 
+/**
+* Datetime attribute in the info dictionary. 
+*/
 struct HaruDate {
    int year;
    int month;
@@ -55,7 +57,9 @@ struct HaruDate {
    int offMinutes;
 }
 
-
+/**
+* Info dictionary types
+*/
 enum HaruInfoType {
    /** date-time type parameters */
    creationDate = 0,
@@ -82,8 +86,13 @@ enum PdfVer {
    eof
 }
 
+/**
+  Encrypt mode
+*/
 enum HaruEncryptMode {
+   /// Use "Revision 2" algorithm. "keyLen" automatically set to 5 (40 bits).
    R2 = 2,
+   /// Use "Revision 3" algorithm. "keyLen" can be 5 (40 bits) to 16 (128bits).
    R3 = 3
 }
 
@@ -91,7 +100,7 @@ struct TextWidth {
    uint numchars;
 
    /** don't use this value (it may be change in the feature).
-      use numspace as alternated. */
+     use numspace as alternated. */
    uint numwords;
 
    uint width;
@@ -184,11 +193,20 @@ enum PageLayout {
    eof
 }
 
+
+/**
+ * Compression mode
+ */
 enum CompressionMode: uint {
+   /// No compression.
    none = 0x0,
+   /// Compress the contents stream of the page.
    text = 0x01,
+   /// Compress the streams of the image objects.
    image = 0x02,
+   /// Other stream datas (fonts, cmaps and so on) are compressed.
    metadata = 0x04,
+   /// All stream datas are compressed
    all = 0x0F
 }
 
@@ -328,7 +346,6 @@ enum PageSizes {
    us4x8,
    us5x7,
    comm10,
-   eof
 }
 
 enum PageDirection {
@@ -359,8 +376,8 @@ enum HaruTextAlignment {
 
 /**
   Permission flags (only Revision 2 is supported)
-*/
-enum Permission: uint {
+ */
+enum HaruPermission: uint {
    ///  user can read the document
    read = 0, 
    /// user can print the document
@@ -374,8 +391,8 @@ enum Permission: uint {
 }
 
 /**
-* Graphics mode
-*/
+ * Graphics mode
+ */
 enum GMode: ushort {
    unknown = 0,
    pageDescription = 0x0001,

@@ -1,10 +1,11 @@
 module harud.annotation;
 
 import harud.haruobject;
-//fix import harud.doc;
 import harud.c;
-//FIXimport harud.c.types;
 
+/**
+* Haru PDF Annotation Class.
+*/
 class Annotation: IHaruObject {
    protected HPDF_Annotation _annotation;
 
@@ -27,11 +28,11 @@ class Annotation: IHaruObject {
    *
    * Params:
    *   width = The width of an annotation's border.
-   *   dash_on = The dash style.
-   *   dash_off = The dash style
+   *   dashOn = The dash style.
+   *   dashOff = The dash style
    */
-   HPDF_STATUS setBorderStyle(float width, ushort dash_on, ushort dash_off) {
-      return HPDF_LinkAnnot_SetBorderStyle(this._annotation, width, dash_on, dash_off);
+   HPDF_STATUS setBorderStyle(float width, ushort dashOn, ushort dashOff) {
+      return HPDF_LinkAnnot_SetBorderStyle(this._annotation, width, dashOn, dashOff);
    }
 
    /**
