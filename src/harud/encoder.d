@@ -1,10 +1,11 @@
 module harud.encoder;
 
-import harud.haruobject;
-//fix import harud.doc;
+import harud;
 import harud.c;
-//FIXimport harud.c.types;
 
+/**
+  Encoder class
+  */
 class Encoder: IHaruObject {
    protected HPDF_Encoder _encoder;
 
@@ -15,7 +16,7 @@ class Encoder: IHaruObject {
    /**
    * Gets the type of an encoding object.
    *
-   * Return:
+   * Returns:
    *   a Encoder value
    */
    HaruEncoderType getType() {
@@ -25,8 +26,8 @@ class Encoder: IHaruObject {
    /**
    * Get the type of byte in the text at position index.
    *
-   * Return:
-   *    a HaruEncoderType value
+   * Returns:
+   *    a $(LINK2 harud/c/types/HaruByteType.html, HaruByteType) value
    */
    HaruByteType getByteType(char[] text, uint index) {
       return HPDF_Encoder_GetByteType(this._encoder, cast(char*) text, index);
@@ -38,24 +39,25 @@ class Encoder: IHaruObject {
    * Params:
    *   code = A character code to convert.
    *
-   * Return:
+   * Returns:
    *   the converted character to unicode
    */
    HPDF_UNICODE getUnicode(ushort code) {
       return HPDF_Encoder_GetUnicode(this._encoder, code);
    }
+   unittest {
+      
+   }
 
    /**
    * Gets the writing mode for the encoding object.
    *
-   * Return:
-   *   a HaruWritingMode value
+   * Returns:
+   *    a $(LINK2 harud/c/types/HaruWritingMode.html, HaruWritingMode) value
    */
    HaruWritingMode getWritingMode() {
       return HPDF_Encoder_GetWritingMode(this._encoder);
    }
-
-
 
    public HPDF_HANDLE getHandle() {
       return _encoder;

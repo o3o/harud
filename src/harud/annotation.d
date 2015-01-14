@@ -1,7 +1,7 @@
 module harud.annotation;
 
-import harud.haruobject;
-import harud.c;
+import harud;
+import harud.c.capi;
 
 /**
 * Haru PDF Annotation Class.

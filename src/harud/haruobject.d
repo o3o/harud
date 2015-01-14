@@ -1,6 +1,6 @@
 module harud.haruobject;
 
-import harud.c;
+import harud;
 
 interface IHaruObject {
    protected HPDF_HANDLE getHandle();

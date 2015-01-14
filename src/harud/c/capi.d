@@ -1,6 +1,6 @@
 module harud.c.capi;
 
-import harud.c.types;
+import harud.types;
 import harud.c.consts;
 
 extern(C) {
@@ -327,6 +327,10 @@ extern(C) {
    HPDF_STATUS HPDF_Page_EofillStroke(HPDF_Page page);
 
    HPDF_STATUS HPDF_Page_ExecuteXObject(HPDF_Page page, HPDF_XObject obj);
+
+   HPDF_XObject HPDF_Page_CreateXObjectFromImage(HPDF_Doc pdf, HPDF_Page page,
+         Rect rect, HPDF_Image image, HPDF_BOOL zoom);
+
 
    HPDF_STATUS HPDF_Page_Fill(HPDF_Page page);
 

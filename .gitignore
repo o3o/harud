@@ -8,3 +8,5 @@ examples/error_handling/err
 examples/font/font
 examples/grid_sheet/grid_sheet
 examples/dash/dash
+examples/image/image
+examples/line/line

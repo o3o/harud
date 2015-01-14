@@ -3,22 +3,25 @@ module harud.font;
 import std.conv;
 import std.string;
 
-import harud.haruobject;
-import harud.c;
+import harud;
+import harud.c.capi;
+import harud.c.consts;
 
+/**
+  Font class
+*/
 class Font: IHaruObject {
    protected HPDF_Font _font;
 
    this(HPDF_Font font) {
       _font =  font;
-      //   HPDF_Page_SetFontAndSize(this.page, document.fuente, 20.0);
    }
 
    /**
    * Gets the name of the font.
    *
    *
-   * Return:
+   * Returns:
    *   the font name on success. Otherwise, returns null.
    */
    @property string fontName() {
@@ -28,7 +31,7 @@ class Font: IHaruObject {
    /**
    * Gets the encoding name of the font.
    *
-   * Return:
+   * Returns:
    *   the encoding name of the font on success. Otherwise, returns null.
    */
    @property string encodingName() {
@@ -46,7 +49,7 @@ class Font: IHaruObject {
    * Params:
    *   code = A Unicode character.
    *
-   * Return:
+   * Returns:
    *   the character width on success. Otherwise, returns null.
    */
    int getUnicodeWidth(HPDF_UNICODE code) {
@@ -56,7 +59,7 @@ class Font: IHaruObject {
    /**
    * Gets the bounding box of the font.
    *
-   * Return:
+   * Returns:
    *   On success, returns HaruBox struct specifying the font bounding box.<br />
    *   Otherwise, returns a HaruBox struct of {0, 0, 0, 0}.
    */
@@ -67,7 +70,7 @@ class Font: IHaruObject {
    /**
    * Gets the vertical ascent of the font.
    *
-   * Return:
+   * Returns:
    *   the font vertical ascent on success. Otherwise, returns 0.
    */
    @property int ascent() {
@@ -77,7 +80,7 @@ class Font: IHaruObject {
    /**
    * Gets the vertical descent of the font.
    *
-   * Return:
+   * Returns:
    *   the font vertical descent on success. Otherwise, returns 0.
    */
    @property int descent() {
@@ -87,7 +90,7 @@ class Font: IHaruObject {
    /**
    * Gets the distance from the baseline of lowercase letters.
    *
-   * Return:
+   * Returns:
    *   the font x-height value on success. Otherwise, returns 0.
    */
    @property uint xHeight() {
@@ -97,7 +100,7 @@ class Font: IHaruObject {
    /**
    * Gets the distance from the baseline of uppercase letters.
    *
-   * Return:
+   * Returns:
    *   the font cap height on success. Otherwise, returns 0.
    */
    @property uint capHeight() {
@@ -111,7 +114,7 @@ class Font: IHaruObject {
    *   text = The text to get width.
    *   len = The byte length of the text.
    *
-   * Return:
+   * Returns:
    *   On success, returns a TextWidth struct including calculation result.<br />
    *   Otherwise, returns TextWidth struct whose attributes are all 0.
    */
@@ -132,7 +135,7 @@ class Font: IHaruObject {
    * wordwrap = Suppose there are three words: "ABCDE", "FGH", and "IJKL". Also, suppose the substring until "J" can be included within the width (12 bytes). If word_wrap is HPDF_FALSE the function returns 12. If word_wrap parameter is HPDF_TRUE, it returns 10 (the end of the previous word).
    * real_width = If not NULL, parameter is set to the real width of the text. If NULL, parameter is ignored.
    *
-   * Return:
+   * Returns:
    *   On success, returns byte length which can be included within specified width. Otherwise, returns 0.
    */
    uint measureText(string text,

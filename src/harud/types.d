@@ -1,4 +1,4 @@
-module harud.c.types;
+module harud.types;
 
 alias HPDF_HANDLE = void*; 
 alias HPDF_Doc = HPDF_HANDLE; 
@@ -27,9 +27,11 @@ alias HPDF_CID = ushort;
 alias HPDF_UNICODE = ushort;
 
 
-/** HPDF_Point struct */
+/** Point struct */
 struct Point {
+   /// x coordinate
    float x;
+   /// y coordinate
    float y;
 }
 
@@ -43,8 +45,8 @@ struct Rect {
 alias HaruBox = Rect;
 
 /**
-* Datetime attribute in the info dictionary. 
-*/
+ * Datetime attribute in the info dictionary. 
+ */
 struct HaruDate {
    int year;
    int month;
@@ -58,8 +60,8 @@ struct HaruDate {
 }
 
 /**
-* Info dictionary types
-*/
+ * Info dictionary types
+ */
 enum HaruInfoType {
    /** date-time type parameters */
    creationDate = 0,
@@ -71,10 +73,8 @@ enum HaruInfoType {
    producer,
    title,
    subject,
-   keywords,
-   eof
+   keywords
 }
-
 
 enum PdfVer {
    V12 = 0,
@@ -82,13 +82,12 @@ enum PdfVer {
    V14,
    V15,
    V16,
-   V17,
-   eof
+   V17
 }
 
 /**
   Encrypt mode
-*/
+ */
 enum HaruEncryptMode {
    /// Use "Revision 2" algorithm. "keyLen" automatically set to 5 (40 bits).
    R2 = 2,
@@ -107,7 +106,6 @@ struct TextWidth {
    uint numspace;
 }
 
-
 struct DashMode {
    ushort ptn[8];
    uint numPtn;
@@ -124,32 +122,73 @@ struct TransMatrix {
    float y;
 }
 
+/** 
+  The color space of the image.
+ */
 enum ColorSpace {
+   /**
+     8 bit gray scale image.$(BR)
+     The gray scale describes each pixel with one byte. $(BR)
+     For each byte, 0X00 is maximum dark, 0XFF maximum light. The size of the
+     image data is (width * height) bytes.$(BR)
+     The sequence of bytes for an 8-pixel 8-bit image with 2 rows and 4 columns would be:
+     -----
+     1   2   3   4
+     5   6   7   8
+     ----
+    */
    deviceGray = 0,
-   deviceRgb,
-   deviceCmyk,
+
+   /** 
+     The RGB color model is an additive color model in which red, green, and
+     blue light are added together in various ways to reproduce a broad array
+     of colors. $(BR)
+     The 24 bit RGB color image describes each pixel with three bytes (Red,
+     Green, Blue). $(BR)
+     For each byte, 0X00 is maximum dark, 0XFF maximum light. The size of the image data is (width * height * 3) bytes.
+     The sequence of bytes for an 8-pixel 24-bit image with 2 rows and 4 columns would be:
+     ---
+     1R 1G 1B  2R 2G 2B  3R 3G 3B  4R 4G 4B  
+     5R 5G 5B  6R 6G 6B  7R 7G 7B  8R 8G 8B  
+     ---
+    */
+   deviceRGB,
+   /**
+     The CMYK color model (process color, four color) is a subtractive color
+     model, used in color printing, and is also used to describe the printing
+     process itself. $(BR)
+     The 32 bit CMYK color image describes each pixel with four bytes (Cyan,
+     Magenta, Yellow, Black). $(BR)
+     The size of the image data is (width * height * 4) bytes. For each byte,
+     0X00 is maximum dark, 0XFF maximum light.$(BR)
+     The sequence of bytes for an 8-pixel 32-bit image with 2 rows and 4 columns would be:
+     ---
+     1C 1M 1Y 1K  2C 2M 2Y 2K  3C 3M 3Y 3K  4C 4M 4Y 4K
+     5C 5M 5Y 5K  6C 6M 6Y 6K  7C 7M 7Y 7K  8C 8M 8Y 8K
+     ---  
+    */
+   deviceCMYK,
    calGray,
-   calRgb,
+   calRGB,
    lab,
    iccBased,
    separation,
    deviceN,
    indexed,
-   pattern,
-   eof
+   pattern
 }
 
 struct HaruRGBColor {
-   float r;
-   float g;
-   float b;
+   float red;
+   float green;
+   float blue;
 }
 
 struct HaruCMYKColor {
-   float c;
-   float m;
-   float y;
-   float k;
+   float cyan;
+   float magenta;
+   float yellow;
+   float key;
 }
 
 /// The line cap style
@@ -179,20 +218,25 @@ enum HaruTextRenderingMode {
    clipping
 }
 
+/// Writing mode
 enum HaruWritingMode {
    horizontal = 0,
    vertical,
-   eof
 }
 
+/**
+  The page layout enum
+ */
 enum PageLayout {
+   /// Only one page is displayed.
    single = 0,
+   /// Display the pages in one column.)
    oneColumn,
+   /// Display in two columns. Odd page number is displayed left)
    twoColumnLeft,
+   /// Display in two columns. Odd page number is displayed right)
    twoColumnRight,
-   eof
 }
-
 
 /**
  * Compression mode
@@ -210,12 +254,18 @@ enum CompressionMode: uint {
    all = 0x0F
 }
 
+/**
+  PageMode enum
+ */
 enum PageMode: uint {
+   /// Display the document with neither outline nor thumbnail.
    useNone = 0,
+   /// Display the document with outline pane.
    useOutline,
+   /// Display the document with thumbnail pane.
    useThumbs,
-   fullScreen,
-   modeEof
+   /// Display the document with full screen mode.
+   fullScreen
 }
 
 enum PageNumStyle {
@@ -281,8 +331,7 @@ enum HaruAnnotIcon {
    help,
    newParagraph,
    paragraph,
-   insert,
-   eof
+   insert
 }
 
 // border stype 
@@ -307,8 +356,7 @@ enum HaruBlendMode {
    hardLight,
    softLight,
    difference,
-   exclushon,
-   eof
+   exclushon
 }
 
 /// slide show 
@@ -329,8 +377,7 @@ enum HaruTransitionStyle {
    glitterRight,
    glitterDown,
    glittertoplefttobottomright,
-   replace,
-   eof
+   replace
 }
 
 enum PageSizes {
@@ -345,7 +392,7 @@ enum PageSizes {
    us4x6,
    us4x8,
    us5x7,
-   comm10,
+   comm10
 }
 
 enum PageDirection {
@@ -360,6 +407,9 @@ enum HaruEncoderType {
    unknown
 }
 
+/**
+  Byte type enum
+ */
 enum HaruByteType {
    single = 0,
    lead,

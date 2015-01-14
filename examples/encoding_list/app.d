@@ -14,7 +14,7 @@ enum int CELL_HEADER = 10;
 
 void main() {
    Doc pdf = new Doc();
-   pdf.compressionMode = CompressionMode.all;
+   pdf.setCompressionMode(CompressionMode.all);
    pdf.pageMode = PageMode.useOutline;
 
    Font helvetica = pdf.getFont("Helvetica"); 
@@ -53,8 +53,8 @@ void main() {
       Page page = pdf.addPage(); /// Add a new page to the document
       page.width = PAGE_WIDTH;
       page.height = PAGE_HEIGHT;
+
       Outline outline = pdf.createOutline(enc, root);
-      Font font2;
 
       Destination dest = page.createDestination();
       dest.setXYZ(0, page.height, 1);
@@ -69,6 +69,7 @@ void main() {
       page.showText(" Encoding");
       page.endText();
 
+      Font font2;
       if (enc == "Symbol-Set") {
          font2 = pdf.getFont("Symbol");
       } else if (enc == "ZapfDingbats-Set") {

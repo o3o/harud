@@ -129,7 +129,6 @@ enum uint INVALID_ICC_COMPONENT_NUM = 0x1085;
 * Returns a error description from error code
 *
 * Params:  errorNo = error number
-*			 
 *
 * Returns: Error description value
 */

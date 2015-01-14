@@ -12,6 +12,7 @@ import harud.annotation;
 import harud.font;
 import harud.image;
 import harud.encoder;
+import harud.types;
 
 /**
  * The Page class
@@ -27,7 +28,7 @@ class Page: IHaruObject {
     * Gets the width of a page.
     *
     * Returns:
-    * when getWidth() succeed, it returns the width of a page. Otherwise it returns 0.
+    * When succeed, it returns the width of a page. Otherwise it returns 0.
     */
    @property float width() {
       return HPDF_Page_GetWidth(this._page);
@@ -171,11 +172,11 @@ class Page: IHaruObject {
     * text = the text to get width.
     *
     * Returns:
-    * when textWidth() succeed, it returns the width of the text in current fontsize, 
+    * When  succeed, it returns the width of the text in current fontsize, 
     * character spacing and word spacing. 
     * Otherwise it returns ZERO and error-handler is called.
     */
-   float textWidth(string text) {
+   float getTextWidth(string text) {
       return HPDF_Page_TextWidth(this._page, text.toStringz());
    }
 
@@ -189,7 +190,7 @@ class Page: IHaruObject {
     * if word_wrap parameter is false it returns 12, and if word_wrap parameter is true, it returns 10 (the end of the previous word).
     * real_width = If this parameter is not null, the real widths of the text is set. An application can set it to null, if it is unnecessary.
     *
-    * Return:
+    * Returns:
     * When succeed it returns the byte length which can be included within the specified width in current fontsize, character spacing and word spacing. 
     * Otherwise it returns ZERO and error-handler is called.
     */
@@ -423,7 +424,7 @@ class Page: IHaruObject {
    /**
     * Gets the current value of the page's flatness.
     *
-    * Return:
+    * Returns:
     * when  succeed, it returns the current value of the page's miter limit. 
     * Otherwise it returns HPDF_DEF_FLATNESS.
     */
@@ -1025,6 +1026,10 @@ class Page: IHaruObject {
       return HPDF_Page_EofillStroke(this._page);
    }
 
+   HPDF_STATUS executeXObject(Image image) {
+      return HPDF_Page_ExecuteXObject(this._page, image.getHandle());
+   }
+
    /**
     * Fills the current path using the nonzero winding number rule.
     *
@@ -1053,12 +1058,13 @@ class Page: IHaruObject {
     * ## Graphics Mode
     * Before and after - GMode.pageDescription.
     */
-   HPDF_STATUS gRestore() {
+   HPDF_STATUS graphicRestore() {
       return HPDF_Page_GRestore(this._page);
    }
 
    /**
-    * Saves the page's current graphics parameter to the stack. An application can invoke gSave() up to 28 (???) and can restore the saved parameter by invoking gRestore().
+    * Saves the page's current graphics parameter to the stack. 
+    * An application can invoke gSave() up to 28 (???) and can restore the saved parameter by invoking gRestore().
     *
     * The parameters that are saved by gSave() are:
     * <li>Character Spacing</li>
@@ -1082,7 +1088,7 @@ class Page: IHaruObject {
     * ## Graphics Mode
     * Before and after - GMode.pageDescription.
     */
-   HPDF_STATUS gSave() {
+   HPDF_STATUS graphicSave() {
       return HPDF_Page_GSave(this._page);
    }
 

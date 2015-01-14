@@ -1,6 +1,9 @@
 module harud.destination;
 
-import harud.c;
+import harud;
+import harud.c.capi;
+
+
 /**
 * Haru PDF Destination Class. 
 */
