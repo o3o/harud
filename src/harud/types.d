@@ -107,7 +107,7 @@ struct TextWidth {
 }
 
 struct DashMode {
-   ushort ptn[8];
+   ushort[8] ptn;
    uint numPtn;
    uint phase;
 }
