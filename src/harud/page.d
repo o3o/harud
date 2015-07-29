@@ -15,7 +15,11 @@ import harud.encoder;
 import harud.types;
 
 /**
- * The Page class
+ * The Page class.
+ * 
+ * The Page class is used to manipulate an individual page. 
+ * To create new pages use $(LINK2 harud/doc/Doc.addPage.html, `addPage()`) or
+ * $(LINK2 harud/doc/Doc.insertPage.html, `insertPage()`) methods of $(LINK2 harud/doc/Doc.html, Doc)  class
  */
 class Page: IHaruObject {
    protected HPDF_Page _page;
@@ -1281,8 +1285,11 @@ class Page: IHaruObject {
     * Prints the text on the specified position.
     *
     * Params:
-    * xpos, ypos = The point position where the text is displayed.
+    * xpos = The x position where the text is displayed.
+    * ypos = The y position where the text is displayed.
     * text = The text to show.
+    * Returns:
+    * Zero when succeed, otherwise it returns error code.
     *
     * ## Graphics Mode
     * Before and after - GMode.textObject.
