@@ -4,10 +4,11 @@ import harud.haruobject;
 import harud.destination;
 import harud.c;
 import harud.types;
+
 /**
 * Outline class
 */
-class Outline: IHaruObject {
+class Outline : IHaruObject {
    private HPDF_Outline _outline;
 
    this(HPDF_Outline outline) {

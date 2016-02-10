@@ -6,11 +6,11 @@ import harud.c;
 /**
   Encoder class
   */
-class Encoder: IHaruObject {
+class Encoder : IHaruObject {
    protected HPDF_Encoder _encoder;
 
    this(HPDF_Encoder encoder) {
-      _encoder =  encoder;
+      _encoder = encoder;
    }
 
    /**
@@ -45,8 +45,9 @@ class Encoder: IHaruObject {
    HPDF_UNICODE getUnicode(ushort code) {
       return HPDF_Encoder_GetUnicode(this._encoder, code);
    }
+
    unittest {
-      
+
    }
 
    /**

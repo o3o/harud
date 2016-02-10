@@ -21,7 +21,7 @@ import harud.types;
  * To create new pages use $(LINK2 harud/doc/Doc.addPage.html, `addPage()`) or
  * $(LINK2 harud/doc/Doc.insertPage.html, `insertPage()`) methods of $(LINK2 harud/doc/Doc.html, Doc)  class
  */
-class Page: IHaruObject {
+class Page : IHaruObject {
    protected HPDF_Page _page;
 
    this(HPDF_Page page) {
@@ -134,7 +134,8 @@ class Page: IHaruObject {
          _encoder = encoder.getHandle();
       }
 
-      HPDF_Annotation annotation = HPDF_Page_CreateTextAnnot(this._page, rect, text.toStringz(), _encoder);
+      HPDF_Annotation annotation = HPDF_Page_CreateTextAnnot(this._page, rect,
+         text.toStringz(), _encoder);
       return new Annotation(annotation);
    }
 
@@ -150,7 +151,7 @@ class Page: IHaruObject {
     */
    Annotation createLinkAnnot(Rect rect, Destination dst) {
       HPDF_Annotation annotation = HPDF_Page_CreateLinkAnnot(this._page, rect,
-            dst.destinationHandle);
+         dst.destinationHandle);
       return new Annotation(annotation);
    }
 
@@ -199,7 +200,8 @@ class Page: IHaruObject {
     * Otherwise it returns ZERO and error-handler is called.
     */
    uint measureText(string text, float width, bool wordwrap, float* real_width) {
-      return HPDF_Page_MeasureText(this._page, text.toStringz(), width, cast(uint) wordwrap, real_width);
+      return HPDF_Page_MeasureText(this._page, text.toStringz(), width,
+         cast(uint) wordwrap, real_width);
    }
 
    /**
@@ -298,7 +300,6 @@ class Page: IHaruObject {
       HPDF_Page_SetLineCap(this._page, lineCap);
    }
 
-
    /**
     * Gets the current line join style of the page.
     *
@@ -332,7 +333,6 @@ class Page: IHaruObject {
       page.lineJoin = HaruLineJoin.roundJoin;
       writeln("lineJoin: ", page.lineJoin);
    }
-
 
    /**
     * Gets the current value of the page's miter limit.
@@ -374,16 +374,15 @@ class Page: IHaruObject {
     * cycled through when stroking the line.
     * phase = Initial offset in which the pattern begins (default is 0).
     */
-   HPDF_STATUS setDash(ushort[] dashPattern, uint phase) 
-      in {
-         assert(dashPattern !is null);
-         assert(dashPattern.length < 9, "numElem should be lesser than 9");
-      } body {
-         return HPDF_Page_SetDash(this._page
-               , dashPattern.ptr
-               , to!(uint)(dashPattern.length)
-               , phase);
-      }
+   HPDF_STATUS setDash(ushort[] dashPattern, uint phase)
+   in {
+      assert(dashPattern !is null);
+      assert(dashPattern.length < 9, "numElem should be lesser than 9");
+   }
+   body {
+      return HPDF_Page_SetDash(this._page, dashPattern.ptr, to!(uint)(dashPattern.length),
+         phase);
+   }
 
    /**
    * Sets the dash pattern to solid line
@@ -646,7 +645,6 @@ class Page: IHaruObject {
       return HPDF_Page_SetRGBStroke(this._page, r, g, b);
    }
 
-
    /**
     * Gets the current value of the page's filling color. 
     * 
@@ -888,7 +886,6 @@ class Page: IHaruObject {
    HPDF_STATUS closePathStroke() {
       return HPDF_Page_ClosePathStroke(this._page);
    }
-
 
    /**
     * Closes the current path, fills the current path using the nonzero winding number rule, then paints the path.
@@ -1311,8 +1308,10 @@ class Page: IHaruObject {
     * ## Graphics Mode
     * Before and after - GMode.textObject.
     */
-   HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment align_, uint* len) {
-      return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), align_, len);
+   HPDF_STATUS textRect(float left, float top, float right, float bottom,
+      string text, HaruTextAlignment align_, uint* len) {
+      return HPDF_Page_TextRect(this._page, left, top, right, bottom,
+         text.toStringz(), align_, len);
    }
 
    HPDF_HANDLE getHandle() {

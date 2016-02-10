@@ -8,9 +8,9 @@ import harud.c.capi;
 import harud.c.consts;
 
 /**
-*  PDF Document Class
-*/
-class Doc: IHaruObject {
+ *  PDF Document Class
+ */
+class Doc : IHaruObject {
    protected HPDF_Doc _doc;
    protected void delegate(HPDF_STATUS, HPDF_STATUS) dlg;
    public HPDF_Font fuente;
@@ -20,7 +20,9 @@ class Doc: IHaruObject {
     * Returns: the new Doc instance
     */
    this() {
-      void delegate(uint, uint) stdErrorHandler = delegate void(uint e, uint d) { throw new HarudException(e); };
+      void delegate(uint, uint) stdErrorHandler = delegate void(uint e, uint d) {
+         throw new HarudException(e);
+      };
       this(stdErrorHandler);
    }
 
@@ -28,7 +30,7 @@ class Doc: IHaruObject {
     * Creates a new Doc instance with a delegate which is invoked when an
     * error occurred.
     *
-    * The delegate must be in the form of 
+    * The delegate must be in the form of
     * ---
     * void error_callback(uint error_no, uint detail_no)
     * ---
@@ -53,10 +55,10 @@ class Doc: IHaruObject {
       this._doc = HPDF_New(&errorHandler, cast(void*) this);
    }
 
-   extern(C) static void errorHandler(HPDF_STATUS error_no, HPDF_STATUS detail_no, Doc doc) {
+   extern (C) static void errorHandler(HPDF_STATUS error_no, HPDF_STATUS detail_no,
+      Doc doc) {
       doc.dlg(error_no, detail_no);
    }
-
 
    /**
     * Creates a new page and adds it after the last page of a document.
@@ -84,15 +86,8 @@ class Doc: IHaruObject {
     * first_page = the first page number to use
     * prefix - the prefix for the page label. (null is allowed.)
     */
-   HPDF_STATUS addPageLabel(uint page_num,
-         PageNumStyle style,
-         uint first_page,
-         string prefix = null) {
-      return HPDF_AddPageLabel(this._doc
-            , page_num
-            , style
-            , first_page
-            , prefix.toStringz());
+   HPDF_STATUS addPageLabel(uint page_num, PageNumStyle style, uint first_page, string prefix = null) {
+      return HPDF_AddPageLabel(this._doc, page_num, style, first_page, prefix.toStringz());
    }
 
    /**
@@ -107,15 +102,14 @@ class Doc: IHaruObject {
     * when createOutline() succeeds, it returns a instance of HaruOutline object. Otherwise, it returns null and error-handler is invoked.
     */
    Outline createOutline(string title, Outline parent = null, Encoder encoder = null) {
-      HPDF_Outline outline = HPDF_CreateOutline(this._doc
-            , parent is null ? null : parent.getHandle()
-            , title.toStringz()
-            , encoder is null ? null : encoder.getHandle());
+      HPDF_Outline outline = HPDF_CreateOutline(this._doc,
+         parent is null ? null : parent.getHandle(), title.toStringz(),
+         encoder is null ? null : encoder.getHandle());
       return new Outline(outline);
    }
 
    /**
-    * Gets the handle of the current encoder of the document object. 
+    * Gets the handle of the current encoder of the document object.
     *
     * The current encoder is set by invoking currentEncoder setter and it is used to processing a text when an application invokes setInfoAttr().
     * The default value of it is null.
@@ -137,7 +131,6 @@ class Doc: IHaruObject {
    HPDF_STATUS setCurrentEncoderByName(string encodingName) {
       return HPDF_SetCurrentEncoder(this._doc, encodingName.toStringz());
    }
-
 
    /**
     * Returns current page object.
@@ -171,8 +164,8 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Once an error code is set, IO processing functions cannot be invoked. 
-    * 
+    * Once an error code is set, IO processing functions cannot be invoked.
+    *
     * In the case of executing a function after the cause of the error is fixed, an application have to invoke resetError() to clear error-code before executing functions
     */
    void resetError() {
@@ -180,7 +173,7 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Sets a user-defined error delegate. 
+    * Sets a user-defined error delegate.
     *
     * If a function call fails, the error delegate is called.
     *
@@ -195,7 +188,6 @@ class Doc: IHaruObject {
       return HPDF_SetErrorHandler(this._doc, &errorHandler);
    }
 
-
    /**
     * Gets a Font instance of the requested font
     *
@@ -203,15 +195,16 @@ class Doc: IHaruObject {
     * fontName = a valid font name
     *
     * Returns:
-    * when getFont() succeeds, it returns the instance of a Font object. 
+    * when getFont() succeeds, it returns the instance of a Font object.
     * Otherwise, it returns null and error-handler is called.
     */
-   Font getFont(string fontName) 
-      in {
-         assert(fontName.length > 0);
-      } body {
-         return new Font(HPDF_GetFont(this._doc, fontName.toStringz(), null));
-      }
+   Font getFont(string fontName)
+   in {
+      assert(fontName.length > 0);
+   }
+   body {
+      return new Font(HPDF_GetFont(this._doc, fontName.toStringz(), null));
+   }
 
    /**
     * Gets a Font instance of the requested font
@@ -221,16 +214,17 @@ class Doc: IHaruObject {
     * encodingName = a valid encoding name
     *
     * Returns:
-    * when getFont() succeeds, it returns the instance of a Font object. 
+    * when getFont() succeeds, it returns the instance of a Font object.
     * Otherwise, it returns null and error-handler is called
     */
-   Font getFont(string fontName, string encodingName) 
-      in {
-         assert(fontName.length > 0);
-         assert(encodingName.length > 0);
-      } body {
-         return new Font(HPDF_GetFont(this._doc, fontName.toStringz(), encodingName.toStringz()));
-      }
+   Font getFont(string fontName, string encodingName)
+   in {
+      assert(fontName.length > 0);
+      assert(encodingName.length > 0);
+   }
+   body {
+      return new Font(HPDF_GetFont(this._doc, fontName.toStringz(), encodingName.toStringz()));
+   }
 
    /**
     * Gets an attribute value from info dictionary.
@@ -247,7 +241,7 @@ class Doc: IHaruObject {
     * )
     *
     * Returns:
-    * when succeeds, it returns the string value of the info dictionary. 
+    * when succeeds, it returns the string value of the info dictionary.
     * If the infomation has not been set or an error has occurred, it returns
     * null.
     */
@@ -298,14 +292,14 @@ class Doc: IHaruObject {
     * Returns the current setting for page layout
     *
     * Returns:
-    * the current setting for $(LINK2 harud/c/types/PageLayout.html, PageLayout) 
+    * the current setting for $(LINK2 harud/c/types/PageLayout.html, PageLayout)
     */
    @property PageLayout pageLayout() {
       return HPDF_GetPageLayout(this._doc);
    }
 
    /**
-    * Sets how the page should be displayed. 
+    * Sets how the page should be displayed.
     *
     * If this attribute is not set, the setting of the viewer application is used
     *
@@ -320,7 +314,7 @@ class Doc: IHaruObject {
     * Returns the current setting for page mode
     *
     * Returns:
-    * the current setting for $(LINK2 harud/c/types/PageMode.html, PageMode) 
+    * the current setting for $(LINK2 harud/c/types/PageMode.html, PageMode)
     */
    @property PageMode pageMode() {
       return HPDF_GetPageMode(this._doc);
@@ -330,7 +324,7 @@ class Doc: IHaruObject {
     * Sets how the document should be displayed
     *
     * Params:
-    * mode = Page mode $(LINK2 harud/c/types/PageMode.html, PageMode) 
+    * mode = Page mode $(LINK2 harud/c/types/PageMode.html, PageMode)
     */
    @property void pageMode(PageMode mode) {
       HPDF_SetPageMode(this._doc, mode);
@@ -372,17 +366,17 @@ class Doc: IHaruObject {
    }
 
    /**
-    * In the default setting, a Doc object has one "Pages" object as root of pages. 
+    * In the default setting, a Doc object has one "Pages" object as root of pages.
     *
-    * All "Page" objects are created as a kid of the "Pages" object. 
-    * Since a "Pages" object can own only 8191 kids objects, the maximum number of pages are 8191 page. 
+    * All "Page" objects are created as a kid of the "Pages" object.
+    * Since a "Pages" object can own only 8191 kids objects, the maximum number of pages are 8191 page.
     * Additionally, the state that there are a lot of "Page" object under
     * one"Pages" object is not good, because it causes performance degradation of a viewer application.
     *
-    * An application can change the setting of a pages tree by invoking setPagesConfiguration(). 
-    * If pagePerPages parameter is set to more than zero, a two-tier pages tree is created. 
-    * A root "Pages" object can own 8191 "Pages" object, and each lower "Pages" object can own pagePerPages "Page" objects. 
-    * As a result, the maximum number of pages becomes 8191 * pagePerPages page. 
+    * An application can change the setting of a pages tree by invoking setPagesConfiguration().
+    * If pagePerPages parameter is set to more than zero, a two-tier pages tree is created.
+    * A root "Pages" object can own 8191 "Pages" object, and each lower "Pages" object can own pagePerPages "Page" objects.
+    * As a result, the maximum number of pages becomes 8191 * pagePerPages page.
     * An application cannot invoke setPageConfiguration() after a page is added to document
     *
     * Params:
@@ -413,11 +407,8 @@ class Doc: IHaruObject {
     * it returns the name of a font. Otherwise, it returns null and error-handler is called
     */
    string loadType1FontFromFile(string afmfilename, string pfmfilename = null) {
-      return to!string(
-            HPDF_LoadType1FontFromFile(this._doc
-               , afmfilename.toStringz()
-               , pfmfilename.toStringz())
-            );
+      return to!string(HPDF_LoadType1FontFromFile(this._doc,
+         afmfilename.toStringz(), pfmfilename.toStringz()));
    }
 
    /**
@@ -428,13 +419,12 @@ class Doc: IHaruObject {
     * embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
     *
     * Returns:
-    * when loadTTFontFromFile() succeeds, it returns the name of a font. 
+    * when loadTTFontFromFile() succeeds, it returns the name of a font.
     * Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, bool embedding = false) {
-      return to!string(HPDF_LoadTTFontFromFile(this._doc
-               , filename.toStringz()
-               , embedding ? HPDF_TRUE : HPDF_FALSE));
+      return to!string(HPDF_LoadTTFontFromFile(this._doc, filename.toStringz(),
+         embedding ? HPDF_TRUE : HPDF_FALSE));
    }
 
    /**
@@ -449,10 +439,8 @@ class Doc: IHaruObject {
     * when loadTTFontFromFile() succeeds, it returns the name of a font. Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, uint index, bool embedding) {
-      return to!string(HPDF_LoadTTFontFromFile2(this._doc
-               , filename.toStringz()
-               , index
-               , embedding ? HPDF_TRUE : HPDF_FALSE));
+      return to!string(HPDF_LoadTTFontFromFile2(this._doc,
+         filename.toStringz(), index, embedding ? HPDF_TRUE : HPDF_FALSE));
    }
 
    /**
@@ -506,8 +494,8 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables simplified Chinese fonts. 
-    * 
+    * Enables simplified Chinese fonts.
+    *
     * After useCNSFonts() is involed, an application can use the following simplified Chinese fonts
     *
     * $(LI SimSun)
@@ -526,7 +514,7 @@ class Doc: IHaruObject {
 
    /**
     * Enables traditional Chinese fonts.
-    * 
+    *
     * After useCNTFonts() is involed, an application can use the following traditional Chinese fonts
     *
     * $(LI MingLiU)
@@ -540,8 +528,8 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables Japanese encodings. 
-    * 
+    * Enables Japanese encodings.
+    *
     * After useJPEncodings() is invoked, an application can use the following Japanese encodings:
     * $(UL
     * $(LI 90ms-RKSJ-H)
@@ -556,7 +544,7 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables Korean encodings. 
+    * Enables Korean encodings.
     *
     * After useKREncodings() is involed, an application can use the following Korean encodings:
     *
@@ -573,7 +561,7 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Enables simplified Chinese encodings. 
+    * Enables simplified Chinese encodings.
     *
     * After useCNSEncodings() is involed, an application can use the following simplified Chinese encodings
     * $(UL
@@ -604,8 +592,8 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Loads an external PNG image file. 
-    * If deferred is true. then does not load all the data immediately (only size and color properties are loaded). 
+    * Loads an external PNG image file.
+    * If deferred is true. then does not load all the data immediately (only size and color properties are loaded).
     * The main data are loaded just before the image object is written to PDF, and the loaded data are deleted immediately.
     *
     * Params:
@@ -613,7 +601,7 @@ class Doc: IHaruObject {
     * deferred = if the load of the image must be referred
     *
     * Returns:
-    * when loadPngImageFromFile() succeeds, it returns an instance of a Image object. 
+    * when loadPngImageFromFile() succeeds, it returns an instance of a Image object.
     * Otherwise, it returns null and error-handler is called.
     */
    Image loadPngImageFromFile(string filename, bool deferred = false) {
@@ -627,8 +615,8 @@ class Doc: IHaruObject {
    }
 
    /**
-    * Loads an image which has "raw" image format. 
-    * 
+    * Loads an image which has "raw" image format.
+    *
     * This function loads the data without any conversion. So it is usually faster than the other functions.
     *
     * Params:
@@ -639,24 +627,18 @@ class Doc: IHaruObject {
     * `deviceGrey`, `deviceRGB` or `deviceCMYK` are allowed.
     *
     * Returns:
-    * When loadRawImageFromFile() succeeds, it returns an instance of a $(LINK2 harud/image/Image.html,Image) object. 
+    * When loadRawImageFromFile() succeeds, it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
     * Otherwise, it returns `null` and error-handler is called.
     */
-   Image loadRawImageFromFile(string filename
-         , uint width
-         , uint height
-         , ColorSpace colorSpace) {
+   Image loadRawImageFromFile(string filename, uint width, uint height, ColorSpace colorSpace) {
       HPDF_Image image = HPDF_LoadRawImageFromFile(this._doc,
-            filename.toStringz(),
-            width,
-            height,
-            colorSpace);
+         filename.toStringz(), width, height, colorSpace);
       return new Image(image);
    }
 
    /**
-    * Loads an image which has $(I raw) image format from buffer. 
-    * 
+    * Loads an image which has $(I raw) image format from buffer.
+    *
     * This function loads the data without any conversion. So it is usually faster than the other functions.
     * The formats that loadRawImageFromMem() can load is the same as loadRawImageFromFile()
     *
@@ -669,21 +651,14 @@ class Doc: IHaruObject {
     * bitsPerComponent = The bit size of each color component. The valid value is either 1, 2, 4, 8.
     *
     * Returns:
-    * When loadRawImageFromMem() succeeds, 
-    * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object. 
+    * When loadRawImageFromMem() succeeds,
+    * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
     * Otherwise, it returns `null` and error-handler is called.
     */
-   Image loadRawImageFromMem(ubyte* buf,
-         uint width,
-         uint height,
-         ColorSpace colorSpace,
-         uint bitsPerComponent) {
-      HPDF_Image image = HPDF_LoadRawImageFromMem(this._doc,
-            buf,
-            width,
-            height,
-            colorSpace,
-            bitsPerComponent);
+   Image loadRawImageFromMem(ubyte* buf, uint width, uint height,
+      ColorSpace colorSpace, uint bitsPerComponent) {
+      HPDF_Image image = HPDF_LoadRawImageFromMem(this._doc, buf, width,
+         height, colorSpace, bitsPerComponent);
       return new Image(image);
    }
 
@@ -694,8 +669,8 @@ class Doc: IHaruObject {
     * filename = path to a JPEG image file
     *
     * Returns:
-    * when loadJpegImageFromFile() succeeds, 
-    * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object. 
+    * when loadJpegImageFromFile() succeeds,
+    * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
     * Otherwise, it returns `null` and error-handler is called.
     */
    Image loadJpegImageFromFile(string filename) {
@@ -705,11 +680,11 @@ class Doc: IHaruObject {
 
    /**
     * Sets a datetime attribute in the info dictionary.
-    * 
+    *
     * Params:
     * type = one of the following attributes:
     *
-    * $(UL 
+    * $(UL
     * $(LI HaruInfo.CREATION_DATE)
     * $(LI HaruInfo.MOD_DATE)
     * )
@@ -751,8 +726,8 @@ class Doc: IHaruObject {
     *
     * Params:
     * mode = One  of the $(LINK2
-    * harud/c/types/HaruEncryptMode.html, HaruEncryptMode) 
-    * keyLen = Specify the byte length of encryption key. 
+    * harud/c/types/HaruEncryptMode.html, HaruEncryptMode)
+    * keyLen = Specify the byte length of encryption key.
     * Only valid for HaruEncryptMode.R3. Between 5 (40 bits) and 16 (128 bits) can be specified
     *
     */
@@ -764,7 +739,7 @@ class Doc: IHaruObject {
     * Set the mode of compression.
     *
     * Params:
-    * mode = Compression mode $(LINK2 harud/c/types/CompressionMode.html, CompressionMode) 
+    * mode = Compression mode $(LINK2 harud/c/types/CompressionMode.html, CompressionMode)
     */
    HPDF_STATUS setCompressionMode(CompressionMode mode) {
       return HPDF_SetCompressionMode(this._doc, mode);
@@ -788,10 +763,10 @@ string getVersion() {
  * Params:
  * document = The instance of Doc to check
  *
- * Returns: 
- * If the specified document handle is valid, it returns true. 
+ * Returns:
+ * If the specified document handle is valid, it returns true.
  * Otherwise, it returns false and error-handler is called.
  */
 static bool hasDoc(Doc document) {
-   return (HPDF_HasDoc(document._doc) != 0) ;
+   return (HPDF_HasDoc(document._doc) != 0);
 }

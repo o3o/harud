@@ -1,7 +1,7 @@
 module harud.types;
 
-alias HPDF_HANDLE = void*; 
-alias HPDF_Doc = HPDF_HANDLE; 
+alias HPDF_HANDLE = void*;
+alias HPDF_Doc = HPDF_HANDLE;
 alias HPDF_Page = HPDF_HANDLE;
 alias HPDF_Pages = HPDF_HANDLE;
 alias HPDF_Stream = HPDF_HANDLE;
@@ -14,18 +14,15 @@ alias HPDF_XObject = HPDF_HANDLE;
 alias HPDF_Annotation = HPDF_HANDLE;
 alias HPDF_ExtGState = HPDF_HANDLE;
 
-
 /* boolean type (0: False, !0: True) */
 alias HPDF_BOOL = int;
 
 /** errorNo type (32bit unsigned integer) */
 alias HPDF_STATUS = uint;
 
-
 /** charactor-code type (16bit) */
 alias HPDF_CID = ushort;
 alias HPDF_UNICODE = ushort;
-
 
 /** Point struct */
 struct Point {
@@ -111,7 +108,6 @@ struct DashMode {
    uint numPtn;
    uint phase;
 }
-
 
 struct TransMatrix {
    float a;
@@ -241,7 +237,7 @@ enum PageLayout {
 /**
  * Compression mode
  */
-enum CompressionMode: uint {
+enum CompressionMode : uint {
    /// No compression.
    none = 0x0,
    /// Compress the contents stream of the page.
@@ -257,7 +253,7 @@ enum CompressionMode: uint {
 /**
   PageMode enum
  */
-enum PageMode: uint {
+enum PageMode : uint {
    /// Display the document with neither outline nor thumbnail.
    useNone = 0,
    /// Display the document with outline pane.
@@ -427,9 +423,9 @@ enum HaruTextAlignment {
 /**
   Permission flags (only Revision 2 is supported)
  */
-enum HaruPermission: uint {
+enum HaruPermission : uint {
    ///  user can read the document
-   read = 0, 
+   read = 0,
    /// user can print the document
    print = 4,
    /// user can add or modify the annotations and form fields of the document
@@ -443,7 +439,7 @@ enum HaruPermission: uint {
 /**
  * Graphics mode
  */
-enum GMode: ushort {
+enum GMode : ushort {
    unknown = 0,
    pageDescription = 0x0001,
    pathObject = 0x0002,

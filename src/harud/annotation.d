@@ -6,11 +6,11 @@ import harud.c.capi;
 /**
 * Haru PDF Annotation Class.
 */
-class Annotation: IHaruObject {
+class Annotation : IHaruObject {
    protected HPDF_Annotation _annotation;
 
    this(HPDF_Annotation annotation) {
-      _annotation =  annotation;
+      _annotation = annotation;
    }
 
    /**

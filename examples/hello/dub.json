@@ -1,16 +1,16 @@
 {
-	"name": "hello",
-	"description": "Simple example with harud",
-	"copyright": "Copyright © 2015, o3o",
-	"authors": ["Orfeo Da Viá"],
-   "license": "Boost License", 
+   "name": "hello",
+   "description": "Simple example with harud",
+   "copyright": "Copyright © 2015, o3o",
+   "authors": ["Orfeo Da Viá"],
+   "license": "Boost License",
    "targetType": "executable",
    "targetPath": "bin",
    "libs-posix": ["hpdf"],
    "sourcePaths": ["."],
    "sourcePaths-windows": ["../../lib/"],
    "sourceFiles-windows": ["../../lib/libhpdf.lib"],
-	"dependencies": {
-      "harud": ">=0.1.0"
-	}
+   "dependencies": {
+      "harud": "~>0.2.0"
+   }
 }

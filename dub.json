@@ -1,12 +1,12 @@
 {
-	"name": "harud",
-	"description": "D binding to libharu",
-	"copyright": "Copyright © 2014, o3o",
-	"authors": ["Orfeo Da Via'"],
-   "license": "MIT License", 
+   "name": "harud",
+   "description": "D binding to libharu",
+   "copyright": "Copyright © 2015, o3o",
+   "authors": ["Orfeo Da Via'"],
+   "license": "MIT License",
    "targetType": "library",
    "targetPath": "bin",
-   "libs": ["hpdf"], 
-	"dependencies": {
-	}
+   "libs": ["hpdf"],
+   "dependencies": {
+   }
 }

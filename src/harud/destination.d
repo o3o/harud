@@ -3,7 +3,6 @@ module harud.destination;
 import harud;
 import harud.c.capi;
 
-
 /**
 * Haru PDF Destination Class. 
 */
@@ -11,7 +10,7 @@ class Destination {
    private HPDF_Destination _destination;
 
    this(HPDF_Destination destination) {
-      _destination =  destination;
+      _destination = destination;
    }
 
    @property HPDF_Destination destinationHandle() {
