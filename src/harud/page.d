@@ -16,8 +16,8 @@ import harud.types;
 
 /**
  * The Page class.
- * 
- * The Page class is used to manipulate an individual page. 
+ *
+ * The Page class is used to manipulate an individual page.
  * To create new pages use $(LINK2 harud/doc/Doc.addPage.html, `addPage()`) or
  * $(LINK2 harud/doc/Doc.insertPage.html, `insertPage()`) methods of $(LINK2 harud/doc/Doc.html, Doc)  class
  */
@@ -95,6 +95,7 @@ class Page : IHaruObject {
    HPDF_STATUS setSize(PageSizes size, PageDirection direction) {
       return HPDF_Page_SetSize(this._page, size, direction);
    }
+
 
    /**
     * Sets rotation angle of the page.
@@ -177,8 +178,8 @@ class Page : IHaruObject {
     * text = the text to get width.
     *
     * Returns:
-    * When  succeed, it returns the width of the text in current fontsize, 
-    * character spacing and word spacing. 
+    * When  succeed, it returns the width of the text in current fontsize,
+    * character spacing and word spacing.
     * Otherwise it returns ZERO and error-handler is called.
     */
    float getTextWidth(string text) {
@@ -191,12 +192,12 @@ class Page : IHaruObject {
     * Params:
     * text = The text to get width.
     * width = The width of the area to put the text.
-    * wordwrap = When there are three words of "ABCDE", "FGH", and "IJKL", and the substring until "J" can be included within the width, 
+    * wordwrap = When there are three words of "ABCDE", "FGH", and "IJKL", and the substring until "J" can be included within the width,
     * if word_wrap parameter is false it returns 12, and if word_wrap parameter is true, it returns 10 (the end of the previous word).
     * real_width = If this parameter is not null, the real widths of the text is set. An application can set it to null, if it is unnecessary.
     *
     * Returns:
-    * When succeed it returns the byte length which can be included within the specified width in current fontsize, character spacing and word spacing. 
+    * When succeed it returns the byte length which can be included within the specified width in current fontsize, character spacing and word spacing.
     * Otherwise it returns ZERO and error-handler is called.
     */
    uint measureText(string text, float width, bool wordwrap, float* real_width) {
@@ -216,12 +217,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current position for path painting. 
-    
+    * Gets the current position for path painting.
+
     * An application can invoke `currentPos` only when graphics mode is GMode.pathObject.
     *
     * Returns:
-    * when succeed, it returns a Point struct indicating the current position for path painting of the page. 
+    * when succeed, it returns a Point struct indicating the current position for path painting of the page.
     * Otherwise it returns a Point struct of {0, 0}.
     */
    @property Point currentPos() {
@@ -229,8 +230,8 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current position for text showing. 
-    * 
+    * Gets the current position for text showing.
+    *
     * An application can invoke getCurrentTextPos() only when graphics mode is
     * GMode.textObject
     *
@@ -246,7 +247,7 @@ class Page : IHaruObject {
     * Gets a Font instance of the page's current font.
     *
     * Returns:
-    * when  succeed, it returns a Font instance of the page's current font. 
+    * when  succeed, it returns a Font instance of the page's current font.
     * Otherwise it returns null.
     */
    @property Font currentFont() {
@@ -258,7 +259,7 @@ class Page : IHaruObject {
     * Gets the size of the page's current font.
     *
     * Returns:
-    * when  succeed, it returns the size of the page's current font. 
+    * when  succeed, it returns the size of the page's current font.
     * Otherwise it returns 0.
     */
    float currentFontSize() {
@@ -280,7 +281,7 @@ class Page : IHaruObject {
     *
     * Returns:
     * when getLineCap() succeed, it returns the current line cap style of the
-    * page. 
+    * page.
     * Otherwise it returns HaruLineCap.buttEnd
     */
    @property HaruLineCap lineCap() {
@@ -304,7 +305,7 @@ class Page : IHaruObject {
     * Gets the current line join style of the page.
     *
     * Returns:
-    * when succeed, it returns the current line join style of the page. 
+    * when succeed, it returns the current line join style of the page.
     * Otherwise it returns HaruLineJoin.miterJoin
     */
    @property HaruLineJoin lineJoin() {
@@ -338,7 +339,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's miter limit.
     *
     * Returns:
-    * when succeed, it returns the current value of the page's miter limit. 
+    * when succeed, it returns the current value of the page's miter limit.
     * Otherwise it returns HPDF_DEF_MITERLIMIT.
     */
    @property float miterLimit() {
@@ -428,7 +429,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's flatness.
     *
     * Returns:
-    * when  succeed, it returns the current value of the page's miter limit. 
+    * when  succeed, it returns the current value of the page's miter limit.
     * Otherwise it returns HPDF_DEF_FLATNESS.
     */
    @property float flat() {
@@ -439,7 +440,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's character spacing.
     *
     * Returns:
-    * when  succeed, it returns the current value of the page's character spacing. 
+    * when  succeed, it returns the current value of the page's character spacing.
     * Otherwise it returns 0.
     */
    @property float charSpace() {
@@ -463,7 +464,7 @@ class Page : IHaruObject {
     * Get the current value of the page's word spacing.
     *
     * Returns:
-    * when succeed, it returns the current value of the page's word spacing. 
+    * when succeed, it returns the current value of the page's word spacing.
     * Otherwise it returns 0.
     */
    @property float wordSpace() {
@@ -487,7 +488,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's horizontal scalling for text showing.
     *
     * Returns:
-    * when  succeed, it returns the current value of the page's horizontal scalling. 
+    * when  succeed, it returns the current value of the page's horizontal scalling.
     * Otherwise it returns HPDF_DEF_HSCALING.
     */
    @property float horizontalScalling() {
@@ -511,7 +512,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's line spacing.
     *
     * Returns:
-    * when succeed, it returns the current value of the line spacing. 
+    * when succeed, it returns the current value of the line spacing.
     * Otherwise it returns 0.
     */
    @property float textLeading() {
@@ -532,7 +533,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's text rendering mode.
     *
     * Returns:
-    * when succeed, it returns the current value of the text rendering mode. 
+    * when succeed, it returns the current value of the text rendering mode.
     * Otherwise it returns 0.
     */
    @property HaruTextRenderingMode textRenderingMode() {
@@ -571,7 +572,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's text rising.
     *
     * Returns:
-    * when succeed, it returns the current value of the text rising. 
+    * when succeed, it returns the current value of the text rising.
     * Otherwise it returns 0.
     */
    @property float textRise() {
@@ -593,7 +594,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current value of the page's filling color. 
+    * Gets the current value of the page's filling color.
 
     * getRGBFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_RGB.
     *
@@ -618,12 +619,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current value of the page's stroking color. 
+    * Gets the current value of the page's stroking color.
     *
     * getRGBStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_RGB.
     *
     * Returns:
-    * when getRGBStroke() succeed, it returns the current value of the page's stroking color. 
+    * when getRGBStroke() succeed, it returns the current value of the page's stroking color.
     * Otherwise it returns {0, 0, 0}.
     */
    HaruRGBColor getRGBStroke() {
@@ -646,12 +647,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current value of the page's filling color. 
-    * 
+    * Gets the current value of the page's filling color.
+    *
     * getCMYKFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_CMYK.
     *
     * Returns:
-    * when getCMYKFill() succeed, it returns the current value of the page's filling color. 
+    * when getCMYKFill() succeed, it returns the current value of the page's filling color.
     * Otherwise it returns {0, 0, 0, 0}.
     */
    HaruCMYKColor getCMYKFill() {
@@ -659,12 +660,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current value of the page's stroking color. 
-    * 
+    * Gets the current value of the page's stroking color.
+    *
     * getCMYKStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_CMYK.
     *
     * Returns:
-    * when getCMYKStroke() succeed, it returns the current value of the page's stroking color. 
+    * when getCMYKStroke() succeed, it returns the current value of the page's stroking color.
     * Otherwise it returns {0, 0, 0, 0}.
     */
    HaruCMYKColor getCMYKStroke() {
@@ -672,12 +673,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current value of the page's filling color. 
-    * 
+    * Gets the current value of the page's filling color.
+    *
     * grayFill() is valid only when the page's stroking color space is HPDF_CS_DEVICE_GRAY.
     *
     * Returns:
-    * when getGrayFill() succeed, it returns the current value of the page's filling color. 
+    * when getGrayFill() succeed, it returns the current value of the page's filling color.
     * Otherwise it returns 0.
     */
    @property float grayFill() {
@@ -698,12 +699,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Gets the current value of the page's stroking color. 
-    * 
+    * Gets the current value of the page's stroking color.
+    *
     * grayStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_GRAY.
     *
     * Returns:
-    * when succeed, it returns the current value of the page's stroking color. 
+    * when succeed, it returns the current value of the page's stroking color.
     * Otherwise it returns 0.
     */
    @property float grayStroke() {
@@ -737,7 +738,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's stroking color space.
     *
     * Returns:
-    * when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space. 
+    * when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space.
     * Otherwise it returns HPDF_CS_EOF.
     */
    ColorSpace getFillingColorSpace() {
@@ -758,7 +759,7 @@ class Page : IHaruObject {
     * Gets the number of the page's graphics state stack.
     *
     * Returns:
-    * when getGStateDepth() succeed, it returns the number of the page's graphics state stack. 
+    * when getGStateDepth() succeed, it returns the number of the page's graphics state stack.
     * Otherwise it returns 0.
     */
    uint getGStateDepth() {
@@ -842,14 +843,14 @@ class Page : IHaruObject {
    }
 
    /**
-    * Modifies the current clipping path by intersecting it with the current path using the nonzero winding number rule. 
+    * Modifies the current clipping path by intersecting it with the current path using the nonzero winding number rule.
     *
-    * The clipping path is only modified after the succeeding painting operator. 
+    * The clipping path is only modified after the succeeding painting operator.
     * To avoid painting the current path, use the function HPDF_Page_EndPath().
     *
-    * Following painting operations will only affect the regions of the page contained by the clipping path. 
-    * Initially, the clipping path includes the entire page. 
-    * There is no way to enlarge the current clipping path, or to replace the clipping path with a new one. 
+    * Following painting operations will only affect the regions of the page contained by the clipping path.
+    * Initially, the clipping path includes the entire page.
+    * There is no way to enlarge the current clipping path, or to replace the clipping path with a new one.
     * The functions HPDF_Page_GSave() and HPDF_Page_GRestore() may be used to save and restore the current graphics state, including the clipping path.
     *
     * ## Graphics Mode
@@ -858,7 +859,7 @@ class Page : IHaruObject {
     * Params:
     * page = The handle of a page object.
     *
-    * Returns: 
+    * Returns:
     *
     * HPDF_OK on success. Otherwise, returns error code and error-handler is invoked.
     */
@@ -935,7 +936,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Appends a Bézier curve to the current path using two spesified points. 
+    * Appends a Bézier curve to the current path using two spesified points.
     *
     * The point (x1, y1) and the point (x3, y3) are used as the control points for a Bézier curve and current point is moved to the point (x3, y3)
     *
@@ -1064,7 +1065,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Saves the page's current graphics parameter to the stack. 
+    * Saves the page's current graphics parameter to the stack.
     * An application can invoke gSave() up to 28 (???) and can restore the saved parameter by invoking gRestore().
     *
     * The parameters that are saved by gSave() are:
@@ -1124,7 +1125,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Starts a new subpath and move the current point for drawing path, 
+    * Starts a new subpath and move the current point for drawing path,
     * moveTo() sets the start point for the path to the point (x, y).
     *
     * Params:
@@ -1152,7 +1153,7 @@ class Page : IHaruObject {
     * ## Graphics Mode
     * Before - GMode.pageDescription or GMode.pathObject.
     * After - GMode.pathObject.
-    * 
+    *
     * Params:
     * x = The x coordinate of lower-left point of the rectangle.
     * y = The y coordinate of lower-left point of the rectangle.
@@ -1221,7 +1222,7 @@ class Page : IHaruObject {
     * Gets the current line width of the page.
     *
     * Returns:
-    * when getLineWidth() succeed, it returns the current line width for path painting of the page. 
+    * when getLineWidth() succeed, it returns the current line width for path painting of the page.
     * Otherwise it returns HPDF_DEF_LINEWIDTH.
     */
    @property float lineWidth() {
@@ -1253,12 +1254,12 @@ class Page : IHaruObject {
    }
 
    /**
-    * Moves the current text position to the start of the next line, 
+    * Moves the current text position to the start of the next line,
     * then prints the text at the current position on the page.
     *
     * ## Graphics Mode
     * Before and after - GMode.textObject.
-    * 
+    *
     * Params:
     * text = The text to print.
     *

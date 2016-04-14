@@ -5,20 +5,20 @@ import harud;
 import harud.c;
 
 void main() {
-   void  errorCallback(uint error_number, uint detail_number) {
+   void errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
-            , getErrorDescription(error_number), 
+            , getErrorDescription(error_number),
             detail_number);
    }
 
    Doc pdf = new Doc(&errorCallback);
-   Font helvetica = pdf.getFont("Helvetica"); 
+   Font helvetica = pdf.getFont("Helvetica");
 
    Page page = pdf.addPage();
 
    /// Set the current font and size for the page
-   page.setFontAndSize(helvetica, 5);  
+   page.setFontAndSize(helvetica, 10);
    page.setSize(PageSizes.A4, PageDirection.portrait);
    printGrid(page);
    pdf.saveToFile("./grid_sheet.pdf"); /// Write to disk
@@ -34,8 +34,7 @@ void printGrid(Page page) {
    page.grayStroke= 0.8;
    y = 0;
    while (y < height) {
-      page.setWidth(y);
-
+      setLineWidth(page, y);
       page.moveTo(0, y);
       page.lineTo(width, y);
       page.stroke();
@@ -54,7 +53,7 @@ void printGrid(Page page) {
    /* Draw virtical lines */
    x = 0;
    while (x < width) {
-      page.setWidth(x);
+      page.setLineWidth(x);
 
       page.moveTo(x, 0);
       page.lineTo(x, height);
@@ -113,7 +112,7 @@ void printGrid(Page page) {
    page.grayStroke = 0;
 }
 
-private void setWidth(Page page, double y) {
+private void setLineWidth(Page page, double y) {
    if (y % 10 == 0)
       page.lineWidth = 0.5;
    else {

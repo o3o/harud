@@ -1,4 +1,4 @@
-# makefile relelase 0.2.0
+# makefile release 0.2.0
 NAME = harud
 PROJECT_VERSION = 0.2.0
 

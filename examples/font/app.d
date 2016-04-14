@@ -7,7 +7,7 @@ void main() {
    void  errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
-            , getErrorDescription(error_number), 
+            , getErrorDescription(error_number),
             detail_number);
    }
 
@@ -30,7 +30,7 @@ void main() {
    writeln("libhpdf-", getVersion());
 
    try {
-      enum string page_title = "FontDemo";
+      enum string TITLE = "FontDemo";
 
       Doc pdf = new Doc(&errorCallback);
 
@@ -45,18 +45,18 @@ void main() {
       page.stroke();
 
       /* Print the title of the page (with positioning center). */
-      Font helvetica = pdf.getFont("Helvetica"); 
+      Font helvetica = pdf.getFont("Helvetica");
       page.setFontAndSize(helvetica, 24);
 
-      float tw = page.textWidth(page_title);
+      float tw = page.getTextWidth(TITLE);
       page.beginText();
-      page.textOut((width - tw) / 2, height - 50, page_title);
+      page.textOut((width - tw) / 2, height - 50, TITLE);
       page.endText();
 
       /* output subtitle. */
       page.beginText();
       page.setFontAndSize(helvetica, 16);
-      page.textOut(60, height - 80, "<Standerd Type1 fonts samples>");
+      page.textOut(60, height - 80, "<Standard Type1 fonts samples>");
       page.endText();
 
       page.beginText();
@@ -76,7 +76,6 @@ void main() {
          page.showText(samp_text);
          page.moveTextPos(0, -20);
       }
-
       page.endText();
 
       pdf.saveToFile("./font.pdf");
