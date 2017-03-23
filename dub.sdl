@@ -1,0 +1,8 @@
+name "harud"
+description "D binding to libharu"
+authors "Orfeo Da Via'"
+copyright "Copyright © 2015, o3o"
+license "MIT License"
+targetType "library"
+targetPath "bin"
+libs "hpdf"
