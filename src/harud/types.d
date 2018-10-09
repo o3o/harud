@@ -42,7 +42,7 @@ struct Rect {
 alias HaruBox = Rect;
 
 /**
- * Datetime attribute in the info dictionary. 
+ * Datetime attribute in the info dictionary.
  */
 struct HaruDate {
    int year;
@@ -83,7 +83,7 @@ enum PdfVer {
 }
 
 /**
-  Encrypt mode
+ * Encrypt mode
  */
 enum HaruEncryptMode {
    /// Use "Revision 2" algorithm. "keyLen" automatically set to 5 (40 bits).
@@ -118,50 +118,50 @@ struct TransMatrix {
    float y;
 }
 
-/** 
-  The color space of the image.
+/**
+ * The color space of the image.
  */
 enum ColorSpace {
    /**
-     8 bit gray scale image.$(BR)
-     The gray scale describes each pixel with one byte. $(BR)
-     For each byte, 0X00 is maximum dark, 0XFF maximum light. The size of the
-     image data is (width * height) bytes.$(BR)
-     The sequence of bytes for an 8-pixel 8-bit image with 2 rows and 4 columns would be:
-     -----
-     1   2   3   4
-     5   6   7   8
-     ----
+    * 8 bit gray scale image.$(BR)
+    * The gray scale describes each pixel with one byte. $(BR)
+    * For each byte, 0X00 is maximum dark, 0XFF maximum light. The size of the
+    * image data is (width * height) bytes.$(BR)
+    * The sequence of bytes for an 8-pixel 8-bit image with 2 rows and 4 columns would be:
+    * -----
+    * 1   2   3   4
+    * 5   6   7   8
+    * ----
     */
    deviceGray = 0,
 
-   /** 
-     The RGB color model is an additive color model in which red, green, and
-     blue light are added together in various ways to reproduce a broad array
-     of colors. $(BR)
-     The 24 bit RGB color image describes each pixel with three bytes (Red,
-     Green, Blue). $(BR)
-     For each byte, 0X00 is maximum dark, 0XFF maximum light. The size of the image data is (width * height * 3) bytes.
-     The sequence of bytes for an 8-pixel 24-bit image with 2 rows and 4 columns would be:
-     ---
-     1R 1G 1B  2R 2G 2B  3R 3G 3B  4R 4G 4B  
-     5R 5G 5B  6R 6G 6B  7R 7G 7B  8R 8G 8B  
-     ---
+   /**
+    * The RGB color model is an additive color model in which red, green, and
+    * blue light are added together in various ways to reproduce a broad array
+    * of colors. $(BR)
+    * The 24 bit RGB color image describes each pixel with three bytes (Red,
+    * Green, Blue). $(BR)
+    * For each byte, 0X00 is maximum dark, 0XFF maximum light. The size of the image data is (width * height * 3) bytes.
+    * The sequence of bytes for an 8-pixel 24-bit image with 2 rows and 4 columns would be:
+    * ---
+    * 1R 1G 1B  2R 2G 2B  3R 3G 3B  4R 4G 4B
+    * 5R 5G 5B  6R 6G 6B  7R 7G 7B  8R 8G 8B
+    * ---
     */
    deviceRGB,
    /**
-     The CMYK color model (process color, four color) is a subtractive color
-     model, used in color printing, and is also used to describe the printing
-     process itself. $(BR)
-     The 32 bit CMYK color image describes each pixel with four bytes (Cyan,
-     Magenta, Yellow, Black). $(BR)
-     The size of the image data is (width * height * 4) bytes. For each byte,
-     0X00 is maximum dark, 0XFF maximum light.$(BR)
-     The sequence of bytes for an 8-pixel 32-bit image with 2 rows and 4 columns would be:
-     ---
-     1C 1M 1Y 1K  2C 2M 2Y 2K  3C 3M 3Y 3K  4C 4M 4Y 4K
-     5C 5M 5Y 5K  6C 6M 6Y 6K  7C 7M 7Y 7K  8C 8M 8Y 8K
-     ---  
+    * The CMYK color model (process color, four color) is a subtractive color
+    * model, used in color printing, and is also used to describe the printing
+    * process itself. $(BR)
+    * The 32 bit CMYK color image describes each pixel with four bytes (Cyan,
+    * Magenta, Yellow, Black). $(BR)
+    * The size of the image data is (width * height * 4) bytes. For each byte,
+    * 0X00 is maximum dark, 0XFF maximum light.$(BR)
+    * The sequence of bytes for an 8-pixel 32-bit image with 2 rows and 4 columns would be:
+    * ---
+    * 1C 1M 1Y 1K  2C 2M 2Y 2K  3C 3M 3Y 3K  4C 4M 4Y 4K
+    * 5C 5M 5Y 5K  6C 6M 6Y 6K  7C 7M 7Y 7K  8C 8M 8Y 8K
+    * ---
     */
    deviceCMYK,
    calGray,
@@ -195,14 +195,14 @@ enum HaruLineCap {
    lineCapEof
 }
 
-/// The line join style 
+/// The line join style
 enum HaruLineJoin {
    miterJoin = 0,
    roundJoin,
    bevelJoin,
 }
 
-/// The text rendering mode 
+/// The text rendering mode
 enum HaruTextRenderingMode {
    fill = 0,
    stroke,
@@ -221,7 +221,7 @@ enum HaruWritingMode {
 }
 
 /**
-  The page layout enum
+ * The page layout enum
  */
 enum PageLayout {
    /// Only one page is displayed.
@@ -251,7 +251,7 @@ enum CompressionMode : uint {
 }
 
 /**
-  PageMode enum
+ * PageMode enum
  */
 enum PageMode : uint {
    /// Display the document with neither outline nor thumbnail.
@@ -330,7 +330,7 @@ enum HaruAnnotIcon {
    insert
 }
 
-// border stype 
+// border stype
 enum HaruBSSubtype {
    solid,
    dashed,
@@ -339,7 +339,7 @@ enum HaruBSSubtype {
    underlined
 }
 
-// blend modes 
+// blend modes
 enum HaruBlendMode {
    normal,
    multiply,
@@ -355,7 +355,7 @@ enum HaruBlendMode {
    exclushon
 }
 
-/// slide show 
+/// slide show
 enum HaruTransitionStyle {
    wipeRight = 0,
    wipeUp,
@@ -421,7 +421,7 @@ enum HaruTextAlignment {
 }
 
 /**
-  Permission flags (only Revision 2 is supported)
+ *Permission flags (only Revision 2 is supported)
  */
 enum HaruPermission : uint {
    ///  user can read the document

@@ -1,14 +1,12 @@
 module harud.c.consts;
 
-/*----------------------------------------------------------------------------*/
-
 enum int HPDF_TRUE = 1;
 enum int HPDF_FALSE = 0;
 
 enum int HPDF_OK = 0;
 enum int HPDF_NOERROR = 0;
 
-/*----- default values -------------------------------------------------------*/
+/* default values */
 
 /* buffer size which is required when we convert to character string. */
 enum int HPDF_TMP_BUF_SIZ = 512;
@@ -49,7 +47,7 @@ enum int HPDF_BS_DEF_WIDTH = 1;
 enum float HPDF_DEF_PAGE_WIDTH = 595.276F;
 enum float HPDF_DEF_PAGE_HEIGHT = 841.89F;
 
-/*----- compression mode ----------------------------------------------------*/
+/* compression mode */
 
 enum int HPDF_COMP_NONE = 0x00;
 enum int HPDF_COMP_TEXT = 0x01;
@@ -61,8 +59,7 @@ enum int HPDF_COMP_ALL = 0x0F;
  */
 enum int HPDF_COMP_MASK = 0xFF;
 
-/*----------------------------------------------------------------------------*/
-/*------ viewer preferences definitions --------------------------------------*/
+/* viewer preferences definitions */
 
 enum int HPDF_HIDE_TOOLBAR = 1;
 enum int HPDF_HIDE_MENUBAR = 2;
@@ -70,39 +67,37 @@ enum int HPDF_HIDE_WINDOW_UI = 4;
 enum int HPDF_FIT_WINDOW = 8;
 enum int HPDF_CENTER_WINDOW = 16;
 
-/*---------------------------------------------------------------------------*/
-/*------ limitation of object implementation (PDF1.4) -----------------------*/
+/* limitation of object implementation (PDF1.4) */
 
-enum int HPDF_LIMIT_MAX_INT = 2147483647;
-enum int HPDF_LIMIT_MIN_INT = -2147483647;
+enum int HPDF_LIMIT_MAX_INT = 2_147_483_647;
+enum int HPDF_LIMIT_MIN_INT = -2_147_483_647;
 
-enum int HPDF_LIMIT_MAX_REAL = 32767;
-enum int HPDF_LIMIT_MIN_REAL = -32767;
+enum int HPDF_LIMIT_MAX_REAL = 32_767;
+enum int HPDF_LIMIT_MIN_REAL = -32_767;
 
-enum int HPDF_LIMIT_MAX_STRING_LEN = 65535;
+enum int HPDF_LIMIT_MAX_STRING_LEN = 65_535;
 enum int HPDF_LIMIT_MAX_NAME_LEN = 127;
 
 enum int HPDF_LIMIT_MAX_ARRAY = 8191;
 enum int HPDF_LIMIT_MAX_DICT_ELEMENT = 4095;
-enum int HPDF_LIMIT_MAX_XREF_ELEMENT = 8388607;
+enum int HPDF_LIMIT_MAX_XREF_ELEMENT = 8_388_607;
 enum int HPDF_LIMIT_MAX_GSTATE = 28;
 enum int HPDF_LIMIT_MAX_DEVICE_N = 8;
 enum int HPDF_LIMIT_MAX_DEVICE_N_V15 = 32;
-enum int HPDF_LIMIT_MAX_CID = 65535;
-enum int HPDF_MAX_GENERATION_NUM = 65535;
+enum int HPDF_LIMIT_MAX_CID = 65_535;
+enum int HPDF_MAX_GENERATION_NUM = 65_535;
 
 enum int HPDF_MIN_PAGE_HEIGHT = 3;
 enum int HPDF_MIN_PAGE_WIDTH = 3;
-enum int HPDF_MAX_PAGE_HEIGHT = 14400;
-enum int HPDF_MAX_PAGE_WIDTH = 14400;
+enum int HPDF_MAX_PAGE_HEIGHT = 14_400;
+enum int HPDF_MAX_PAGE_WIDTH = 14_400;
 enum int HPDF_MIN_MAGNIFICATION_FACTOR = 8;
 enum int HPDF_MAX_MAGNIFICATION_FACTOR = 3200;
 
-/*---------------------------------------------------------------------------*/
-/*------ limitation of various properties -----------------------------------*/
+/* limitation of various properties */
 
 enum int HPDF_MIN_PAGE_SIZE = 3;
-enum int HPDF_MAX_PAGE_SIZE = 14400;
+enum int HPDF_MAX_PAGE_SIZE = 14_400;
 enum int HPDF_MIN_HORIZONTALSCALING = 10;
 enum int HPDF_MAX_HORIZONTALSCALING = 300;
 enum int HPDF_MIN_WORDSPACE = -30;
@@ -117,7 +112,6 @@ enum int HPDF_MAX_DASH_PATTERN = 100;
 
 enum int HPDF_MAX_JWW_NUM = 128;
 
-/*----------------------------------------------------------------------------*/
 /*----- country code definition ----------------------------------------------*/
 
 enum string HPDF_COUNTRY_AF = "AF"; /* AFGHANISTAN */

@@ -317,7 +317,7 @@ class Page : IHaruObject {
    }
 
    unittest {
-      import harud.doc;
+      import harud.doc : Doc;
 
       Doc pdf = new Doc();
       Page page = pdf.addPage();
@@ -542,7 +542,7 @@ class Page : IHaruObject {
    }
 
    unittest {
-      import harud.doc;
+      import harud.doc : Doc;
 
       Doc pdf = new Doc();
       Page page = pdf.addPage();
@@ -1251,7 +1251,7 @@ class Page : IHaruObject {
     * text = The text to print.
     *
     */
-   HPDF_STATUS showTextNextLine(string text, float word_space = 0.0, float char_space = 0.0) {
+   HPDF_STATUS showTextNextLine(string text, float wordSpace = 0.0, float charSpace = 0.0) {
       return HPDF_Page_ShowTextNextLine(this._page, text.toStringz());
    }
 
