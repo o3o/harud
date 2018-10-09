@@ -78,7 +78,7 @@ $(BIN)/$(NAME): $(SRC) $(LIB)| builddir
 
 run: all
 	$(BIN)/$(NAME)
-	xpdf ./$(NAME).pdf
+	evince ./$(NAME).pdf
 
 ## se si usa unit_threaded
 ## make test T=nome_test

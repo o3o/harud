@@ -347,7 +347,7 @@ enum string HPDF_COUNTRY_GB = "GB"; /* UNITED KINGDOM */
 enum string HPDF_COUNTRY_US = "US"; /* UNITED STATES */
 enum string HPDF_COUNTRY_UM = "UM"; /* UNITED STATES MINOR OUTLYING ISLANDS */
 enum string HPDF_COUNTRY_UY = "UY"; /* URUGUAY */
-enum stringHPDF_COUNTRY_UZ = "UZ"; /* UZBEKISTAN */
+enum string HPDF_COUNTRY_UZ = "UZ"; /* UZBEKISTAN */
 enum string HPDF_COUNTRY_VU = "VU"; /* VANUATU */
 enum string HPDF_COUNTRY_VA = "VA"; /* VATICAN CITY STATE (HOLY SEE) */
 enum string HPDF_COUNTRY_VE = "VE"; /* VENEZUELA */
@@ -498,7 +498,3 @@ enum string HPDF_LANG_WO = "wo"; /* Wolof */
 enum string HPDF_LANG_XH = "xh"; /* Xhosa */
 enum string HPDF_LANG_YO = "yo"; /* Yoruba */
 enum string HPDF_LANG_ZH = "zh"; /* Chinese */
-enum string HPDF_LANG_ZU = "zu"; /* Zulu */
-
-
-

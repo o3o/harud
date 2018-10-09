@@ -7,7 +7,7 @@ void main() {
    void  errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
-            , getErrorDescription(error_number), 
+            , getErrorDescription(error_number),
             detail_number);
    }
 
@@ -30,27 +30,25 @@ void main() {
    writeln("libhpdf-", getVersion());
 
    try {
-      enum string page_title = "FontDemo";
+      enum string TITLE = "FontDemo";
 
       Doc pdf = new Doc(&errorCallback);
-
       Page page = pdf.addPage();
 
       float height = page.height;
       float width = page.width;
-
       /* Print the lines of the page. */
       page.lineWidth = 1;
       page.rectangle(50, 50, width - 100, height - 110);
       page.stroke();
 
       /* Print the title of the page (with positioning center). */
-      Font helvetica = pdf.getFont("Helvetica"); 
+      Font helvetica = pdf.getFont("Helvetica");
       page.setFontAndSize(helvetica, 24);
 
-      float tw = page.textWidth(page_title);
+      float tw = page.getTextWidth(TITLE);
       page.beginText();
-      page.textOut((width - tw) / 2, height - 50, page_title);
+      page.textOut((width - tw) / 2, height - 50, TITLE);
       page.endText();
 
       /* output subtitle. */
@@ -62,7 +60,7 @@ void main() {
       page.beginText();
       page.moveTextPos(60, height - 105);
 
-      for (int i = 0; i < fontList.length; i++) {
+      for (int i = 0; i < fontList.length -1 ; i++) {
          enum string samp_text = "abcdefgABCDEFG12345!#$%&+-@?";
          Font font = pdf.getFont(fontList[i]);
 
@@ -76,6 +74,15 @@ void main() {
          page.showText(samp_text);
          page.moveTextPos(0, -20);
       }
+      pdf.useCNSFonts();
+      pdf.useCNSEncodings();
+      page.setFontAndSize(helvetica, 9);
+      page.showText("simsun");
+      page.moveTextPos(0, -18);
+
+      Font cfont = pdf.getFont("SimSun", "GB-EUC-H");
+      page.setFontAndSize(cfont, 20);
+      page.showText("奥菲欧");
 
       page.endText();
 

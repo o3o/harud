@@ -20,9 +20,7 @@ class Doc : IHaruObject {
     * Returns: the new Doc instance
     */
    this() {
-      void delegate(uint, uint) stdErrorHandler = delegate void(uint e, uint d) {
-         throw new HarudException(e);
-      };
+      void delegate(uint, uint) stdErrorHandler = delegate void(uint e, uint d) { throw new HarudException(e); };
       this(stdErrorHandler);
    }
 
@@ -52,11 +50,10 @@ class Doc : IHaruObject {
     */
    this(void delegate(HPDF_STATUS error_no, HPDF_STATUS detail_no) _dlg) {
       dlg = _dlg;
-      this._doc = HPDF_New(&errorHandler, cast(void*) this);
+      this._doc = HPDF_New(&errorHandler, cast(void*)this);
    }
 
-   extern (C) static void errorHandler(HPDF_STATUS error_no, HPDF_STATUS detail_no,
-      Doc doc) {
+   extern (C) static void errorHandler(HPDF_STATUS error_no, HPDF_STATUS detail_no, Doc doc) {
       doc.dlg(error_no, detail_no);
    }
 
@@ -91,20 +88,22 @@ class Doc : IHaruObject {
    }
 
    /**
-    * Creates an instance of HaruOutline object.
+    * Creates an instance of Outline object.
     *
     * Params:
-    * parent = the instance of a HaruOutline object which comes to the parent of the created outline object. If null, the outline is created as a root outline.
-    * title = the caption of the outline object.
-    * encoder = the instance of a Encoding object applied to the title. If null, PDFDocEncoding is used.
+    *  param = param description
+    *
+    * Params:
+    *   parent = the instance of a Outline object which comes to the parent of the created outline object. If null, the outline is created as a root outline.
+    *   title = the caption of the outline object.
+    *   encoder = the instance of a Encoding object applied to the title. If null, PDFDocEncoding is used.
     *
     * Returns:
-    * when createOutline() succeeds, it returns a instance of HaruOutline object. Otherwise, it returns null and error-handler is invoked.
+    * when createOutline() succeeds, it returns a instance of Outline object. Otherwise, it returns null and error-handler is invoked.
     */
    Outline createOutline(string title, Outline parent = null, Encoder encoder = null) {
-      HPDF_Outline outline = HPDF_CreateOutline(this._doc,
-         parent is null ? null : parent.getHandle(), title.toStringz(),
-         encoder is null ? null : encoder.getHandle());
+      HPDF_Outline outline = HPDF_CreateOutline(this._doc, parent is null ? null : parent.getHandle(), title.toStringz(),
+            encoder is null ? null : encoder.getHandle());
       return new Outline(outline);
    }
 
@@ -407,8 +406,7 @@ class Doc : IHaruObject {
     * it returns the name of a font. Otherwise, it returns null and error-handler is called
     */
    string loadType1FontFromFile(string afmfilename, string pfmfilename = null) {
-      return to!string(HPDF_LoadType1FontFromFile(this._doc,
-         afmfilename.toStringz(), pfmfilename.toStringz()));
+      return to!string(HPDF_LoadType1FontFromFile(this._doc, afmfilename.toStringz(), pfmfilename.toStringz()));
    }
 
    /**
@@ -423,8 +421,7 @@ class Doc : IHaruObject {
     * Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, bool embedding = false) {
-      return to!string(HPDF_LoadTTFontFromFile(this._doc, filename.toStringz(),
-         embedding ? HPDF_TRUE : HPDF_FALSE));
+      return to!string(HPDF_LoadTTFontFromFile(this._doc, filename.toStringz(), embedding ? HPDF_TRUE : HPDF_FALSE));
    }
 
    /**
@@ -439,8 +436,7 @@ class Doc : IHaruObject {
     * when loadTTFontFromFile() succeeds, it returns the name of a font. Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, uint index, bool embedding) {
-      return to!string(HPDF_LoadTTFontFromFile2(this._doc,
-         filename.toStringz(), index, embedding ? HPDF_TRUE : HPDF_FALSE));
+      return to!string(HPDF_LoadTTFontFromFile2(this._doc, filename.toStringz(), index, embedding ? HPDF_TRUE : HPDF_FALSE));
    }
 
    /**
@@ -631,8 +627,7 @@ class Doc : IHaruObject {
     * Otherwise, it returns `null` and error-handler is called.
     */
    Image loadRawImageFromFile(string filename, uint width, uint height, ColorSpace colorSpace) {
-      HPDF_Image image = HPDF_LoadRawImageFromFile(this._doc,
-         filename.toStringz(), width, height, colorSpace);
+      HPDF_Image image = HPDF_LoadRawImageFromFile(this._doc, filename.toStringz(), width, height, colorSpace);
       return new Image(image);
    }
 
@@ -655,10 +650,8 @@ class Doc : IHaruObject {
     * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
     * Otherwise, it returns `null` and error-handler is called.
     */
-   Image loadRawImageFromMem(ubyte* buf, uint width, uint height,
-      ColorSpace colorSpace, uint bitsPerComponent) {
-      HPDF_Image image = HPDF_LoadRawImageFromMem(this._doc, buf, width,
-         height, colorSpace, bitsPerComponent);
+   Image loadRawImageFromMem(ubyte* buf, uint width, uint height, ColorSpace colorSpace, uint bitsPerComponent) {
+      HPDF_Image image = HPDF_LoadRawImageFromMem(this._doc, buf, width, height, colorSpace, bitsPerComponent);
       return new Image(image);
    }
 

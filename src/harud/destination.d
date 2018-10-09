@@ -4,7 +4,7 @@ import harud;
 import harud.c.capi;
 
 /**
-* Haru PDF Destination Class. 
+* Haru PDF Destination Class.
 */
 class Destination {
    private HPDF_Destination _destination;
@@ -37,7 +37,7 @@ class Destination {
    }
 
    /**
-   * Defines the appearance of a page to magnifying to fit the width of the page within the window and setting 
+   * Defines the appearance of a page to magnifying to fit the width of the page within the window and setting
    * the top position of the page to the value of the "top" parameter.
    *
    * Params:
@@ -48,8 +48,8 @@ class Destination {
    }
 
    /**
-   * Defines the appearance of a page to magnifying to fit the 
-   * height of the page within the window and setting the left 
+   * Defines the appearance of a page to magnifying to fit the
+   * height of the page within the window and setting the left
    * position of the page to the value of the "left" parameter.
    *
    * Params:

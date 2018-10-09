@@ -107,7 +107,6 @@ extern(C) {
    /*
     *Other Functions
     */
-
    HPDF_Outline HPDF_CreateOutline(HPDF_Doc pdf, HPDF_Outline parent, const(char)* title, HPDF_Encoder encoder);
 
    HPDF_Image HPDF_LoadPngImageFromFile(HPDF_Doc pdf, const(char)* filename);
@@ -586,5 +585,4 @@ extern(C) {
 
    HPDF_STATUS HPDF_Image_SetMaskImage(HPDF_Image image,
          HPDF_Image mask_image);
-
 }
