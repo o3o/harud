@@ -96,6 +96,7 @@ class Page : IHaruObject {
       return HPDF_Page_SetSize(this._page, size, direction);
    }
 
+
    /**
     * Sets rotation angle of the page.
     *
@@ -214,6 +215,7 @@ class Page : IHaruObject {
 
    /**
     * Gets the current position for path painting.
+    *
     * An application can invoke `currentPos` only when graphics mode is GMode.pathObject.
     *
     * Returns:

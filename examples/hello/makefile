@@ -1,4 +1,4 @@
-NAME = font
+NAME = hello
 VERSION = 0.1.0
 
 ROOT_SOURCE_DIR = .
@@ -60,7 +60,6 @@ clean:
 
 clobber:
 	-rm -f $(BIN)/$(NAME)
-
 
 var:
 	@echo SRC:$(SRC)

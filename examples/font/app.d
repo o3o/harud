@@ -53,7 +53,7 @@ void main() {
       /* output subtitle. */
       page.beginText();
       page.setFontAndSize(helvetica, 16);
-      page.textOut(60, height - 80, "<Standerd Type1 fonts samples>");
+      page.textOut(60, height - 80, "<Standard Type1 fonts samples>");
       page.endText();
 
       page.beginText();

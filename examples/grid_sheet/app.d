@@ -5,7 +5,7 @@ import harud;
 import harud.c;
 
 void main() {
-   void  errorCallback(uint error_number, uint detail_number) {
+   void errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
             , getErrorDescription(error_number),
@@ -18,10 +18,8 @@ void main() {
    Page page = pdf.addPage();
 
    /// Set the current font and size for the page
-   page.setFontAndSize(helvetica, 5);
-   //page.setSize(PageSizes.A4, PageDirection.portrait);
-   page.setHeight(600);
-   page.setWidth(400);
+   page.setFontAndSize(helvetica, 10);
+   page.setSize(PageSizes.A4, PageDirection.portrait);
    printGrid(page);
    pdf.saveToFile("./grid_sheet.pdf"); /// Write to disk
 }
@@ -38,8 +36,12 @@ void printGrid(Page page) {
    writeln(page.getGMode);
 
    while (y < height) {
+<<<<<<< HEAD
       page.setAltWidth(y);
 
+=======
+      setLineWidth(page, y);
+>>>>>>> 2bb8e4f29f20b22ae43ebeeaa978aca13415b71e
       page.moveTo(0, y);
       page.lineTo(width, y);
       page.stroke();
@@ -59,7 +61,11 @@ void printGrid(Page page) {
    /* Draw vertical lines */
    x = 0;
    while (x < width) {
+<<<<<<< HEAD
       page.setAltWidth(x);
+=======
+      page.setLineWidth(x);
+>>>>>>> 2bb8e4f29f20b22ae43ebeeaa978aca13415b71e
 
       page.moveTo(x, 0);
       page.lineTo(x, height);
@@ -116,12 +122,21 @@ void printGrid(Page page) {
    page.setGrayStroke(0);
 }
 
+<<<<<<< HEAD
 private void setAltWidth(Page page, double y) {
    if (y % 10 == 0) {
       page.setLineWidth(0.5);
    } else {
       if (page.getLineWidth != 0.25) {
          page.setLineWidth(0.25);
+=======
+private void setLineWidth(Page page, double y) {
+   if (y % 10 == 0)
+      page.lineWidth = 0.5;
+   else {
+      if (page.lineWidth != 0.25) {
+         page.lineWidth = 0.25;
+>>>>>>> 2bb8e4f29f20b22ae43ebeeaa978aca13415b71e
       }
    }
 }

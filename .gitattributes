@@ -1,0 +1,3 @@
+# ignore c files in statistic https://github.com/github/linguist#troubleshooting
+*.c linguist-vendored
+*.h linguist-vendored

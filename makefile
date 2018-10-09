@@ -1,178 +1,138 @@
-# makefile relelase 0.2.0
-NAME = harud
-PROJECT_VERSION = 0.2.0
+# makefile release 0.4.0
+PROJECT_VERSION = $(getVer)
 
+#############
+# Dirs      #
+#############
 ROOT_SOURCE_DIR = src
-BIN=bin
+BIN = bin
+
+#############
+# Sources   #
+#############
 SRC = $(getSources)
-TARGET = lib
-SRC_TEST = $(SRC)
-#oppure
-#SRC_TEST = $(filter-out $(ROOT_SOURCE_DIR)/app.d, $(SRC))
-#SRC_TEST += $(wildcard tests/*.d)
 
-# Compiler flag
-# -----------
-ifeq ($(TARGET),lib)
-	DCFLAGS += -lib
-	DCFLAGS_REL += -lib
-endif
-
-DCFLAGS += $(DBG_CODE) #compile in debug code
-DCFLAGS += $(OPTIMIZE) #optimize
-DCFLAGS += -g # add symbolic debug info
-DCFLAGS += $(WARN_AS_ERR) # warnings as errors (compilation will halt)
-DCFLAGS += $(WARN_AS_MSG) # warnings as messages (compilation will continue)
-
-# release flags
-DCFLAGS_REL += $(OPTIMIZE) $(WARN_AS_MSG) -release -inline -boundscheck=off
-
-DCFLAGS_TEST += -unittest
-# DCFLAGS_TEST += -main -quiet
-
-# Linker flag
-# -----------
-DCFLAGS_LINK += $(LINKERFLAG)-lhpdf
-# DCFLAGS_LINK += $(LINKERFLAG)-L/usr/lib/
-
-# Version flag
-# -----------
-#VERSION_FLAG += -version=StdLoggerDisableLogging
-#VERSION_FLAG += -version=use_gtk
-
-# Packages
-# -----------
-PKG = $(wildcard $(BIN)/$(NAME))
-PKG_SRC = $(PKG) $(SRC) makefile
-
-# -----------
-# Test  library
-# -----------
-
-# unit-threaded
-# https://github.com/atilaneves/unit-threaded
-# -----------
-#LIB_TEST += $(D_DIR)/unit-threaded/libunit-threaded.a
-#DCFLAGS_IMPORT_TEST += -I$(D_DIR)/unit-threaded/source
-
-# dmocks-revived
-# https://github.com/QAston/DMocks-revived
-# -----------
-#LIB_TEST += $(D_DIR)/DMocks-revived/libdmocks-revived.a
-#DCFLAGS_IMPORT_TEST += -I$(D_DIR)/DMocks-revived
-
-LIB_TEST += $(LIB)
-DCFLAGS_IMPORT_TEST += $(DCFLAGS_IMPORT)
-
-###############
-# Common part
-###############
-DEFAULT: all
-
-DC = dmd
-DEPEND = $(D_DIR)/depend/depend
-
-STATIC_LIB_EXT = .a
-STATIC_LIB_PRE = lib
-ifeq ($(TARGET),lib)
-	NAME_DEBUG = $(STATIC_LIB_PRE)$(STATIC_LIBNAME)d$(STATIC_LIB_EXT)
-	NAME_REL = $(STATIC_LIB_PRE)$(STATIC_LIBNAME)$(STATIC_LIB_EXT)
+#############
+# Names     #
+#############
+SDL_FILE = dub.sdl
+ifneq ("$(wildcard $(SDL_FILE))","")
+NAME = $(getNameSdl)
 else
-	NAME_DEBUG = $(NAME)d
-	NAME_REL = $(NAME)
+NAME = $(getNameJson)
+SDL_FILE = dub.json
 endif
 
-ifeq ($(DC),gdc)
-	COMPILER=gdc
-	STATIC_LIBNAME=$(NAME)-$(COMPILER)
-	WARN_AS_ERR=-Werror
-	WARN_AS_MSG=-w
-	DBG_CODE=-fdebug
-	OUTPUT=-o
-	OPTIMIZE=-O2
-	LINKERFLAG=-Xlinker
-else
-	COMPILER=dmd
-	STATIC_LIBNAME=$(NAME)
-	WARN_AS_MSG=-wi
-	WARN_AS_ERR=-w
-	#compile in debug code
-	DBG_CODE=-debug
-	OUTPUT=-of
-	OPTIMIZE=-O
-	LINKERFLAG=-L
-endif
+BIN_NAME = $(BIN)/lib$(NAME).a
 
-NAME_TEST = test-runner
+#############
+# Packages  #
+#############
+ZIP_BIN = $(BIN_NAME)
+ZIP_SRC = $(ZIP_BIN) $(SRC) $(SDL_FILE) README.md CHANGELOG.md makefile
+ZIP_SRC += tests/*.d
+ZIP_PREFIX = $(NAME)-$(PROJECT_VERSION)
 
+
+getSources = $(shell find $(ROOT_SOURCE_DIR) -name "*.d")
+
+getVer = $(shell ag -o --nofilename '\d+\.\d+\.\d+(-\w+\.\d)?' $(ROOT_SOURCE_DIR)/$(NAME)/semver.d)
+#http://stackoverflow.com/questions/1546711/can-grep-show-only-words-that-match-search-pattern#1546735
+getNameSdl = $(shell ag -m1 --silent -o 'name\s+\"\K\w+' dub.sdl)
+getNameJson = $(shell ag -o -m1 '\"name\":\s+\"\K[[:alpha:]]+' dub.json)
+
+#############
+# Commands  #
+#############
+DUB = dub
 DSCAN = $(D_DIR)/Dscanner/bin/dscanner
 MKDIR = mkdir -p
 RM = -rm -f
 UPX = upx --no-progress
 
-BITS ?= $(shell getconf LONG_BIT)
-DCFLAGS += -m$(BITS)
+#############
+# Flags     #
+#############
+# per impostatare la configurazione conf
+# make c=conf
+# per debug
+# make b=debug
+CONFIG += $(if $(c), -c$(c))
+BUILD += $(if $(b), -b$(b))
+# make run s=timer:countdown
+SUB += $(if $(s), $(NAME):$(s))
+DUBFLAGS = -q $(CONFIG) $(BUILD) $(SUB)
 
-getSources = $(shell find $(ROOT_SOURCE_DIR) -name "*.d")
+# si usa cosi:
+# make test W=tests.common.testRunOnce
+# oppure con piu' parametri
+# make test W='tests.common.testRunOnce -d'
+WHERE += $(if $(W), $(W))
+SEP = $(if $(WHERE), -- )
 
-# Version flag
-# use: make VERS=x
-# -----------
-VERSION_FLAG += $(if $(VERS), -version=$(VERS), )
+.PHONY: all release force run run-rel test btest upx dx rx pkgall pkg pkgtar pkgsrc up tags style syn loc clean clobber pb pc pp ver var help
 
-.PHONY: all clean clobber test testv run pkg pkgsrc tags syn style loc var ver help release
+DEFAULT: all
 
-all: builddir $(BIN)/$(NAME_DEBUG)
-release: builddir $(BIN)/$(NAME_REL)
-deps: deps.pdf 
-deps2: deps2.pdf 
+all:
+	$(DUB) build $(DUBFLAGS)
 
-builddir:
-	@$(MKDIR) $(BIN)
+build-ldc:
+	$(DUB) build $(DUBFLAGS) --compiler=ldc
 
-$(BIN)/$(NAME_DEBUG): $(SRC) $(LIB)| builddir
-	$(DC) $^ $(VERSION_FLAG) $(DCFLAGS) $(DCFLAGS_IMPORT) $(DCFLAGS_LINK) $(DCFLAGS_J) $(OUTPUT)$@
+release:
+	$(DUB) build -brelease $(DUBFLAGS)
 
-$(BIN)/$(NAME_REL): $(SRC) $(LIB)| builddir
-	$(DC) $^ $(VERSION_FLAG) $(DCFLAGS_REL) $(DCFLAGS_IMPORT) $(DCFLAGS_LINK) $(DCFLAGS_J) $(OUTPUT)$@
-ifdef COMPRESS
-	$(UPX) $@
-endif
+rel-ldc:
+	$(DUB) build -brelease --compiler=ldc $(DUBFLAGS)
 
-deps2.pdf: dependencies
-	$(DEPEND) --filter='src' --dot dependencies | dot -Tpdf -o $@
+force:
+	$(DUB) build --force --combined $(DUBFLAGS)
 
-deps.pdf: dependencies
-	$(DEPEND) --filter='src' --dot dependencies | tred | dot -Tpdf -o $@
+run:
+	$(DUB) run $(DUBFLAGS)
+run-rel:
+	$(DUB) run -brelease $(DUBFLAGS)
 
-dependencies: $(SRC)
-	$(DC) -deps=dependencies $^ -c $(DCFLAGS) $(DCFLAGS_IMPORT) $(DCFLAGS_J) $(OUTPUT)/dev/null
+test:
+	$(DUB) test -q $(SEP) $(WHERE)
+testd:
+	$(DUB) test -q -- -d $(WHERE)
+testc:
+	$(DUB) test -q -- -c $(WHERE)
+testl:
+	$(DUB) test -q -- -l
 
-run: all
-	$(BIN)/$(NAME_DEBUG)
+btest:
+	$(DUB) build -cunittest -q
 
-## with unit_threaded:
-## make test T=test_name
-test: build_test
-	@$(BIN)/$(NAME_TEST) $(T)
-
-testv: build_test
-	@$(BIN)/$(NAME_TEST) -d $(T)
-
-build_test: $(BIN)/$(NAME_TEST)
-
-$(BIN)/$(NAME_TEST): $(SRC_TEST) $(LIB_TEST)| builddir
-	$(DC) $^ $(VERSION_FLAG) $(DCFLAGS_TEST) $(DCFLAGS_IMPORT_TEST) $(DCFLAGS_LINK) $(DCFLAGS_J) $(OUTPUT)$@
+dx: all upx
+rx: release upx
+upx: $(BIN)/$(NAME)
+	$(UPX) $^
 
 pkgdir:
 	$(MKDIR) pkg
 
-pkg: $(PKG) | pkgdir
-	tar -jcf pkg/$(NAME)-$(PROJECT_VERSION).tar.bz2 $^
-	zip pkg/$(NAME)-$(PROJECT_VERSION).zip $^
+pkgall: pkg pkgtar pkgsrc
 
-pkgsrc: $(PKG_SRC) | pkgdir
-	tar -jcf pkg/$(NAME)-$(PROJECT_VERSION)-src.tar.bz2 $^
+pkg: pkgdir | pkg/$(ZIP_PREFIX).zip
+
+pkg/$(ZIP_PREFIX).zip: $(ZIP_BIN)
+	zip $@ $(ZIP_BIN)
+
+pkgtar: pkgdir | pkg/$(ZIP_PREFIX).tar.bz2
+
+pkg/$(ZIP_PREFIX).tar.bz2: $(ZIP_BIN)
+	tar -jcf $@ $^
+
+pkgsrc: pkgdir | pkg/$(ZIP_PREFIX)-src.tar.bz2
+
+pkg/$(ZIP_PREFIX)-src.tar.bz2: $(ZIP_SRC)
+	tar -jcf $@ $^
+
+up:
+	$(DUB) upgrade
 
 tags: $(SRC)
 	$(DSCAN) --ctags $^ > tags
@@ -186,64 +146,107 @@ syn: $(SRC)
 loc: $(SRC)
 	$(DSCAN) --sloc $^
 
+imp: $(SRC)
+	$(DSCAN) -i $^
+
 clean:
-	$(RM) $(BIN)/*.o
-	$(RM) $(BIN)/*.log
-	$(RM) $(BIN)/__*
-	$(RM) $(BIN)/$(NAME_TEST)
-	$(RM) deps.pdf
-	$(RM) deps2.pdf
-	$(RM) dependencies
+	$(DUB) clean
 
 clobber: clean
-	$(RM) $(BIN)/$(NAME_REL)
-	$(RM) $(BIN)/$(NAME_DEBUG)
+	$(RM) $(BIN_NAME)
+	$(RM) $(BIN)/*.log
+	$(RM) $(BIN)/test-runner
+
+pb:
+	@$(DUB) build  --print-builds
+pc:
+	$(DUB) build  --print-configs
+pp:
+	$(DUB) build  --print-platform
+
+changelog: CHANGELOG.txt
+CHANGELOG.txt: CHANGELOG.md
+	pandoc -f markdown_github -t plain $^ > $@
 
 ver:
 	@echo $(PROJECT_VERSION)
 
 var:
 	@echo
-	@echo NAME:       $(NAME)
-	@echo NAME_DEBUG: $(NAME_DEBUG)
-	@echo NAME_REL:   $(NAME_REL)
-	@echo TARGET:     $(TARGET)
-	@echo COMPRESS:   $(COMPRESS)
-	@echo PRJ_VER:    $(PROJECT_VERSION)
+	@echo "General"
+	@echo "--------------------"
+	@echo "NAME     :" $(NAME)
+	@echo "BIN_NAME :" $(BIN_NAME)
+	@echo "PRJ_VER  :" $(PROJECT_VERSION)
+	@echo "DUBFLAGS :" $(DUBFLAGS)
+	@echo "DUB FILE :" $(SDL_FILE)
 	@echo
-	@echo D_DIR: $(D_DIR)
-	@echo BIN:   $(BIN)
-	@echo SRC:   $(SRC)
-	@echo LIB:   $(LIB)
+	@echo "Directory"
+	@echo "--------------------"
+	@echo "D_DIR           :" $(D_DIR)
+	@echo "BIN             :" $(BIN)
+	@echo "ROOT_SOURCE_DIR :" $(ROOT_SOURCE_DIR)
+	@echo "TEST_SOURCE_DIR :" $(TEST_SOURCE_DIR)
 	@echo
-	@echo DC:      $(DC)
-	@echo DCFLAGS: $(DCFLAGS)
-	@echo DCFLAGS_LINK: $(DCFLAGS_LINK)
-	@echo DCFLAGS_IMPORT: $(DCFLAGS_IMPORT)
-	@echo VERSION: $(VERSION_FLAG)
+	@echo "Zip"
+	@echo "--------------------"
+	@echo "ZIP_BIN    : " $(ZIP_BIN)
+	@echo "ZIP_PREFIX :" $(ZIP_PREFIX)
+	@echo 
+	@echo "Zip source"
+	@echo "--------------------"
+	@echo $(ZIP_SRC)
 	@echo
-	@echo ==== test ===
-	@echo NAME_TEST: $(NAME_TEST)
-	@echo SRC_TEST: $(SRC_TEST)
-	@echo DCFLAGS_IMPORT_TEST: $(DCFLAGS_IMPORT_TEST)
-	@echo LIB_TEST: $(LIB_TEST)
+	@echo "Source"
+	@echo "--------------------"
+	@echo $(SRC)
 	@echo
-	@echo T: $(T)
 
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
-	@echo "... all (the default if no target is provided)"
-	@echo "... test"
-	@echo "... testv Runs unitt_threded test in verbose (-debug) mode"
-	@echo "... run"
-	@echo "... clean"
-	@echo "... clobber"
-	@echo "... pkg Generates a binary package"
-	@echo "... pkgsrc Generates a source package"
-	@echo "... tags Generates tag file"
-	@echo "... style Checks programming style"
-	@echo "... syn"
-	@echo "... upx Compress using upx"
-	@echo "... loc Counts lines of code"
-	@echo "... var Lists all variables"
+	@echo "Compile"
+	@echo "--------------------"
+	@echo "   all     : (the default if no target is provided)"
+	@echo "   release : Compiles in release mode"
+	@echo "   rel-ldc : Compiles in release mode with ldc compiler"
+	@echo "   force   : Forces a recompilation"
+	@echo "   run     : Builds and runs"
+	@echo "   test    : Build and executes the tests"
+	@echo "   testd   : Build and executes the tests in debug mode"
+	@echo "   testc   : Build and executes the tests with execution time"
+	@echo "   btest   : Build the tests"
+	@echo "   upx     : Compress using upx"
+	@echo "   dx      : Make debug and compress using upx"
+	@echo "   rx      : Make release and compress using upx"
+	@echo ""
+	@echo "Pack"
+	@echo "--------------------"
+	@echo "   pkgall : Executes pkg, pkgtar, pkgsrc"
+	@echo "   pkg    : Zip binary"
+	@echo "   pkgtar : Tar binary"
+	@echo "   pkgsrc : Tar source"
+	@echo ""
+	@echo "Utility"
+	@echo "--------------------"
+	@echo "   up      : Forces an upgrade of all dub dependencies"
+	@echo "   tags    : Generates tag file"
+	@echo "   style   : Checks programming style"
+	@echo "   syn     : Syntax check"
+	@echo "   loc     : Counts lines of code"
+	@echo "   clean   : Removes intermediate build files"
+	@echo "   clobber : Removes all"
+	@echo ""
+	@echo "Print"
+	@echo "--------------------"
+	@echo "   pb  : Prints the list of available build types"
+	@echo "   pc  : Prints the list of available configurations"
+	@echo "   pp  : Prints the identifiers for the current build platform as used for the build fields"
+	@echo "   ver : Prints version"
+	@echo "   var : Lists all variables"
+	@echo ""
+	@echo "Common options"
+	@echo "--------------------"
+	@echo "   make c=conf  : Uses 'conf' configuration"
+	@echo "   make b=debug : Uses 'debug' build"
+	@echo "   make s=y     : Uses 'y' subpakages"
