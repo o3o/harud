@@ -8,21 +8,21 @@ void main() {
    void  errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
-            , getErrorDescription(error_number), 
+            , getErrorDescription(error_number),
             detail_number);
    }
 
 
    try {
       Doc pdf = new Doc(&errorCallback);
-      Font helvetica = pdf.getFont("Helvetica"); 
+      Font helvetica = pdf.getFont("Helvetica");
 
       Page page = pdf.addPage();
       page.rectangle(0, 0, 100, 100);
       page.rectangle(100, 100, 100, 100);
       page.stroke();
 
-      auto status = page.setFontAndSize(helvetica, 10); 
+      auto status = page.setFontAndSize(helvetica, 10);
 
       /* Line dash pattern */
       testLineDashPattern(page);
@@ -35,7 +35,7 @@ void main() {
 
 private void testLineDashPattern(Page page) {
    /* Line dash pattern */
-   page.lineWidth = 1.0;
+   page.setLineWidth(1.0);
 
    enum ushort[] NN = [0, 0, 0, 0, 0, 0, 0, 0];
    enum ushort[] DASH_MODE1 = [3];
@@ -76,7 +76,7 @@ private void testLineDashPattern(Page page) {
 
    page.setDashDot();
    drawLine(page, 60, 440, "DASH_DOT");
-   
+
    page.setDashed();
    drawLine(page, 60, 410, "DASHED");
    page.setDotted();

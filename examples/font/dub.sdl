@@ -1,0 +1,4 @@
+name "font"
+targetType "executable"
+dependency "harud" path="../../"
+sourceFiles "app.d"

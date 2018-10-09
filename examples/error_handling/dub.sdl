@@ -1,0 +1,4 @@
+name "err"
+targetType "executable"
+dependency "harud" path="../../"
+sourceFiles "app.d"

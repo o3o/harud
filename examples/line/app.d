@@ -8,56 +8,56 @@ void main() {
    void  errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
-            , getErrorDescription(error_number), 
+            , getErrorDescription(error_number),
             detail_number);
    }
 
 
    try {
       Doc pdf = new Doc(&errorCallback);
-      Font helvetica = pdf.getFont("Helvetica"); 
+      Font helvetica = pdf.getFont("Helvetica");
 
       Page page = pdf.addPage();
 
       page.drawBorder();
-      auto status = page.setFontAndSize(helvetica, 10); 
+      auto status = page.setFontAndSize(helvetica, 10);
 
       /* Draw verious widths of lines. */
-      page.lineWidth =  0;
+      page.setLineWidth( 0);
       page.drawLine( 60, 770, "line width = 0");
 
-      page.lineWidth = 1.0;
+      page.setLineWidth(1.0);
       page.drawLine(60, 740, "line width = 1.0");
 
-      page.lineWidth = 2.0;
+      page.setLineWidth(2.0);
       page.drawLine(60, 710, "line width = 2.0");
 
 
       /* set big green line */
-      page.lineWidth = 30;
+      page.setLineWidth(30);
       page.setRGBStroke(0.0, 0.5, 0.0);
 
       /* Line Cap Style */
-      page.lineCap =  HaruLineCap.buttEnd;
+      page.setLineCap( HaruLineCap.buttEnd);
       drawLine2(page, 60, 570, "PDF_BUTT_END");
 
-      page.lineCap = HaruLineCap.roundEnd;
+      page.setLineCap(HaruLineCap.roundEnd);
       drawLine2(page, 60, 505, "PDF_ROUND_END");
 
-      page.lineCap = HaruLineCap.projectingScuareEnd;
+      page.setLineCap(HaruLineCap.projectingScuareEnd);
       drawLine2(page, 60, 440, "PDF_PROJECTING_SCUARE_END");
 
-      page.lineWidth = 30;
+      page.setLineWidth(30);
       page.setRGBStroke(0.0, 0.5, 0.0);
 
       /* Line dash pattern */
          testLineDashPattern(page);
 
       /* Line Join Style */
-      page.lineWidth = 30;
+      page.setLineWidth(30);
       page.setRGBStroke(0.0, 0.0, 0.5);
 
-      page.lineJoin = HaruLineJoin.miterJoin;
+      page.setLineJoin(HaruLineJoin.miterJoin);
       page.drawHat(120, 300);
 
       page.beginText();
@@ -65,8 +65,8 @@ void main() {
       page.showText("PDF_MITER_JOIN");
       page.endText();
 
-      page.lineJoin = HaruLineJoin.roundJoin;
-      writeln("LJ ", page.lineJoin);
+      page.setLineJoin(HaruLineJoin.roundJoin);
+      writeln("LJ ", page.getLineJoin);
 
       page.drawHat(120, 195);
 
@@ -76,7 +76,7 @@ void main() {
       page.endText();
 
 
-      page.lineJoin = HaruLineJoin.bevelJoin;
+      page.setLineJoin(HaruLineJoin.bevelJoin);
       page.drawHat(120, 90);
 
       page.beginText();
@@ -85,7 +85,7 @@ void main() {
       page.endText();
 
       /* Draw Rectangle */
-      page.lineWidth = 2;
+      page.setLineWidth(2);
       page.setRGBStroke(0, 0, 0);
       page.setRGBFill(0.75, 0.0, 0.0);
 
@@ -107,7 +107,7 @@ void main() {
 
 private void testLineDashPattern(Page page) {
    /* Line dash pattern */
-   page.lineWidth = 1.0;
+   page.setLineWidth(1.0);
 
    enum ushort[] NN = [0, 0, 0, 0, 0, 0, 0, 0];
    enum ushort[] DASH_MODE1 = [3];
@@ -127,8 +127,8 @@ private void testLineDashPattern(Page page) {
 }
 
 void drawBorder(Page page) {
-   page.lineWidth = 1;
-   page.rectangle(50, 50, page.width - 100, page.height - 110);
+   page.setLineWidth(1);
+   page.rectangle(50, 50, page.getWidth - 100, page.getHeight - 110);
    page.stroke();
 }
 

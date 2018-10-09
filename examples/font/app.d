@@ -1,7 +1,6 @@
-import std.stdio;
-
-import harud;
 import harud.c;
+import harud;
+import std.stdio;
 
 void main() {
    void  errorCallback(uint error_number, uint detail_number) {
@@ -35,10 +34,10 @@ void main() {
       Doc pdf = new Doc(&errorCallback);
       Page page = pdf.addPage();
 
-      float height = page.height;
-      float width = page.width;
+      float height = page.getHeight;
+      float width = page.getWidth;
       /* Print the lines of the page. */
-      page.lineWidth = 1;
+      page.setLineWidth(1);
       page.rectangle(50, 50, width - 100, height - 110);
       page.stroke();
 

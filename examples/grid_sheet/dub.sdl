@@ -1,0 +1,4 @@
+name "grid_sheet"
+targetType "executable"
+dependency "harud" path="../../"
+sourceFiles "app.d"

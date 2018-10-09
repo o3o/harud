@@ -137,7 +137,7 @@ class Doc : IHaruObject {
     * Returns:
     * it returns the instance of a current Page object. Otherwise it returns NULL.
     */
-   @property Page currentPage() {
+   Page getCurrentPage() {
       return new Page(HPDF_GetCurrentPage(this._doc));
    }
 
@@ -201,7 +201,7 @@ class Doc : IHaruObject {
    in {
       assert(fontName.length > 0);
    }
-   body {
+   do {
       return new Font(HPDF_GetFont(this._doc, fontName.toStringz(), null));
    }
 
@@ -293,7 +293,7 @@ class Doc : IHaruObject {
     * Returns:
     * the current setting for $(LINK2 harud/c/types/PageLayout.html, PageLayout)
     */
-   @property PageLayout pageLayout() {
+   PageLayout getPageLayout() {
       return HPDF_GetPageLayout(this._doc);
    }
 
@@ -305,7 +305,7 @@ class Doc : IHaruObject {
     * Params:
     * layout = $(LINK2 harud/c/types/PageLayout.html, PageLayout) value
     */
-   @property void pageLayout(PageLayout layout) {
+   void setPageLayout(PageLayout layout) {
       HPDF_SetPageLayout(this._doc, layout);
    }
 
@@ -315,7 +315,7 @@ class Doc : IHaruObject {
     * Returns:
     * the current setting for $(LINK2 harud/c/types/PageMode.html, PageMode)
     */
-   @property PageMode pageMode() {
+   PageMode getPageMode() {
       return HPDF_GetPageMode(this._doc);
    }
 
@@ -325,7 +325,7 @@ class Doc : IHaruObject {
     * Params:
     * mode = Page mode $(LINK2 harud/c/types/PageMode.html, PageMode)
     */
-   @property void pageMode(PageMode mode) {
+   void setPageMode(PageMode mode) {
       HPDF_SetPageMode(this._doc, mode);
    }
 

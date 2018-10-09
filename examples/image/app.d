@@ -1,35 +1,33 @@
-import std.stdio;
-import std.conv;
-import std.string;
-import std.math;
-
 import harud;
-//import harud.c;
+import std.conv;
+import std.math;
+import std.stdio;
+import std.string;
 
 void main() {
  void  errorCallback(uint error_number, uint detail_number) {
       writefln("err %x, %s, (num %x)"
             , error_number
-            , getErrorDescription(error_number), 
+            , getErrorDescription(error_number),
             detail_number);
    }
 
    try {
       Doc pdf = new Doc(&errorCallback);
       pdf.setCompressionMode(CompressionMode.all);
-      Font helvetica = pdf.getFont("Helvetica"); 
+      Font helvetica = pdf.getFont("Helvetica");
 
       Page page = pdf.addPage();
-      page.width = 550;
-      page.height = 500;
+      page.setWidth(550);
+      page.setHeight(500);
       Destination dst = page.createDestination();
       writeln(hasDoc(pdf));
-      
+
       pdf.setOpenAction(dst.destinationHandle());
 
       page.beginText();
       page.setFontAndSize(helvetica, 20);
-      page.moveTextPos(220, page.height - 70);
+      page.moveTextPos(220, page.getHeight - 70);
       page.showText("ImageDemo");
       page.endText();
 
@@ -38,12 +36,12 @@ void main() {
       Image image2 = pdf.getPngImage("basn0g01.png");
       Image image3 = pdf.getPngImage("maskimage.png");
 
-      double iw = image.width;
-      double ih = image.height;
-      page.lineWidth = 0.5;
+      double iw = image.getWidth;
+      double ih = image.getHeight;
+      page.setLineWidth(0.5);
 
       double x = 100;
-      double y = page.height - 150;
+      double y = page.getHeight - 150;
 
       page.drawImage(image, x, y, iw, ih);
       showDescription(page, x, y, "Actual Size");
@@ -52,7 +50,7 @@ void main() {
 
       /* Scalling image (X direction) */
       page.drawImage(image, x, y, iw * 1.5, ih);
-      showDescription (page, x, y, "Scalling image (X direction)");
+      showDescription(page, x, y, "Scalling image (X direction)");
 
       x += 150;
       /* Scalling image (Y direction). */
@@ -141,7 +139,7 @@ void showDescription(Page page, float x, float y, string text) {
    page.lineTo(x + 10, y);
    page.stroke();
 
-   page.setFontAndSize(page.currentFont, 8);
+   page.setFontAndSize(page.getCurrentFont, 8);
    page.setRGBFill(0, 0, 0);
 
    page.beginText();

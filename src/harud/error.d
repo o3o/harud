@@ -1,6 +1,6 @@
 /**
-* This module defines error code and functions related to exceptions and general error handling. 
-*/
+ * This module defines error code and functions related to exceptions and general error handling.
+ */
 module harud.error;
 
 /* error-code */
@@ -126,12 +126,12 @@ enum uint NAME_CANNOT_GET_NAMES = 0x1084;
 enum uint INVALID_ICC_COMPONENT_NUM = 0x1085;
 
 /**
-* Returns a error description from error code
-*
-* Params:  errorNo = error number
-*
-* Returns: Error description value
-*/
+ * Returns a error description from error code
+ *
+ * Params:  errorNo = error number
+ *
+ * Returns: Error description value
+ */
 string getErrorDescription(uint errorNo) {
    switch (errorNo) {
       case ARRAY_COUNT_ERR: return "Array count err";
@@ -247,8 +247,8 @@ string getErrorDescription(uint errorNo) {
 }
 
 /**
-* Thrown if errors that set errno occur.
-*/
+ * Thrown if errors that set errno occur.
+ */
 class HarudException: Exception {
    this(uint errCode) {
       this.errCode = errCode;
@@ -258,7 +258,7 @@ class HarudException: Exception {
    this(string msg, string file = __FILE__, int line = __LINE__) {
       super(msg, file, line);
    }
-   
+
    private uint _errCode;
    @property uint errCode() const pure nothrow { return _errCode; }
    @property void errCode(uint rhs) pure nothrow { _errCode = rhs; }

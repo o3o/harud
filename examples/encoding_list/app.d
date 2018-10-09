@@ -1,10 +1,8 @@
-import std.stdio;
-import std.conv;
-import std.string;
-
-import harud;
 import harud.c;
-
+import harud;
+import std.conv;
+import std.stdio;
+import std.string;
 
 enum int PAGE_WIDTH = 420;
 enum int PAGE_HEIGHT = 400;
@@ -15,11 +13,11 @@ enum int CELL_HEADER = 10;
 void main() {
    Doc pdf = new Doc();
    pdf.setCompressionMode(CompressionMode.all);
-   pdf.pageMode = PageMode.useOutline;
+   pdf.setPageMode(PageMode.useOutline);
 
-   Font helvetica = pdf.getFont("Helvetica"); 
-   string font_name 
-      = pdf.loadType1FontFromFile("type1/a010013l.afm", "type1/a010013l.pfb"); 
+   Font helvetica = pdf.getFont("Helvetica");
+   string font_name
+      = pdf.loadType1FontFromFile("type1/a010013l.afm", "type1/a010013l.pfb");
 
    Outline root = pdf.createOutline("Encoding list");
    root.setOpened(true);
@@ -51,13 +49,13 @@ void main() {
 
    foreach (enc; encodings) {
       Page page = pdf.addPage(); /// Add a new page to the document
-      page.width = PAGE_WIDTH;
-      page.height = PAGE_HEIGHT;
+      page.setWidth(PAGE_WIDTH);
+      page.setHeight(PAGE_HEIGHT);
 
       Outline outline = pdf.createOutline(enc, root);
 
       Destination dest = page.createDestination();
-      dest.setXYZ(0, page.height, 1);
+      dest.setXYZ(0, page.getHeight, 1);
       outline.setDestination(dest);
       page.setFontAndSize(helvetica, 15);
       drawGraph(page);
@@ -90,7 +88,7 @@ void drawGraph(Page page) {
    /* Draw 16 X 15 cells */
 
    /* Draw vertical lines. */
-   page.lineWidth = 0.5f;
+   page.setLineWidth(0.5f);
 
    for (i = 0; i <= 17; i++) {
       int x = i * CELL_WIDTH + 40;
@@ -102,7 +100,7 @@ void drawGraph(Page page) {
       if (i > 0 && i <= 16) {
          page.beginText();
          page.moveTextPos(x + 5, PAGE_HEIGHT - 75);
-         buf = format("%X", i - 1); 
+         buf = format("%X", i - 1);
 
          page.showText(buf);
          page.endText();
@@ -120,7 +118,7 @@ void drawGraph(Page page) {
       if (i < 14) {
          page.beginText();
          page.moveTextPos(45, y + 5);
-         buf = format("%X", 15 - i); 
+         buf = format("%X", 15 - i);
          page.showText(buf);
          page.endText();
       }
@@ -139,18 +137,16 @@ void drawFonts(Page page) {
          int y = PAGE_HEIGHT - 55 - ((i - 1) * CELL_HEIGHT);
          int x = j * CELL_WIDTH + 50;
 
-         char buf[2];
+         char[2] buf;
          buf[1] = 0x00;
          buf[0] = to!(char)((i - 1) * 16 + (j - 1));
          if (buf[0] >= 32) {
             double d;
             string s = to!string(buf);
-            d  = x - page.textWidth(s) / 2;
+            d  = x - page.getTextWidth(s) / 2;
             page.textOut(d, y, s);
          }
       }
    }
-
    page.endText();
 }
-
