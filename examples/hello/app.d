@@ -10,7 +10,7 @@ void main() {
 
       Page page = pdf.addPage(); /// Add a new page to the document
 
-      writeln("page width:", page.width);
+      writeln("page width:", page.getWidth);
 
       auto status = page.setFontAndSize(helvetica, 60);   /// Set the current font and size for the page
       writeln("set font width:", 60, " status", status);

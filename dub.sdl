@@ -3,16 +3,7 @@ description "D binding to libharu"
 authors "Orfeo Da Via'"
 copyright "Copyright © 2015, o3o"
 license "MIT License"
-<<<<<<< HEAD
 dependency "silly" version="~>0.8.0"
 targetType "library"
 targetPath "bin"
 libs "hpdf"
-
-// see https://github.com/MartinNowak/scod
-x:ddoxTool "scod"
-=======
-targetType "library"
-targetPath "bin"
-libs "hpdf"
->>>>>>> 2bb8e4f29f20b22ae43ebeeaa978aca13415b71e
