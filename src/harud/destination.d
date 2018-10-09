@@ -82,20 +82,22 @@ class Destination {
    }
 
    /**
-   * Defines the appearance of a page to magnifying to fit the width of the bounding box of the page within the window and setting the top position of the page to the value of the "top" parameter.
+   * Defines the appearance of a page to magnifying to fit the width of the bounding box of the page within the window
+   * and setting the top position of the page to the value of the "top" parameter.
    *
    * Params:
-   *   top = The top coordinates of the page.
+   *  top = The top coordinates of the page.
    */
    HPDF_STATUS setFitBH(float top) {
       return HPDF_Destination_SetFitBH(this._destination, top);
    }
 
    /**
-   * Defines the appearance of a page to magnifying to fit the height of the bounding box of the page within the window and setting the left position of the page to the value of the "left" parameter.
+   * Defines the appearance of a page to magnifying to fit the height of the bounding box of the page within the window
+   * and setting the left position of the page to the value of the "left" parameter.
    *
    * Params:
-   *   left - The left coordinates of the page.
+   *  left = The left coordinates of the page.
    */
    HPDF_STATUS setFitBV(float left) {
       return HPDF_Destination_SetFitBV(this._destination, left);

@@ -70,17 +70,17 @@ class Doc : IHaruObject {
     * Adds a page labeling range for the document
     *
     * Params:
-    * page_num = the first page that applies this labeling range
-    * style = one of the following numbering styles:
+    *  page_num = the first page that applies this labeling range
+    *  style = one of the following numbering styles:
     *
-    * $(LI PageNumStyle.DECIMAL - Arabic numerals (1 2 3 4))
-    * $(LI PageNumStyle.UPPER_ROMAN - Uppercase roman numerals (I II III IV))
-    * $(LI PageNumStyle.LOWER_ROMAN - Lowercase roman numerals (i ii iii iv))
-    * $(LI PageNumStyle.UPPER_LETTERS - Uppercase letters (A B C D))
-    * $(LI PageNumStyle,LOWER_LETTERS - Lowercase letters (a b c d))
+    *  $(LI PageNumStyle.DECIMAL - Arabic numerals (1 2 3 4))
+    *  $(LI PageNumStyle.UPPER_ROMAN - Uppercase roman numerals (I II III IV))
+    *  $(LI PageNumStyle.LOWER_ROMAN - Lowercase roman numerals (i ii iii iv))
+    *  $(LI PageNumStyle.UPPER_LETTERS - Uppercase letters (A B C D))
+    *  $(LI PageNumStyle,LOWER_LETTERS - Lowercase letters (a b c d))
     *
-    * first_page = the first page number to use
-    * prefix - the prefix for the page label. (null is allowed.)
+    *  first_page = the first page number to use
+    *  prefix = the prefix for the page label. (null is allowed.)
     */
    HPDF_STATUS addPageLabel(uint page_num, PageNumStyle style, uint first_page, string prefix = null) {
       return HPDF_AddPageLabel(this._doc, page_num, style, first_page, prefix.toStringz());
@@ -90,12 +90,9 @@ class Doc : IHaruObject {
     * Creates an instance of Outline object.
     *
     * Params:
-    *  param = param description
-    *
-    * Params:
-    *   parent = the instance of a Outline object which comes to the parent of the created outline object. If null, the outline is created as a root outline.
-    *   title = the caption of the outline object.
-    *   encoder = the instance of a Encoding object applied to the title. If null, PDFDocEncoding is used.
+    *  parent = the instance of a Outline object which comes to the parent of the created outline object. If null, the outline is created as a root outline.
+    *  title = the caption of the outline object.
+    *  encoder = the instance of a Encoding object applied to the title. If null, PDFDocEncoding is used.
     *
     * Returns:
     * when createOutline() succeeds, it returns a instance of Outline object. Otherwise, it returns null and error-handler is invoked.
@@ -144,7 +141,7 @@ class Doc : IHaruObject {
     * Gets an instance of a Encoder object by specified encoding name
     *
     * Params:
-    * encodingName - a valid encoding name
+    *  encodingName = a valid encoding name
     *
     * Returns:
     * when getEncoder() succeeds, it returns an instance of a Encoder object. Otherwise, it returns null and error-handler is called
@@ -251,14 +248,15 @@ class Doc : IHaruObject {
     * Sets the text of an info dictionary attribute, using current encoding of the document
     *
     * Params:
-    * type = one of the following:
-    * $(UL
-    * $(LI HaruInfo.author)
-    * $(LI HaruInfo.creator)
-    * $(LI HaruInfo.title)
-    * $(LI HaruInfo.subject)
-    * $(LI HaruInfo.keywords)
-    * )
+    *  type = one of the following:
+    *  $(UL
+    *  $(LI HaruInfo.author)
+    *  $(LI HaruInfo.creator)
+    *  $(LI HaruInfo.title)
+    *  $(LI HaruInfo.subject)
+    *  $(LI HaruInfo.keywords)
+    *  )
+    *  value = text
     */
    HPDF_STATUS setInfoAttr(HaruInfoType type, string value) {
       return HPDF_SetInfoAttr(this._doc, type, value.toStringz());
@@ -674,14 +672,13 @@ class Doc : IHaruObject {
     * Sets a datetime attribute in the info dictionary.
     *
     * Params:
-    * type = one of the following attributes:
+    *  type = one of the following attributes:
+    *  $(UL
+    *  $(LI HaruInfo.CREATION_DATE)
+    *  $(LI HaruInfo.MOD_DATE)
+    *  )
     *
-    * $(UL
-    * $(LI HaruInfo.CREATION_DATE)
-    * $(LI HaruInfo.MOD_DATE)
-    * )
-    *
-    * value - The new value for the attribute.
+    *  value = The new value for the attribute.
     *
     * See_Also:
     * HaruDate
@@ -694,8 +691,8 @@ class Doc : IHaruObject {
     * Sets a password for the document. If the password is set, document contents are encrypted
     *
     * Params:
-    * ownerPassword = The password for the owner of the document. The owner can change the permission of the document. null, zero length string, and the same value as user password are not allowed.
-    * userPassword = The password for the user of the document. The userPassword may be set to null or zero length string.
+    *  ownerPasswd = The password for the owner of the document. The owner can change the permission of the document. null, zero length string, and the same value as user password are not allowed.
+    *  userPasswd = The password for the user of the document. The userPassword may be set to null or zero length string.
     *
     */
    HPDF_STATUS setPassword(string ownerPasswd, string userPasswd = null) {

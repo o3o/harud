@@ -1,0 +1,12 @@
+name "harud"
+description "D binding to libharu"
+authors "Orfeo Da Via'"
+copyright "Copyright © 2015, o3o"
+license "MIT License"
+dependency "silly" version="~>0.8.0"
+targetType "library"
+targetPath "bin"
+libs "hpdf"
+
+// see https://github.com/MartinNowak/scod
+x:ddoxTool "scod"

@@ -157,8 +157,8 @@ class Page : IHaruObject {
     * Creates a new web link Annotation instance object for the page.
     *
     * Params:
-    * rect = A rectangle of clickable area.
-    * dst = A handle of destination object to jump to.
+    *  rect = A rectangle of clickable area.
+    *  uri = A handle of destination object to jump to.
     *
     * Returns:
     * returns an instance of a Annotation object. If it failed, it returns null.
@@ -287,7 +287,7 @@ class Page : IHaruObject {
     * Sets the shape to be used at the ends of lines.
     *
     * Params:
-    *  lineCap - The line cap style.
+    *  lineCap = The line cap style.
     *
     */
    void setLineCap(HaruLineCap lineCap) {
@@ -596,7 +596,9 @@ class Page : IHaruObject {
     * Sets the filling color.
     *
     * Params:
-    * r, g, b = The level of each color element. They must be between 0 and 1. (See "Colors")
+    *  r = The level of red color element. They must be between 0 and 1. (See "Colors")
+    *  g = The level of green color element. They must be between 0 and 1. (See "Colors")
+    *  b = The level of blue color element. They must be between 0 and 1. (See "Colors")
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -676,7 +678,7 @@ class Page : IHaruObject {
     * Sets the filling color.
     *
     * Params:
-    * value = The value of the gray level between 0 and 1.
+    *  gray = The value of the gray level between 0 and 1.
     *
     * ## Graphics Mode
     * Before and after - GMode.pagedescription or GMode.textObject.
