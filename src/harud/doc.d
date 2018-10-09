@@ -221,7 +221,7 @@ class Doc : IHaruObject {
       assert(fontName.length > 0);
       assert(encodingName.length > 0);
    }
-   body {
+   do {
       return new Font(HPDF_GetFont(this._doc, fontName.toStringz(), encodingName.toStringz()));
    }
 
