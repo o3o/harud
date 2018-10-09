@@ -30,7 +30,7 @@ class Encoder : IHaruObject {
    *    a $(LINK2 harud/c/types/HaruByteType.html, HaruByteType) value
    */
    HaruByteType getByteType(char[] text, uint index) {
-      return HPDF_Encoder_GetByteType(this._encoder, cast(char*) text, index);
+      return HPDF_Encoder_GetByteType(this._encoder, cast(char*)text, index);
    }
 
    /**

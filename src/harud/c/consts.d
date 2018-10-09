@@ -38,7 +38,7 @@ enum int HPDF_DEF_RISE = 0;
 enum int HPDF_DEF_RAISE = HPDF_DEF_RISE;
 enum int HPDF_DEF_LINEWIDTH = 1;
 enum int HPDF_DEF_LINECAP = 0; /* HPDF_BUTT_END */
-enum int HPDF_DEF_LINEJOIN = 0;/* HPDF_MITER_JOIN */
+enum int HPDF_DEF_LINEJOIN = 0; /* HPDF_MITER_JOIN */
 enum int HPDF_DEF_MITERLIMIT = 10;
 enum int HPDF_DEF_FLATNESS = 1;
 enum int HPDF_DEF_PAGE_NUM = 1;
@@ -61,8 +61,6 @@ enum int HPDF_COMP_ALL = 0x0F;
  */
 enum int HPDF_COMP_MASK = 0xFF;
 
-
-
 /*----------------------------------------------------------------------------*/
 /*------ viewer preferences definitions --------------------------------------*/
 
@@ -71,7 +69,6 @@ enum int HPDF_HIDE_MENUBAR = 2;
 enum int HPDF_HIDE_WINDOW_UI = 4;
 enum int HPDF_FIT_WINDOW = 8;
 enum int HPDF_CENTER_WINDOW = 16;
-
 
 /*---------------------------------------------------------------------------*/
 /*------ limitation of object implementation (PDF1.4) -----------------------*/

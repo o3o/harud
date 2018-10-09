@@ -9,11 +9,11 @@ import std.string;
 /**
  *  Font class
  */
-class Font: IHaruObject {
+class Font : IHaruObject {
    protected HPDF_Font _font;
 
    this(HPDF_Font font) {
-      _font =  font;
+      _font = font;
    }
 
    /**
@@ -136,23 +136,10 @@ class Font: IHaruObject {
     * Returns:
     *   On success, returns byte length which can be included within specified width. Otherwise, returns 0.
     */
-   uint measureText(string text,
-         uint len,
-         float width,
-         float font_size,
-         float char_space,
-         float word_space,
-         bool wordwrap,
-         float* real_width) {
-      return HPDF_Font_MeasureText(this._font,
-            text.toStringz,
-            len,
-            width,
-            font_size,
-            char_space,
-            word_space,
-            wordwrap ? HPDF_TRUE : HPDF_FALSE,
-            real_width);
+   uint measureText(string text, uint len, float width, float font_size, float char_space, float word_space,
+         bool wordwrap, float* real_width) {
+      return HPDF_Font_MeasureText(this._font, text.toStringz, len, width, font_size, char_space, word_space, wordwrap
+            ? HPDF_TRUE : HPDF_FALSE, real_width);
    }
 
    public HPDF_HANDLE getHandle() {

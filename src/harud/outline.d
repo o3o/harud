@@ -22,7 +22,7 @@ class Outline : IHaruObject {
    *   opened = Specify whether the node is opened or not.
    */
    HPDF_STATUS setOpened(bool opened) {
-      return HPDF_Outline_SetOpened(this._outline, cast(uint) opened);
+      return HPDF_Outline_SetOpened(this._outline, cast(uint)opened);
    }
 
    /**

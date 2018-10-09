@@ -134,8 +134,7 @@ class Page : IHaruObject {
          _encoder = encoder.getHandle();
       }
 
-      HPDF_Annotation annotation = HPDF_Page_CreateTextAnnot(this._page, rect,
-         text.toStringz(), _encoder);
+      HPDF_Annotation annotation = HPDF_Page_CreateTextAnnot(this._page, rect, text.toStringz(), _encoder);
       return new Annotation(annotation);
    }
 
@@ -150,8 +149,7 @@ class Page : IHaruObject {
     * returns an instance of a Annotation object. If it failed, it returns null.
     */
    Annotation createLinkAnnot(Rect rect, Destination dst) {
-      HPDF_Annotation annotation = HPDF_Page_CreateLinkAnnot(this._page, rect,
-         dst.destinationHandle);
+      HPDF_Annotation annotation = HPDF_Page_CreateLinkAnnot(this._page, rect, dst.destinationHandle);
       return new Annotation(annotation);
    }
 
@@ -200,8 +198,7 @@ class Page : IHaruObject {
     * Otherwise it returns ZERO and error-handler is called.
     */
    uint measureText(string text, float width, bool wordwrap, float* real_width) {
-      return HPDF_Page_MeasureText(this._page, text.toStringz(), width,
-         cast(uint) wordwrap, real_width);
+      return HPDF_Page_MeasureText(this._page, text.toStringz(), width, cast(uint)wordwrap, real_width);
    }
 
    /**
@@ -248,7 +245,7 @@ class Page : IHaruObject {
     * when  succeed, it returns a Font instance of the page's current font.
     * Otherwise it returns null.
     */
-    Font getCurrentFont() {
+   Font getCurrentFont() {
       HPDF_Font font = HPDF_Page_GetCurrentFont(this._page);
       return new Font(font);
    }
@@ -293,7 +290,7 @@ class Page : IHaruObject {
     *  lineCap - The line cap style.
     *
     */
-    void setLineCap(HaruLineCap lineCap) {
+   void setLineCap(HaruLineCap lineCap) {
       HPDF_Page_SetLineCap(this._page, lineCap);
    }
 
@@ -336,14 +333,14 @@ class Page : IHaruObject {
     * when succeed, it returns the current value of the page's miter limit.
     * Otherwise it returns HPDF_DEF_MITERLIMIT.
     */
-    float getMiterLimit() {
+   float getMiterLimit() {
       return HPDF_Page_GetMiterLimit(this._page);
    }
 
    /**
     * Sets the miter limit
     */
-    void setMiterLimit(float miterLim) {
+   void setMiterLimit(float miterLim) {
       HPDF_Page_SetMiterLimit(this._page, miterLim);
    }
 
@@ -373,8 +370,7 @@ class Page : IHaruObject {
       assert(dashPattern.length < 9, "numElem should be lesser than 9");
    }
    do {
-      return HPDF_Page_SetDash(this._page, dashPattern.ptr, to!(uint)(dashPattern.length),
-         phase);
+      return HPDF_Page_SetDash(this._page, dashPattern.ptr, to!(uint)(dashPattern.length), phase);
    }
 
    /**
@@ -1300,10 +1296,8 @@ class Page : IHaruObject {
     * ## Graphics Mode
     * Before and after - GMode.textObject.
     */
-   HPDF_STATUS textRect(float left, float top, float right, float bottom,
-      string text, HaruTextAlignment align_, uint* len) {
-      return HPDF_Page_TextRect(this._page, left, top, right, bottom,
-         text.toStringz(), align_, len);
+   HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment align_, uint* len) {
+      return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), align_, len);
    }
 
    HPDF_HANDLE getHandle() {

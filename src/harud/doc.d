@@ -1,11 +1,10 @@
 module harud.doc;
 
-import std.conv;
-import std.string;
-
-import harud;
 import harud.c.capi;
 import harud.c.consts;
+import harud;
+import std.conv;
+import std.string;
 
 /**
  *  PDF Document Class

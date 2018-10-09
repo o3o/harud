@@ -82,17 +82,16 @@ class Image : IHaruObject {
     *   bmin = The lower limit of Blue. It must be between 0 and 255.
     *   bmax = The upper limit of Blue. It must be between 0 and 255.
     */
-   HPDF_STATUS setColorMask(uint rmin, uint rmax, uint gmin, uint gmax, uint bmin,
-         uint bmax)
+   HPDF_STATUS setColorMask(uint rmin, uint rmax, uint gmin, uint gmax, uint bmin, uint bmax)
 
-      in {
-         assert(rmin < 256, "rmin should less than 256");
-         assert(rmax < 256, "rmax should less than 256");
-         assert(gmin < 256, "gmin should less than 256");
-         assert(gmax < 256, "gmax should less than 256");
-         assert(bmin < 256, "bmin should less than 256");
-         assert(bmax < 256, "bmax should less than 256");
-      }
+   in {
+      assert(rmin < 256, "rmin should less than 256");
+      assert(rmax < 256, "rmax should less than 256");
+      assert(gmin < 256, "gmin should less than 256");
+      assert(gmax < 256, "gmax should less than 256");
+      assert(bmin < 256, "bmin should less than 256");
+      assert(bmax < 256, "bmax should less than 256");
+   }
    do {
       return HPDF_Image_SetColorMask(this._image, rmin, rmax, gmin, gmax, bmin, bmax);
    }

@@ -52,7 +52,7 @@ class Annotation : IHaruObject {
    *   open = true means the annotation initially displayed open.
    */
    HPDF_STATUS setOpened(bool open) {
-      return HPDF_TextAnnot_SetOpened(this._annotation, cast(uint) open);
+      return HPDF_TextAnnot_SetOpened(this._annotation, cast(uint)open);
    }
 
    public HPDF_HANDLE getHandle() {
