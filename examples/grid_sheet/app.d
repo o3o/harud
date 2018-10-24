@@ -20,6 +20,8 @@ void main() {
    /// Set the current font and size for the page
    page.setFontAndSize(helvetica, 10);
    page.setSize(PageSizes.A4, PageDirection.portrait);
+   writefln("page w: %s h: %s", page.getWidth, page.getHeight);
+
    printGrid(page);
    pdf.saveToFile("./grid_sheet.pdf"); /// Write to disk
 }

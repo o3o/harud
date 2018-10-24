@@ -1,9 +1,9 @@
 module harud.page;
 
 import std.conv;
+import std.exception; // for ErrNoException
 import std.stdio;
 import std.string;
-import std.exception; // for ErrNoException
 
 import harud.annotation;
 import harud.c;
@@ -95,7 +95,6 @@ class Page : IHaruObject {
    HPDF_STATUS setSize(PageSizes size, PageDirection direction) {
       return HPDF_Page_SetSize(this._page, size, direction);
    }
-
 
    /**
     * Sets rotation angle of the page.
@@ -376,40 +375,40 @@ class Page : IHaruObject {
    }
 
    /**
-   * Sets the dash pattern to solid line
-   */
+    * Sets the dash pattern to solid line
+    */
    HPDF_STATUS setSolid() {
       enum ushort[] NN = [0, 0, 0, 0, 0, 0, 0, 0];
       return HPDF_Page_SetDash(this._page, NN.ptr, 0, 0);
    }
 
    /**
-   * Sets the dash pattern to dotted line
-   */
+    * Sets the dash pattern to dotted line
+    */
    HPDF_STATUS setDotted() {
       enum ushort[] DOTTED = [2];
       return setDash(DOTTED, 0);
    }
 
    /**
-   * Sets the dash pattern to dash-dash-dot line
-   */
+    * Sets the dash pattern to dash-dash-dot line
+    */
    HPDF_STATUS setDashDashDot() {
       enum ushort[] DASH_DASH_DOT = [2, 2, 2, 2, 8, 2];
       return setDash(DASH_DASH_DOT, 0);
    }
 
    /**
-   * Sets the dash pattern to dash-dot line
-   */
+    * Sets the dash pattern to dash-dot line
+    */
    HPDF_STATUS setDashDot() {
       enum ushort[] DASH_DOT = [2, 2, 8, 2];
       return setDash(DASH_DOT, 0);
    }
 
    /**
-   * Sets the dash pattern to dashed line
-   */
+    * Sets the dash pattern to dashed line
+    */
    HPDF_STATUS setDashed() {
       enum ushort[] DASHED = [4];
       return setDash(DASHED, 0);
@@ -1146,11 +1145,10 @@ class Page : IHaruObject {
     * After - GMode.pathObject.
     *
     * Params:
-    * x = The x coordinate of lower-left point of the rectangle.
-    * y = The y coordinate of lower-left point of the rectangle.
-    * width = The width of the rectangle.
-    * height = The height of the rectangle.
-    *
+    *  x = The x coordinate of lower-left point of the rectangle.
+    *  y = The y coordinate of lower-left point of the rectangle.
+    *  width = The width of the rectangle.
+    *  height = The height of the rectangle.
     */
    HPDF_STATUS rectangle(float x, float y, float width, float height) {
       return HPDF_Page_Rectangle(this._page, x, y, width, height);
@@ -1199,8 +1197,8 @@ class Page : IHaruObject {
     * Sets the type of font and size leading.
     *
     * Params:
-    * font = The handle of a font object.
-    * size = The size of a font.
+    *  font = The handle of a font object.
+    *  size = The size of a font.
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -1224,7 +1222,7 @@ class Page : IHaruObject {
     * Sets the width of the line used to stroke a path.
     *
     * Params:
-    * line_width = The line width to use (default is 1).
+    *  line_width = The line width to use (default is 1).
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -1240,6 +1238,17 @@ class Page : IHaruObject {
       return HPDF_Page_SetTextMatrix(this._page, a, b, c, d, x, y);
    }
 
+   /**
+    * Prints the text at the current position on the page.
+    *
+    * Params:
+    *  text = The text to print.
+    *
+    * ## Graphics Mode
+    * Before and after - HPDF_GMODE_TEXT_OBJECT.
+    *
+    * Returns: Returns HPDF_OK on success. Otherwise, returns error code and error-handler is invoked.
+    */
    HPDF_STATUS showText(string text) {
       return HPDF_Page_ShowText(this._page, text.toStringz());
    }
@@ -1274,17 +1283,21 @@ class Page : IHaruObject {
     * Prints the text on the specified position.
     *
     * Params:
-    * xpos = The x position where the text is displayed.
-    * ypos = The y position where the text is displayed.
-    * text = The text to show.
+    *  xpos = The x position where the text is displayed.
+    *  ypos = The y position where the text is displayed.
+    *  text = The text to show.
+    *
     * Returns:
     * Zero when succeed, otherwise it returns error code.
     *
     * ## Graphics Mode
     * Before and after - GMode.textObject.
     */
-   HPDF_STATUS textOut(float xpos, float ypos, string text) {
+   HPDF_STATUS textOut(float xpos, float ypos, string text)
+   in {
       assert(text.length > 0);
+   }
+   do {
       return HPDF_Page_TextOut(this._page, xpos, ypos, text.toStringz());
    }
 
@@ -1292,16 +1305,16 @@ class Page : IHaruObject {
     * Prints the text inside the specified region.
     *
     * Params:
-    * left, top, right, bottom = Coordinates of corners of the region to output text.
-    * text = The text to show.
-    * align = The alignment of the text (one of the following).
-    * len = If not NULL, the number of characters printed in the area is returned.
+    *  left, top, right, bottom = Coordinates of corners of the region to output text.
+    *  text = The text to show.
+    *  alignment = The alignment of the text.
+    *  len = If not NULL, the number of characters printed in the area is returned.
     *
     * ## Graphics Mode
     * Before and after - GMode.textObject.
     */
-   HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment align_, uint* len) {
-      return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), align_, len);
+   HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment alignment, uint* len) {
+      return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), alignment, len);
    }
 
    HPDF_HANDLE getHandle() {

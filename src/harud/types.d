@@ -404,7 +404,7 @@ enum HaruEncoderType {
 }
 
 /**
-  Byte type enum
+ * Byte type enum
  */
 enum HaruByteType {
    single = 0,
@@ -413,15 +413,18 @@ enum HaruByteType {
    unknown
 }
 
+/**
+ * Text alignment
+ */
 enum HaruTextAlignment {
-   left = 0,
-   right,
-   center,
-   justify
+   left = 0,  // The text is aligned to left.
+   right,     // The text is aligned to right.
+   center,    // The text is aligned to center.
+   justify    // Add spaces between the words to justify both left and right side.
 }
 
 /**
- *Permission flags (only Revision 2 is supported)
+ * Permission flags (only Revision 2 is supported)
  */
 enum HaruPermission : uint {
    ///  user can read the document

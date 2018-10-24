@@ -38,11 +38,12 @@ class Font : IHaruObject {
 
    /**
     * Gets the width of a Unicode character in a specific font. Actual width of the character on the page can be calculated as follows:
-    * Example:
-    *   ---------------------------------------------------------------------------
+    *
+    * Examples:
+    * --------------------
     *   char_width = Font::GetUnicodeWidth ( UNICODE );
     *   float actual_width = char_width * FONT_SIZE / 1000;
-    *   ---------------------------------------------------------------------------
+    * --------------------
     *
     * Params:
     *   code = A Unicode character.
@@ -124,14 +125,14 @@ class Font : IHaruObject {
     * Calculates the byte length which can be included within the specified width.
     *
     * Params:
-    * text = The text to use for calculation.
-    * len = The length of the text.
-    * width = The width of the area to put the text.
-    * font_size = The size of the font.
-    * char_space = The character spacing.
-    * word_space = The word spacing.
-    * wordwrap = Suppose there are three words: "ABCDE", "FGH", and "IJKL". Also, suppose the substring until "J" can be included within the width (12 bytes). If word_wrap is HPDF_FALSE the function returns 12. If word_wrap parameter is HPDF_TRUE, it returns 10 (the end of the previous word).
-    * real_width = If not NULL, parameter is set to the real width of the text. If NULL, parameter is ignored.
+    *  text = The text to use for calculation.
+    *  len = The length of the text.
+    *  width = The width of the area to put the text.
+    *  font_size = The size of the font.
+    *  char_space = The character spacing.
+    *  word_space = The word spacing.
+    *  wordwrap = Suppose there are three words: "ABCDE", "FGH", and "IJKL". Also, suppose the substring until "J" can be included within the width (12 bytes). If word_wrap is HPDF_FALSE the function returns 12. If word_wrap parameter is HPDF_TRUE, it returns 10 (the end of the previous word).
+    *  real_width = If not NULL, parameter is set to the real width of the text. If NULL, parameter is ignored.
     *
     * Returns:
     *   On success, returns byte length which can be included within specified width. Otherwise, returns 0.
@@ -145,5 +146,4 @@ class Font : IHaruObject {
    public HPDF_HANDLE getHandle() {
       return _font;
    }
-
 }
