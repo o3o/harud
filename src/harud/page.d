@@ -1,3 +1,6 @@
+/**
+ * Describes a page
+ */
 module harud.page;
 
 import std.conv;
@@ -705,7 +708,7 @@ class Page : IHaruObject {
     * Sets the stroking color.
     *
     * Params:
-    * value = The value of the gray level between 0 and 1.
+    *  gray = The value of the gray level between 0 and 1.
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -760,26 +763,26 @@ class Page : IHaruObject {
     * Configures the setting for slide transition of the page.
     *
     * Params:
-    * type = The transition style. The following values are available.
-    *
-    * <li>HaruTransitionStyle.WIPE_RIGHT</li>
-    * <li>HaruTransitionStyle.WIPE_UP</li>
-    * <li>HaruTransitionStyle.WIPE_LEFT</li>
-    * <li>HaruTransitionStyle.WIPE_DOWN</li>
-    * <li>HaruTransitionStyle.BARN_DOORS_HORIZONTAL_OUT</li>
-    * <li>HaruTransitionStyle.BARN_DOORS_HORIZONTAL_IN</li>
-    * <li>HaruTransitionStyle.BARN_DOORS_VERTICAL_OUT</li>
-    * <li>HaruTransitionStyle.BARN_DOORS_VERTICAL_IN</li>
-    * <li>HaruTransitionStyle.BOX_OUT</li>
-    * <li>HaruTransitionStyle.BOX_IN</li>
-    * <li>HaruTransitionStyle.BLINDS_HORIZONTAL</li>
-    * <li>HaruTransitionStyle.BLINDS_VERTICAL</li>
-    * <li>HaruTransitionStyle.DISSOLVE</li>
-    * <li>HaruTransitionStyle.GLITTER_RIGHT</li>
-    * <li>HaruTransitionStyle.GLITTER_DOWN</li>
-    * <li>HaruTransitionStyle.GLITTER_TOP_LEFT_TO_BOTTOM_RIGHT</li>
-    * <li>HaruTransitionStyle.REPLACE</li>
-    *
+    *  type = The transition style. The following values are available.
+    *  $(UL
+    *     $(LI HaruTransitionStyle.WIPE_RIGHT)
+    *     $(LI HaruTransitionStyle.WIPE_UP)
+    *     $(LI HaruTransitionStyle.WIPE_LEFT)
+    *     $(LI HaruTransitionStyle.WIPE_DOWN)
+    *     $(LI HaruTransitionStyle.BARN_DOORS_HORIZONTAL_OUT)
+    *     $(LI HaruTransitionStyle.BARN_DOORS_HORIZONTAL_IN)
+    *     $(LI HaruTransitionStyle.BARN_DOORS_VERTICAL_OUT)
+    *     $(LI HaruTransitionStyle.BARN_DOORS_VERTICAL_IN)
+    *     $(LI HaruTransitionStyle.BOX_OUT)
+    *     $(LI HaruTransitionStyle.BOX_IN)
+    *     $(LI HaruTransitionStyle.BLINDS_HORIZONTAL)
+    *     $(LI HaruTransitionStyle.BLINDS_VERTICAL)
+    *     $(LI HaruTransitionStyle.DISSOLVE)
+    *     $(LI HaruTransitionStyle.GLITTER_RIGHT)
+    *     $(LI HaruTransitionStyle.GLITTER_DOWN)
+    *     $(LI HaruTransitionStyle.GLITTER_TOP_LEFT_TO_BOTTOM_RIGHT)
+    *     $(LI HaruTransitionStyle.REPLACE)
+    * )
     * disp_time = The display duration of the page. (in seconds)
     * trans_time = The duration of the transition effect. Default value is 1(second).
     *
@@ -791,16 +794,17 @@ class Page : IHaruObject {
    /**
     * Appends a circle arc to the current path.
     *
+    *
+    * Params:
+    *  x = X coordinate of  center point of the circle.
+    *  y = Y coordinate of center point of the circle.
+    *  ray = The radius of the circle.
+    *  ang1 = The angle of the begining of the arc.
+    *  ang2 = The angle of the end of the arc. It must be greater than ang1.
+    *
     * ## Graphics Mode
     * Before - GMode.pageDescription or GMode.pathObject.
     * After - GMode.pathObject.
-    *
-    * Params:
-    * x, y = The center point of the circle.
-    * radius = The radius of the circle.
-    * ang1 = The angle of the begining of the arc.
-    * ang2 = The angle of the end of the arc. It must be greater than ang1.
-    *
     */
    HPDF_STATUS arc(float x, float y, float ray, float ang1, float ang2) {
       return HPDF_Page_Arc(this._page, x, y, ray, ang1, ang2);
@@ -821,8 +825,9 @@ class Page : IHaruObject {
     * Appends a circle to the current path.
     *
     * Params:
-    * x, y = The center point of the circle.
-    * radius = The radius of the circle.
+    *  x = X coordinate of  center point of the circle.
+    *  y = Y coordinate of center point of the circle.
+    *  ray = The radius of the circle.
     *
     * ## Graphics Mode
     * Before - GMode.pageDescription or GMode.pathObject.
@@ -846,11 +851,7 @@ class Page : IHaruObject {
     * ## Graphics Mode
     * Before and after - GMode,pathObject.
     *
-    * Params:
-    * page = The handle of a page object.
-    *
     * Returns:
-    *
     * HPDF_OK on success. Otherwise, returns error code and error-handler is invoked.
     */
    HPDF_STATUS clip() {
@@ -893,7 +894,12 @@ class Page : IHaruObject {
     * Concatenates the page's current transformation matrix and specified matrix.
     *
     * Params:
-    * a, b, c, d, x, y = The transformation matrix to concatenate.
+    *  a = The transformation matrix to concatenate.
+    *  b = The transformation matrix to concatenate.
+    *  c = The transformation matrix to concatenate.
+    *  d = The transformation matrix to concatenate.
+    *  x = The transformation matrix to concatenate.
+    *  y = The transformation matrix to concatenate.
     */
    HPDF_STATUS concat(float a, float b, float c, float d, float x, float y) {
       return HPDF_Page_Concat(this._page, a, b, c, d, x, y);
@@ -903,7 +909,12 @@ class Page : IHaruObject {
     * Appends a Bézier curve to the current path using the control points (x1, y1) and (x2, y2) and (x3, y3), then sets the current point to (x3, y3).
     *
     * Params:
-    * x1, y1, x2, y2, x3, y3 = The control points for a Bézier curve.
+    *  x1= The control points for a Bézier curve.
+    *  y1= The control points for a Bézier curve.
+    *  x2= The control points for a Bézier curve.
+    *  y2= The control points for a Bézier curve.
+    *  x3= The control points for a Bézier curve.
+    *  y3= The control points for a Bézier curve.
     *
     * ## Graphics Mode
     * Before and after - GMode.pathObject.
@@ -916,7 +927,10 @@ class Page : IHaruObject {
     * Appends a Bézier curve to the current path using the current point and (x2, y2) and (x3, y3) as control points. Then, the current point is set to (x3, y3).
     *
     * Params:
-    * x2, y2, x3, y3 = Control points for Bézier curve, along with current point.
+    *  x2= Control points for Bézier curve, along with current point.
+    *  y2= Control points for Bézier curve, along with current point.
+    *  x3= Control points for Bézier curve, along with current point.
+    *  y3 = Control points for Bézier curve, along with current point.
     *
     * ## Graphics Mode
     * Before and after - GMode.pathObject.
@@ -931,7 +945,10 @@ class Page : IHaruObject {
     * The point (x1, y1) and the point (x3, y3) are used as the control points for a Bézier curve and current point is moved to the point (x3, y3)
     *
     * Params:
-    * x1, y1, x3, y3 = The control points for a Bézier curve.
+    *  x1= The control points for a Bézier curve.
+    *  y1= The control points for a Bézier curve.
+    *  x3= The control points for a Bézier curve.
+    *  y3= The control points for a Bézier curve.
     *
     * ## Graphics Mode
     * Before and after - GMode.pathObject.
@@ -944,10 +961,11 @@ class Page : IHaruObject {
     * Shows an image in one operation.
     *
     * Params:
-    * image = The handle of an image object.
-    * x, y = The lower-left point of the region where image is displayed.
-    * width = The width of the region where image is displayed.
-    * height = The width of the region where image is displayed.
+    *  image = The handle of an image object.
+    *  x = The lower-left point of the region where image is displayed.
+    *  y = The lower-left point of the region where image is displayed.
+    *  width = The width of the region where image is displayed.
+    *  height = The width of the region where image is displayed.
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription.
@@ -960,8 +978,10 @@ class Page : IHaruObject {
     * Appends an ellipse to the current path.
     *
     * Params:
-    * x, y = The center point of the ellipse.
-    * x_radius, y_radius = Horizontal and vertical radii of the ellipse.
+    * x = The center point of the ellipse.
+    * y = The center point of the ellipse.
+    * xray = Horizontal and vertical radii of the ellipse.
+    * yray = Horizontal and vertical radii of the ellipse.
     *
     * ## Graphics Mode
     * Before and after - GMode.pathObject.
@@ -1088,7 +1108,8 @@ class Page : IHaruObject {
     * Appends a path from the current point to the specified point.
     *
     * Params:
-    * x, y = The end point of the path
+    *  x = The end point of the path
+    *  y = The end point of the path
     *
     * ## Graphics Mode
     * Before and after - GMode.pathObject.
@@ -1101,7 +1122,9 @@ class Page : IHaruObject {
     * Changes the current text position, using the specified offset values. If the current text position is (x1, y1), the new text position will be (x1 + x, y1 + y).
     *
     * Params:
-    * x, y = The offset to new text position.
+    *  x = The offset to new text position.
+    *  y = The offset to new text position.
+    *  setLeading = ?
     *
     * ## Graphics Mode
     * Before and after - GMode.textObject.
@@ -1158,7 +1181,10 @@ class Page : IHaruObject {
     * Sets the filling color.
     *
     * Params:
-    * c, m, y, k = The level of each color element. They must be between 0 and 1.
+    *  c = The level of each color element. They must be between 0 and 1.
+    *  m = The level of each color element. They must be between 0 and 1.
+    *  y = The level of each color element. They must be between 0 and 1.
+    *  k = The level of each color element. They must be between 0 and 1.
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -1171,7 +1197,10 @@ class Page : IHaruObject {
     * Sets the stroking color.
     *
     * Params:
-    * c, m, y, k = The level of each color element. They must be between 0 and 1.
+    *  c = The level of each color element. They must be between 0 and 1.
+    *  m = The level of each color element. They must be between 0 and 1.
+    *  y = The level of each color element. They must be between 0 and 1.
+    *  k = The level of each color element. They must be between 0 and 1.
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -1222,7 +1251,7 @@ class Page : IHaruObject {
     * Sets the width of the line used to stroke a path.
     *
     * Params:
-    *  line_width = The line width to use (default is 1).
+    *  lineWidth = The line width to use (default is 1).
     *
     * ## Graphics Mode
     * Before and after - GMode.pageDescription or GMode.textObject.
@@ -1261,8 +1290,9 @@ class Page : IHaruObject {
     * Before and after - GMode.textObject.
     *
     * Params:
-    * text = The text to print.
-    *
+    *  text = The text to print.
+    *  wordSpace = ?
+    *  charSpace = ?
     */
    HPDF_STATUS showTextNextLine(string text, float wordSpace = 0.0, float charSpace = 0.0) {
       return HPDF_Page_ShowTextNextLine(this._page, text.toStringz());
@@ -1305,7 +1335,10 @@ class Page : IHaruObject {
     * Prints the text inside the specified region.
     *
     * Params:
-    *  left, top, right, bottom = Coordinates of corners of the region to output text.
+    *  left= Coordinates of corners of the region to output text.
+    *  top= Coordinates of corners of the region to output text.
+    *  right= Coordinates of corners of the region to output text.
+    *  bottom = Coordinates of corners of the region to output text.
     *  text = The text to show.
     *  alignment = The alignment of the text.
     *  len = If not NULL, the number of characters printed in the area is returned.

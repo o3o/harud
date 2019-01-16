@@ -226,11 +226,11 @@ enum HaruWritingMode {
 enum PageLayout {
    /// Only one page is displayed.
    single = 0,
-   /// Display the pages in one column.)
+   /// Display the pages in one column.
    oneColumn,
-   /// Display in two columns. Odd page number is displayed left)
+   /// Display in two columns. Odd page number is displayed left
    twoColumnLeft,
-   /// Display in two columns. Odd page number is displayed right)
+   /// Display in two columns. Odd page number is displayed right
    twoColumnRight,
 }
 
