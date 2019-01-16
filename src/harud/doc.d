@@ -1,3 +1,6 @@
+/**
+ * Describes main document
+ */
 module harud.doc;
 
 import harud.c.capi;

@@ -1,3 +1,6 @@
+/**
+ * Describes an image
+ */
 module harud.image;
 
 import harud.c;

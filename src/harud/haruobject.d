@@ -1,3 +1,6 @@
+/**
+ * Generic haru object interface
+ */
 module harud.haruobject;
 
 import harud;

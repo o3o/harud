@@ -1,3 +1,6 @@
+/**
+ * Describes an annotation.
+ */
 module harud.annotation;
 
 import harud;

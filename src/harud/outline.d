@@ -1,3 +1,4 @@
+///
 module harud.outline;
 
 import harud.haruobject;

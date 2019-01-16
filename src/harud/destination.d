@@ -1,3 +1,6 @@
+/**
+ * Describes a destination
+ */
 module harud.destination;
 
 import harud;

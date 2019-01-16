@@ -1,3 +1,6 @@
+/**
+ * Describes fonts objects
+ */
 module harud.font;
 
 import harud.c.capi;
