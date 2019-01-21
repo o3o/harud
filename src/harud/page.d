@@ -1163,9 +1163,10 @@ class Page : IHaruObject {
    /**
     * Appends a rectangle to the current path.
     *
-    * ## Graphics Mode
-    * Before - GMode.pageDescription or GMode.pathObject.
-    * After - GMode.pathObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD GMode.pageDescription` or `GMode.pathObject`)
+    *   $(DT After) $(DD `GMode.pathObject`)
+    * )
     *
     * Params:
     *  x = The x coordinate of lower-left point of the rectangle.
@@ -1212,11 +1213,13 @@ class Page : IHaruObject {
    /**
     * Applyies the graphics state to the page.
     *
-    * Params:
-    * ext_gstate = The handle of an extended graphics state object.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.pageDescription)
+    * )
     *
-    * ## Graphics Mode
-    * Before and after: GMode.pageDescription.
+    * Params:
+    *  ext_gstate = The handle of an extended graphics state object.
+    *
     */
    HPDF_STATUS setExtGState(HPDF_ExtGState ext_gstate) {
       return HPDF_Page_SetExtGState(this._page, ext_gstate);
@@ -1225,12 +1228,13 @@ class Page : IHaruObject {
    /**
     * Sets the type of font and size leading.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.pageDescription or GMode.textObject)
+    * )
+    *
     * Params:
     *  font = The handle of a font object.
     *  size = The size of a font.
-    *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    HPDF_STATUS setFontAndSize(Font font, float size) {
       return HPDF_Page_SetFontAndSize(this._page, font.getHandle(), size);
@@ -1250,11 +1254,12 @@ class Page : IHaruObject {
    /**
     * Sets the width of the line used to stroke a path.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.pageDescription or GMode.textObject)
+    * )
+    *
     * Params:
     *  lineWidth = The line width to use (default is 1).
-    *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
     */
    void setLineWidth(float lineWidth) {
       HPDF_Page_SetLineWidth(this._page, lineWidth);
@@ -1270,11 +1275,12 @@ class Page : IHaruObject {
    /**
     * Prints the text at the current position on the page.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.textObject)
+    * )
+    *
     * Params:
     *  text = The text to print.
-    *
-    * ## Graphics Mode
-    * Before and after - HPDF_GMODE_TEXT_OBJECT.
     *
     * Returns: Returns HPDF_OK on success. Otherwise, returns error code and error-handler is invoked.
     */
@@ -1286,8 +1292,9 @@ class Page : IHaruObject {
     * Moves the current text position to the start of the next line,
     * then prints the text at the current position on the page.
     *
-    * ## Graphics Mode
-    * Before and after - GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.textObject)
+    * )
     *
     * Params:
     *  text = The text to print.
@@ -1301,9 +1308,10 @@ class Page : IHaruObject {
    /**
     * Paints the current path.
     *
-    * ## Graphics Mode
-    * Before - GMode.pathObject.
-    * After - GMode.pageDescription.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD `GMode.pathObject`)
+    *   $(DT After) $(DD `GMode.pageDescription`)
+    * )
     */
    HPDF_STATUS stroke() {
       return HPDF_Page_Stroke(this._page);
@@ -1312,16 +1320,17 @@ class Page : IHaruObject {
    /**
     * Prints the text on the specified position.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.textObject)
+    * )
+    *
     * Params:
     *  xpos = The x position where the text is displayed.
     *  ypos = The y position where the text is displayed.
     *  text = The text to show.
     *
     * Returns:
-    * Zero when succeed, otherwise it returns error code.
-    *
-    * ## Graphics Mode
-    * Before and after - GMode.textObject.
+    *  Zero when succeed, otherwise it returns error code.
     */
    HPDF_STATUS textOut(float xpos, float ypos, string text)
    in {
@@ -1334,6 +1343,10 @@ class Page : IHaruObject {
    /**
     * Prints the text inside the specified region.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.textObject)
+    * )
+    *
     * Params:
     *  left= Coordinates of corners of the region to output text.
     *  top= Coordinates of corners of the region to output text.
@@ -1342,9 +1355,6 @@ class Page : IHaruObject {
     *  text = The text to show.
     *  alignment = The alignment of the text.
     *  len = If not NULL, the number of characters printed in the area is returned.
-    *
-    * ## Graphics Mode
-    * Before and after - GMode.textObject.
     */
    HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment alignment, uint* len) {
       return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), alignment, len);

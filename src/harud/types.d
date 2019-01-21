@@ -418,10 +418,10 @@ enum HaruByteType {
  * Text alignment
  */
 enum HaruTextAlignment {
-   left = 0,  // The text is aligned to left.
-   right,     // The text is aligned to right.
-   center,    // The text is aligned to center.
-   justify    // Add spaces between the words to justify both left and right side.
+   left = 0,  /** The text is aligned to left. */
+   right,     /** The text is aligned to right. */
+   center,    /** The text is aligned to center. */
+   justify    /** Add spaces between the words to justify both left and right side. */
 }
 
 /**
@@ -442,12 +442,44 @@ enum HaruPermission : uint {
 
 /**
  * Graphics mode
+ *
+ * Each page object maintains a flag named "graphics mode".
+ * The graphics mode corresponds to the graphics-object of the PDF specification.
+ * The graphics mode is changed by invoking particular functions.
+ * The functions that can be invoked are decided by the value of the graphics mode.
+ *
  */
 enum GMode : ushort {
    unknown = 0,
+   /**
+    * Allowed operators:
+    * $(UL
+    *   $(LI General graphic state)
+    *   $(LI Special graphic state)
+    *   $(LI Color)
+    *   $(LI Text state)
+    * )
+    */
    pageDescription = 0x0001,
+   /**
+    * Allowed operators:
+    * $(UL
+    *   $(LI Path construction)
+    * )
+    */
    pathObject = 0x0002,
+   /**
+    * Allowed operators:
+    * $(UL
+    *   $(LI Graphic state)
+    *   $(LI Color)
+    *   $(LI Text state)
+    *   $(LI Text-shadowing)
+    *   $(LI Text-positioning)
+    * )
+    */
    textObject = 0x0004,
+
    clippingPath = 0x0008,
    shading = 0x0010,
    inlineImage = 0x0020,

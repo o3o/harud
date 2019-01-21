@@ -11,3 +11,8 @@ public import harud.image;
 public import harud.outline;
 public import harud.page;
 public import harud.types;
+
+public import harud.util;
+public import harud.table;
+
+

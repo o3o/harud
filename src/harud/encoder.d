@@ -3,8 +3,8 @@
  */
 module harud.encoder;
 
-import harud;
 import harud.c;
+import harud;
 
 /**
  * Encoder class
