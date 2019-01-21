@@ -93,6 +93,9 @@ enum HaruEncryptMode {
    R3 = 3
 }
 
+/**
+ * Describes a text width
+ */
 struct TextWidth {
    uint numchars;
 

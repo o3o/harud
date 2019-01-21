@@ -190,11 +190,11 @@ class Doc : IHaruObject {
     * Gets a Font instance of the requested font
     *
     * Params:
-    * fontName = a valid font name
+    *  fontName = a valid font name
     *
     * Returns:
-    * when getFont() succeeds, it returns the instance of a Font object.
-    * Otherwise, it returns null and error-handler is called.
+    *  when getFont() succeeds, it returns the instance of a Font object.
+    *  Otherwise, it returns null and error-handler is called.
     */
    Font getFont(string fontName)
    in {
@@ -208,8 +208,8 @@ class Doc : IHaruObject {
     * Gets a Font instance of the requested font
     *
     * Params:
-    * fontName = a valid font name
-    * encodingName = a valid encoding name
+    *  fontName = A valid font name
+    *  encodingName = A valid encoding name
     *
     * Returns:
     * when getFont() succeeds, it returns the instance of a Font object.
@@ -228,15 +228,14 @@ class Doc : IHaruObject {
     * Gets an attribute value from info dictionary.
     *
     * Params:
-    * type = one of the following:
-    *
-    * $(UL
-    * $(LI HaruInfo.author)
-    * $(LI HaruInfo.creator)
-    * $(LI HaruInfo.title)
-    * $(LI HaruInfo.subject)
-    * $(LI HaruInfo.keywords)
-    * )
+    *  type = one of the following:
+    *  $(UL
+    *     $(LI HaruInfo.author)
+    *     $(LI HaruInfo.creator)
+    *     $(LI HaruInfo.title)
+    *     $(LI HaruInfo.subject)
+    *     $(LI HaruInfo.keywords)
+    *  )
     *
     * Returns:
     * when succeeds, it returns the string value of the info dictionary.
@@ -253,11 +252,11 @@ class Doc : IHaruObject {
     * Params:
     *  type = one of the following:
     *  $(UL
-    *  $(LI HaruInfo.author)
-    *  $(LI HaruInfo.creator)
-    *  $(LI HaruInfo.title)
-    *  $(LI HaruInfo.subject)
-    *  $(LI HaruInfo.keywords)
+    *     $(LI HaruInfo.author)
+    *     $(LI HaruInfo.creator)
+    *     $(LI HaruInfo.title)
+    *     $(LI HaruInfo.subject)
+    *     $(LI HaruInfo.keywords)
     *  )
     *  value = text
     */
@@ -389,21 +388,21 @@ class Doc : IHaruObject {
     * Set the first page to appear when a document is opened.
     *
     * Params:
-    * open_action = a valid destination object.
+    *  openAction = a valid destination object.
     */
-   HPDF_STATUS setOpenAction(HPDF_Destination open_action) {
-      return HPDF_SetOpenAction(this._doc, open_action);
+   HPDF_STATUS setOpenAction(HPDF_Destination openAction) {
+      return HPDF_SetOpenAction(this._doc, openAction);
    }
 
    /**
     * Loads a Type1 font from an external file and registers it in the document object
     *
     * Params:
-    * afmfilename = a path of an AFM file
-    * pfmfilename = a path of a PFA/PFB file. If null, the glyph data of font file is not embedded to a PDF file
+    *  afmfilename = a path of an AFM file
+    *  pfmfilename = a path of a PFA/PFB file. If null, the glyph data of font file is not embedded to a PDF file
     *
     * Returns:
-    * it returns the name of a font. Otherwise, it returns null and error-handler is called
+    *  it returns the name of a font. Otherwise, it returns null and error-handler is called
     */
    string loadType1FontFromFile(string afmfilename, string pfmfilename = null) {
       return to!string(HPDF_LoadType1FontFromFile(this._doc, afmfilename.toStringz(), pfmfilename.toStringz()));
@@ -413,12 +412,12 @@ class Doc : IHaruObject {
     * Loads a TrueType font from an external file and register it to a document object
     *
     * Params:
-    * filename = A path of a TrueType font file (.ttf)
-    * embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
+    *  filename = A path of a TrueType font file (.ttf)
+    *  embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
     *
     * Returns:
-    * when loadTTFontFromFile() succeeds, it returns the name of a font.
-    * Otherwise, it returns null and error-handler is called
+    *  when loadTTFontFromFile() succeeds, it returns the name of a font.
+    *  Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, bool embedding = false) {
       return to!string(HPDF_LoadTTFontFromFile(this._doc, filename.toStringz(), embedding ? HPDF_TRUE : HPDF_FALSE));
@@ -428,12 +427,12 @@ class Doc : IHaruObject {
     * Loads a TrueType font from an external file (at the selected index) and register it to a document object
     *
     * Params:
-    * filename = A path of a TrueType font file (.ttf)
-    * embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
-    * index = the index of font to be loaded.
+    *  filename = A path of a TrueType font file (.ttf)
+    *  embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
+    *  index = the index of font to be loaded.
     *
     * Returns:
-    * when loadTTFontFromFile() succeeds, it returns the name of a font. Otherwise, it returns null and error-handler is called
+    *  when loadTTFontFromFile() succeeds, it returns the name of a font. Otherwise, it returns null and error-handler is called
     */
    string loadTTFontFromFile(string filename, uint index, bool embedding) {
       return to!string(HPDF_LoadTTFontFromFile2(this._doc, filename.toStringz(), index, embedding ? HPDF_TRUE : HPDF_FALSE));
@@ -442,23 +441,24 @@ class Doc : IHaruObject {
    /**
     * Enables Japanese fonts. After useJPFonts() is involed, an application can use the following Japanese fonts
     *
-    * $(LI MS-Mincyo)
-    * $(LI MS-Mincyo,Bold)
-    * $(LI MS-Mincyo,Italic)
-    * $(LI MS-Mincyo,BoldItalic)
-    * $(LI MS-Gothic)
-    * $(LI MS-Gothic,Bold)
-    * $(LI MS-Gothic,Italic)
-    * $(LI MS-Gothic,BoldItalic)
-    * $(LI MS-PMincyo)
-    * $(LI MS-PMincyo,Bold)
-    * $(LI MS-PMincyo,Italic)
-    * $(LI MS-PMincyo,BoldItalic)
-    * $(LI MS-PGothic)
-    * $(LI MS-PGothic,Bold)
-    * $(LI MS-PGothic,Italic)
-    * $(LI MS-PGothic,BoldItalic)
-    *
+    * $(UL
+    *    $(LI MS-Mincyo)
+    *    $(LI MS-Mincyo,Bold)
+    *    $(LI MS-Mincyo,Italic)
+    *    $(LI MS-Mincyo,BoldItalic)
+    *    $(LI MS-Gothic)
+    *    $(LI MS-Gothic,Bold)
+    *    $(LI MS-Gothic,Italic)
+    *    $(LI MS-Gothic,BoldItalic)
+    *    $(LI MS-PMincyo)
+    *    $(LI MS-PMincyo,Bold)
+    *    $(LI MS-PMincyo,Italic)
+    *    $(LI MS-PMincyo,BoldItalic)
+    *    $(LI MS-PGothic)
+    *    $(LI MS-PGothic,Bold)
+    *    $(LI MS-PGothic,Italic)
+    *    $(LI MS-PGothic,BoldItalic)
+    * )
     */
    HPDF_STATUS useJPFonts() {
       return HPDF_UseJPFonts(this._doc);
@@ -589,6 +589,7 @@ class Doc : IHaruObject {
 
    /**
     * Loads an external PNG image file.
+    *
     * If deferred is true. then does not load all the data immediately (only size and color properties are loaded).
     * The main data are loaded just before the image object is written to PDF, and the loaded data are deleted immediately.
     *
@@ -753,11 +754,11 @@ string getVersion() {
  * Checks if the document is valid.
  *
  * Params:
- * document = The instance of Doc to check
+ *  document = The instance of Doc to check
  *
  * Returns:
- * If the specified document handle is valid, it returns true.
- * Otherwise, it returns false and error-handler is called.
+ *  If the specified document handle is valid, it returns true.
+ *  Otherwise, it returns false and error-handler is called.
  */
 static bool hasDoc(Doc document) {
    return (HPDF_HasDoc(document._doc) != 0);

@@ -357,7 +357,6 @@ extern (C) {
    /*
     * Encoding
     */
-
    HaruEncoderType HPDF_Encoder_GetType(HPDF_Encoder encoder);
 
    HaruByteType HPDF_Encoder_GetByteType(HPDF_Encoder encoder, const(char)* text, uint index);
@@ -380,15 +379,12 @@ extern (C) {
    /*
     * Outline
     */
-
    HPDF_STATUS HPDF_Outline_SetOpened(HPDF_Outline outline, HPDF_BOOL opened);
-
    HPDF_STATUS HPDF_Outline_SetDestination(HPDF_Outline outline, HPDF_Destination dst);
 
    /*
     * Destination
     */
-
    HPDF_STATUS HPDF_Destination_SetXYZ(HPDF_Destination dst, float left, float top, float zoom);
 
    HPDF_STATUS HPDF_Destination_SetFit(HPDF_Destination dst);

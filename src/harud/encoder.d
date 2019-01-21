@@ -4,7 +4,8 @@
 module harud.encoder;
 
 import harud.c;
-import harud;
+import harud.haruobject;
+import harud.types;
 
 /**
  * Encoder class

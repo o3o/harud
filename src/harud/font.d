@@ -5,7 +5,8 @@ module harud.font;
 
 import harud.c.capi;
 import harud.c.consts;
-import harud;
+import harud.haruobject;
+import harud.types;
 import std.conv;
 import std.string;
 
@@ -40,11 +41,13 @@ class Font : IHaruObject {
    }
 
    /**
-    * Gets the width of a Unicode character in a specific font. Actual width of the character on the page can be calculated as follows:
+    * Gets the width of a Unicode character in a specific font.
+    *
+    * Actual width of the character on the page can be calculated as follows:
     *
     * Examples:
     * --------------------
-    *   char_width = Font::GetUnicodeWidth ( UNICODE );
+    *   char_width = font.getUnicodeWidth(UNICODE);
     *   float actual_width = char_width * FONT_SIZE / 1000;
     * --------------------
     *
@@ -62,10 +65,10 @@ class Font : IHaruObject {
     * Gets the bounding box of the font.
     *
     * Returns:
-    *   On success, returns HaruBox struct specifying the font bounding box.<br />
+    *   On success, returns Rect struct specifying the font bounding box.
     *   Otherwise, returns a HaruBox struct of {0, 0, 0, 0}.
     */
-   HaruBox getBBox() {
+   Rect getBBox() {
       return HPDF_Font_GetBBox(this._font);
    }
 
@@ -146,7 +149,7 @@ class Font : IHaruObject {
             ? HPDF_TRUE : HPDF_FALSE, real_width);
    }
 
-   public HPDF_HANDLE getHandle() {
+   HPDF_HANDLE getHandle() {
       return _font;
    }
 }
