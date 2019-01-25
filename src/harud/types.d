@@ -113,6 +113,23 @@ struct DashMode {
    uint phase;
 }
 
+
+/**
+* For certain types of drawing operations you may want to adjust (or transform, which is the proper term) the coordinates in some way
+* The part of the graphic state that tracks this is called the current transformation matrix (CTM).
+*
+* To apply a transformation, you use the cm operator, which takes six operands
+* that represent a standard 3x2 matrix.
+*
+* --------------
+* | Transformation | Operand                  |
+* | ---            | ---                      |
+* | Translation    | 1 0 0 1 tx ty            |
+* | Rotation       | cosQ sinQ -sinQ cosQ 0 0 |
+* | Skew           | 1 tanA tabB 1 0 0        |
+* --------------
+*/
+
 struct TransMatrix {
    float a;
    float b;

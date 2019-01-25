@@ -11,7 +11,7 @@ import std.conv;
 import std.string;
 
 /**
- *  Font class
+ * Font class
  */
 class Font : IHaruObject {
    protected HPDF_Font _font;
@@ -134,19 +134,19 @@ class Font : IHaruObject {
     *  text = The text to use for calculation.
     *  len = The length of the text.
     *  width = The width of the area to put the text.
-    *  font_size = The size of the font.
-    *  char_space = The character spacing.
-    *  word_space = The word spacing.
-    *  wordwrap = Suppose there are three words: "ABCDE", "FGH", and "IJKL". Also, suppose the substring until "J" can be included within the width (12 bytes). If word_wrap is HPDF_FALSE the function returns 12. If word_wrap parameter is HPDF_TRUE, it returns 10 (the end of the previous word).
-    *  real_width = If not NULL, parameter is set to the real width of the text. If NULL, parameter is ignored.
+    *  fontSize = The size of the font.
+    *  charSpace = The character spacing.
+    *  wordSpace = The word spacing.
+    *  wordWrap = Suppose there are three words: "ABCDE", "FGH", and "IJKL". Also, suppose the substring until "J" can be included within the width (12 bytes). If word_wrap is HPDF_FALSE the function returns 12. If word_wrap parameter is HPDF_TRUE, it returns 10 (the end of the previous word).
+    *  realWidth = If not NULL, parameter is set to the real width of the text. If NULL, parameter is ignored.
     *
     * Returns:
     *   On success, returns byte length which can be included within specified width. Otherwise, returns 0.
     */
-   uint measureText(string text, uint len, float width, float font_size, float char_space, float word_space,
-         bool wordwrap, float* real_width) {
-      return HPDF_Font_MeasureText(this._font, text.toStringz, len, width, font_size, char_space, word_space, wordwrap
-            ? HPDF_TRUE : HPDF_FALSE, real_width);
+   uint measureText(string text, uint len, float width, float fontSize, float charSpace, float wordSpace,
+         bool wordWrap, float* realWidth) {
+      return HPDF_Font_MeasureText(this._font, text.toStringz, len, width, fontSize, charSpace, wordSpace, wordWrap
+            ? HPDF_TRUE : HPDF_FALSE, realWidth);
    }
 
    HPDF_HANDLE getHandle() {

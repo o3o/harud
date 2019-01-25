@@ -73,20 +73,21 @@ class Doc : IHaruObject {
     * Adds a page labeling range for the document
     *
     * Params:
-    *  page_num = the first page that applies this labeling range
-    *  style = one of the following numbering styles:
+    *  pageNum = The first page that applies this labeling range
+    *  style = One of the following numbering styles:
+    *  $(UL
+    *     $(LI PageNumStyle.DECIMAL - Arabic numerals (1 2 3 4))
+    *     $(LI PageNumStyle.UPPER_ROMAN - Uppercase roman numerals (I II III IV))
+    *     $(LI PageNumStyle.LOWER_ROMAN - Lowercase roman numerals (i ii iii iv))
+    *     $(LI PageNumStyle.UPPER_LETTERS - Uppercase letters (A B C D))
+    *     $(LI PageNumStyle,LOWER_LETTERS - Lowercase letters (a b c d))
+    *  )
     *
-    *  $(LI PageNumStyle.DECIMAL - Arabic numerals (1 2 3 4))
-    *  $(LI PageNumStyle.UPPER_ROMAN - Uppercase roman numerals (I II III IV))
-    *  $(LI PageNumStyle.LOWER_ROMAN - Lowercase roman numerals (i ii iii iv))
-    *  $(LI PageNumStyle.UPPER_LETTERS - Uppercase letters (A B C D))
-    *  $(LI PageNumStyle,LOWER_LETTERS - Lowercase letters (a b c d))
-    *
-    *  first_page = the first page number to use
-    *  prefix = the prefix for the page label. (null is allowed.)
+    *  firstPage = The first page number to use
+    *  prefix = The prefix for the page label. (null is allowed.)
     */
-   HPDF_STATUS addPageLabel(uint page_num, PageNumStyle style, uint first_page, string prefix = null) {
-      return HPDF_AddPageLabel(this._doc, page_num, style, first_page, prefix.toStringz());
+   HPDF_STATUS addPageLabel(uint pageNum, PageNumStyle style, uint firstPage, string prefix = null) {
+      return HPDF_AddPageLabel(this._doc, pageNum, style, firstPage, prefix.toStringz());
    }
 
    /**
@@ -467,23 +468,24 @@ class Doc : IHaruObject {
    /**
     * Enables Korean fonts. After useKRFonts() is involed, an application can use the following Korean fonts
     *
-    * $(LI DotumChe)
-    * $(LI DotumChe,Bold)
-    * $(LI DotumChe,Italic)
-    * $(LI DotumChe,BoldItalic)
-    * $(LI Dotum)
-    * $(LI Dotum,Bold)
-    * $(LI Dotum,Italic)
-    * $(LI Dotum,BoldItalic)
-    * $(LI BatangChe)
-    * $(LI BatangChe,Bold)
-    * $(LI BatangChe,Italic)
-    * $(LI BatangChe,BoldItalic)
-    * $(LI Batang)
-    * $(LI Batang,Bold)
-    * $(LI Batang,Italic)
-    * $(LI Batang,BoldItalic)
-    *
+    * $(UL
+    *    $(LI DotumChe)
+    *    $(LI DotumChe,Bold)
+    *    $(LI DotumChe,Italic)
+    *    $(LI DotumChe,BoldItalic)
+    *    $(LI Dotum)
+    *    $(LI Dotum,Bold)
+    *    $(LI Dotum,Italic)
+    *    $(LI Dotum,BoldItalic)
+    *    $(LI BatangChe)
+    *    $(LI BatangChe,Bold)
+    *    $(LI BatangChe,Italic)
+    *    $(LI BatangChe,BoldItalic)
+    *    $(LI Batang)
+    *    $(LI Batang,Bold)
+    *    $(LI Batang,Italic)
+    *    $(LI Batang,BoldItalic)
+    * )
     */
    HPDF_STATUS useKRFonts() {
       return HPDF_UseKRFonts(this._doc);
@@ -494,14 +496,16 @@ class Doc : IHaruObject {
     *
     * After useCNSFonts() is involed, an application can use the following simplified Chinese fonts
     *
-    * $(LI SimSun)
-    * $(LI SimSun,Bold)
-    * $(LI SimSun,Italic)
-    * $(LI SimSun,BoldItalic)
-    * $(LI SimHei)
-    * $(LI SimHei,Bold)
-    * $(LI SimHei,Italic)
-    * $(LI SimHei,BoldItalic)
+    * $(UL
+    *    $(LI SimSun)
+    *    $(LI SimSun,Bold)
+    *    $(LI SimSun,Italic)
+    *    $(LI SimSun,BoldItalic)
+    *    $(LI SimHei)
+    *    $(LI SimHei,Bold)
+    *    $(LI SimHei,Italic)
+    *    $(LI SimHei,BoldItalic)
+    * )
     *
     */
    HPDF_STATUS useCNSFonts() {
@@ -513,11 +517,12 @@ class Doc : IHaruObject {
     *
     * After useCNTFonts() is involed, an application can use the following traditional Chinese fonts
     *
-    * $(LI MingLiU)
-    * $(LI MingLiU,Bold)
-    * $(LI MingLiU,Italic)
-    * $(LI MingLiU,BoldItalic)
-    *
+    * $(UL
+    *    $(LI MingLiU)
+    *    $(LI MingLiU,Bold)
+    *    $(LI MingLiU,Italic)
+    *    $(LI MingLiU,BoldItalic)
+    * )
     */
    HPDF_STATUS useCNTFonts() {
       return HPDF_UseCNTFonts(this._doc);
@@ -528,11 +533,11 @@ class Doc : IHaruObject {
     *
     * After useJPEncodings() is invoked, an application can use the following Japanese encodings:
     * $(UL
-    * $(LI 90ms-RKSJ-H)
-    * $(LI 90ms-RKSJ-V)
-    * $(LI 90msp-RKSJ-H)
-    * $(LI EUC-H)
-    * $(LI EUC-V)
+    *    $(LI 90ms-RKSJ-H)
+    *    $(LI 90ms-RKSJ-V)
+    *    $(LI 90msp-RKSJ-H)
+    *    $(LI EUC-H)
+    *    $(LI EUC-V)
     * )
     */
    HPDF_STATUS useJPEncodings() {
@@ -545,11 +550,11 @@ class Doc : IHaruObject {
     * After useKREncodings() is involed, an application can use the following Korean encodings:
     *
     * $(UL
-    * $(LI KSC-EUC-H)
-    * $(LI KSC-EUC-V)
-    * $(LI KSCms-UHC-H)
-    * $(LI KSCms-UHC-HW-H)
-    * $(LI KSCms-UHC-HW-V)
+    *    $(LI KSC-EUC-H)
+    *    $(LI KSC-EUC-V)
+    *    $(LI KSCms-UHC-H)
+    *    $(LI KSCms-UHC-HW-H)
+    *    $(LI KSCms-UHC-HW-V)
     * )
     */
    HPDF_STATUS useKREncodings() {
@@ -561,10 +566,10 @@ class Doc : IHaruObject {
     *
     * After useCNSEncodings() is involed, an application can use the following simplified Chinese encodings
     * $(UL
-    * $(LI GB-EUC-H)
-    * $(LI GB-EUC-V)
-    * $(LI GBK-EUC-H)
-    * $(LI GBK-EUC-V)
+    *    $(LI GB-EUC-H)
+    *    $(LI GB-EUC-V)
+    *    $(LI GBK-EUC-H)
+    *    $(LI GBK-EUC-V)
     * )
     */
    HPDF_STATUS useCNSEncodings() {
@@ -577,10 +582,10 @@ class Doc : IHaruObject {
     * After useCNTEncodings() is involed, an application can use the following traditional Chinese encodings.
     *
     * $(UL
-    * $(LI GB-EUC-H)
-    * $(LI GB-EUC-V)
-    * $(LI GBK-EUC-H)
-    * $(LI GBK-EUC-V)
+    *    $(LI GB-EUC-H)
+    *    $(LI GB-EUC-V)
+    *    $(LI GBK-EUC-H)
+    *    $(LI GBK-EUC-V)
     * )
     */
    HPDF_STATUS useCNTEncodings() {
@@ -594,8 +599,8 @@ class Doc : IHaruObject {
     * The main data are loaded just before the image object is written to PDF, and the loaded data are deleted immediately.
     *
     * Params:
-    * filename = a path to a PNG image file
-    * deferred = if the load of the image must be referred
+    *  filename = a path to a PNG image file
+    *  deferred = if the load of the image must be referred
     *
     * Returns:
     * when loadPngImageFromFile() succeeds, it returns an instance of a Image object.

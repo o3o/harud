@@ -269,7 +269,7 @@ class Page : IHaruObject {
     * Gets the current transformation matrix of the page.
     *
     * Returns:
-    * when succeed, it returns a TransMatrix struct of current transformation matrix of the page
+    * when succeed, it returns a `TransMatrix` struct of current transformation matrix of the page
     */
    TransMatrix getTransMatrix() {
       return HPDF_Page_GetTransMatrix(this._page);
@@ -442,11 +442,13 @@ class Page : IHaruObject {
    /**
     * Sets the character spacing for text.
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
     *
     * Params:
-    * value = The character spacing (initial value is 0).
+    *  value = The character spacing (initial value is 0).
+    *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.pathObject`)
+    * )
     */
    void setCharSpace(float value) {
       HPDF_Page_SetCharSpace(this._page, value);
@@ -456,8 +458,8 @@ class Page : IHaruObject {
     * Get the current value of the page's word spacing.
     *
     * Returns:
-    * when succeed, it returns the current value of the page's word spacing.
-    * Otherwise it returns 0.
+    *  when succeed, it returns the current value of the page's word spacing.
+    *  Otherwise it returns 0.
     */
    float getWordSpace() {
       return HPDF_Page_GetWordSpace(this._page);
@@ -469,8 +471,9 @@ class Page : IHaruObject {
     * Params:
     * value = The value of word spacing (initial value is 0).
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    void setWordSpace(float value) {
       HPDF_Page_SetWordSpace(this._page, value);
@@ -491,10 +494,11 @@ class Page : IHaruObject {
     * Sets the horizontal scalling (scaling) for text showing.
     *
     * Params:
-    * value = The value of horizontal scalling (scaling) (initially 100).
+    *  value = The value of horizontal scalling (scaling) (initially 100).
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    void setHorizontalScalling(float value) {
       HPDF_Page_SetHorizontalScalling(this._page, value);
@@ -504,8 +508,8 @@ class Page : IHaruObject {
     * Gets the current value of the page's line spacing.
     *
     * Returns:
-    * when succeed, it returns the current value of the line spacing.
-    * Otherwise it returns 0.
+    *  when succeed, it returns the current value of the line spacing.
+    *  Otherwise it returns 0.
     */
    float getTextLeading() {
       return HPDF_Page_GetTextLeading(this._page);
@@ -515,7 +519,7 @@ class Page : IHaruObject {
     * Sets the text leading (line spacing) for text showing.
     *
     * Params:
-    * value = The value of text leading (initial value is 0).
+    *  value = The value of text leading (initial value is 0).
     */
    void setTextLeading(float value) {
       HPDF_Page_SetTextLeading(this._page, value);
@@ -525,8 +529,8 @@ class Page : IHaruObject {
     * Gets the current value of the page's text rendering mode.
     *
     * Returns:
-    * when succeed, it returns the current value of the text rendering mode.
-    * Otherwise it returns 0.
+    *  when succeed, it returns the current value of the text rendering mode.
+    *  Otherwise it returns 0.
     */
    HaruTextRenderingMode getTextRenderingMode() {
       return HPDF_Page_GetTextRenderingMode(this._page);
@@ -535,11 +539,12 @@ class Page : IHaruObject {
    /**
     * Sets the text rendering mode. The initial value of text rendering mode is HPDF_FILL.
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
-    *
     * Params:
-    * mode = The text rendering mode (one of the following values)
+    *  mode = The text rendering mode (one of the following values)
+    *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    void setTextRenderingMode(HaruTextRenderingMode mode) {
       HPDF_Page_SetTextRenderingMode(this._page, mode);
@@ -563,8 +568,8 @@ class Page : IHaruObject {
     * Gets the current value of the page's text rising.
     *
     * Returns:
-    * when succeed, it returns the current value of the text rising.
-    * Otherwise it returns 0.
+    *  when succeed, it returns the current value of the text rising.
+    *  Otherwise it returns 0.
     */
    float getTextRise() {
       return HPDF_Page_GetTextRise(this._page);
@@ -573,12 +578,12 @@ class Page : IHaruObject {
    /**
     * Moves the text position in vertical direction by the amount of value. Useful for making subscripts or superscripts.
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
-    *
     * Params:
-    * value = Text rise, in user space units.
+    *  value = Text rise, in user space units.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    void setTextRise(float value) {
       HPDF_Page_SetTextRise(this._page, value);
@@ -586,11 +591,11 @@ class Page : IHaruObject {
 
    /**
     * Gets the current value of the page's filling color.
-
+    *
     * getRGBFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_RGB.
     *
     * Returns:
-    * when getRGBFill() succeed, it returns the current value of the page's filling color. Otherwise it returns {0, 0, 0}.
+    *  when getRGBFill() succeed, it returns the current value of the page's filling color. Otherwise it returns {0, 0, 0}.
     */
    HaruRGBColor getRGBFill() {
       return HPDF_Page_GetRGBFill(this._page);
@@ -604,8 +609,9 @@ class Page : IHaruObject {
     *  g = The level of green color element. They must be between 0 and 1. (See "Colors")
     *  b = The level of blue color element. They must be between 0 and 1. (See "Colors")
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    HPDF_STATUS setRGBFill(float r, float g, float b) {
       return HPDF_Page_SetRGBFill(this._page, r, g, b);
@@ -617,8 +623,8 @@ class Page : IHaruObject {
     * getRGBStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_RGB.
     *
     * Returns:
-    * when getRGBStroke() succeed, it returns the current value of the page's stroking color.
-    * Otherwise it returns {0, 0, 0}.
+    *  when getRGBStroke() succeed, it returns the current value of the page's stroking color.
+    *  Otherwise it returns {0, 0, 0}.
     */
    HaruRGBColor getRGBStroke() {
       return HPDF_Page_GetRGBStroke(this._page);
@@ -628,12 +634,13 @@ class Page : IHaruObject {
     * Sets the stroking color.
     *
     * Params:
-    * r = The level of red color element. They must be between 0 and 1. (See "Colors")
-    * g = The level of green color element. They must be between 0 and 1. (See "Colors")
-    * b = The level of blue color element. They must be between 0 and 1. (See "Colors")
+    *  r = The level of red color element. They must be between 0 and 1. (See "Colors")
+    *  g = The level of green color element. They must be between 0 and 1. (See "Colors")
+    *  b = The level of blue color element. They must be between 0 and 1. (See "Colors")
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    HPDF_STATUS setRGBStroke(float r, float g, float b) {
       return HPDF_Page_SetRGBStroke(this._page, r, g, b);
@@ -645,8 +652,8 @@ class Page : IHaruObject {
     * getCMYKFill() is valid only when the page's filling color space is HPDF_CS_DEVICE_CMYK.
     *
     * Returns:
-    * when getCMYKFill() succeed, it returns the current value of the page's filling color.
-    * Otherwise it returns {0, 0, 0, 0}.
+    *  when getCMYKFill() succeed, it returns the current value of the page's filling color.
+    *  Otherwise it returns {0, 0, 0, 0}.
     */
    HaruCMYKColor getCMYKFill() {
       return HPDF_Page_GetCMYKFill(this._page);
@@ -658,8 +665,8 @@ class Page : IHaruObject {
     * getCMYKStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_CMYK.
     *
     * Returns:
-    * when getCMYKStroke() succeed, it returns the current value of the page's stroking color.
-    * Otherwise it returns {0, 0, 0, 0}.
+    *  when getCMYKStroke() succeed, it returns the current value of the page's stroking color.
+    *  Otherwise it returns {0, 0, 0, 0}.
     */
    HaruCMYKColor getCMYKStroke() {
       return HPDF_Page_GetCMYKStroke(this._page);
@@ -671,8 +678,8 @@ class Page : IHaruObject {
     * grayFill() is valid only when the page's stroking color space is HPDF_CS_DEVICE_GRAY.
     *
     * Returns:
-    * when getGrayFill() succeed, it returns the current value of the page's filling color.
-    * Otherwise it returns 0.
+    *  when getGrayFill() succeed, it returns the current value of the page's filling color.
+    *  Otherwise it returns 0.
     */
    float getGrayFill() {
       return HPDF_Page_GetGrayFill(this._page);
@@ -684,8 +691,9 @@ class Page : IHaruObject {
     * Params:
     *  gray = The value of the gray level between 0 and 1.
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pagedescription or GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    void setGrayFill(float gray) {
       HPDF_Page_SetGrayFill(this._page, gray);
@@ -697,8 +705,8 @@ class Page : IHaruObject {
     * grayStroke() is valid only when the page's stroking color space is HPDF_CS_DEVICE_GRAY.
     *
     * Returns:
-    * when succeed, it returns the current value of the page's stroking color.
-    * Otherwise it returns 0.
+    *  when succeed, it returns the current value of the page's stroking color.
+    *  Otherwise it returns 0.
     */
    float getGrayStroke() {
       return HPDF_Page_GetGrayStroke(this._page);
@@ -710,8 +718,9 @@ class Page : IHaruObject {
     * Params:
     *  gray = The value of the gray level between 0 and 1.
     *
-    * ## Graphics Mode
-    * Before and after - GMode.pageDescription or GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
     */
    void setGrayStroke(float gray) {
       HPDF_Page_SetGrayStroke(this._page, gray);
@@ -721,7 +730,7 @@ class Page : IHaruObject {
     * Gets the current value of the page's stroking color space.
     *
     * Returns:
-    * when getStrokingColorSpace() succeed, it returns the current value of the page's stroking color space. Otherwise it returns HPDF_CS_EOF.
+    *  when getStrokingColorSpace() succeed, it returns the current value of the page's stroking color space. Otherwise it returns HPDF_CS_EOF.
     */
    ColorSpace getStrokingColorSpace() {
       return HPDF_Page_GetStrokingColorSpace(this._page);
@@ -731,8 +740,8 @@ class Page : IHaruObject {
     * Gets the current value of the page's stroking color space.
     *
     * Returns:
-    * when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space.
-    * Otherwise it returns HPDF_CS_EOF.
+    *  when getFillingColorSpace() succeed, it returns the current value of the page's stroking color space.
+    *  Otherwise it returns HPDF_CS_EOF.
     */
    ColorSpace getFillingColorSpace() {
       return HPDF_Page_GetFillingColorSpace(this._page);
@@ -742,7 +751,7 @@ class Page : IHaruObject {
     * Gets the current text transformation matrix of the page.
     *
     * Returns:
-    * when getTextMatrix() succeed, it returns a TransMatrix struct of current text transformation matrix of the page.
+    *  when getTextMatrix() succeed, it returns a TransMatrix struct of current text transformation matrix of the page.
     */
    TransMatrix getTextMatrix() {
       return HPDF_Page_GetTextMatrix(this._page);
@@ -752,8 +761,8 @@ class Page : IHaruObject {
     * Gets the number of the page's graphics state stack.
     *
     * Returns:
-    * when getGStateDepth() succeed, it returns the number of the page's graphics state stack.
-    * Otherwise it returns 0.
+    *  when getGStateDepth() succeed, it returns the number of the page's graphics state stack.
+    *  Otherwise it returns 0.
     */
    uint getGStateDepth() {
       return HPDF_Page_GetGStateDepth(this._page);
@@ -802,9 +811,10 @@ class Page : IHaruObject {
     *  ang1 = The angle of the begining of the arc.
     *  ang2 = The angle of the end of the arc. It must be greater than ang1.
     *
-    * ## Graphics Mode
-    * Before - GMode.pageDescription or GMode.pathObject.
-    * After - GMode.pathObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD `GMode.pageDescription` or `GMode.pathObject`)
+    *   $(DT After) $(DD `GMode.pathObject`)
+    * )
     */
    HPDF_STATUS arc(float x, float y, float ray, float ang1, float ang2) {
       return HPDF_Page_Arc(this._page, x, y, ray, ang1, ang2);
@@ -813,9 +823,10 @@ class Page : IHaruObject {
    /**
     * Begins a text object and sets the text position to (0, 0).
     *
-    * ## Graphics Mode
-    * Before - GMode.pageDescription.
-    * After - GMode.textObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD `GMode.pageDescription`)
+    *   $(DT After) $(DD `GMode.textObject`)
+    * )
     */
    HPDF_STATUS beginText() {
       return HPDF_Page_BeginText(this._page);
@@ -829,9 +840,10 @@ class Page : IHaruObject {
     *  y = Y coordinate of center point of the circle.
     *  ray = The radius of the circle.
     *
-    * ## Graphics Mode
-    * Before - GMode.pageDescription or GMode.pathObject.
-    * After - GMode.pathObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD `GMode.pageDescription` or `GMode.pathObject`)
+    *   $(DT After) $(DD `GMode.pathObject`)
+    * )
     */
    HPDF_STATUS circle(float x, float y, float ray) {
       return HPDF_Page_Circle(this._page, x, y, ray);
@@ -848,11 +860,12 @@ class Page : IHaruObject {
     * There is no way to enlarge the current clipping path, or to replace the clipping path with a new one.
     * The functions HPDF_Page_GSave() and HPDF_Page_GRestore() may be used to save and restore the current graphics state, including the clipping path.
     *
-    * ## Graphics Mode
-    * Before and after - GMode,pathObject.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pathObject`)
+    * )
     *
     * Returns:
-    * HPDF_OK on success. Otherwise, returns error code and error-handler is invoked.
+    *  HPDF_OK on success. Otherwise, returns error code and error-handler is invoked.
     */
    HPDF_STATUS clip() {
       return HPDF_Page_Clip(this._page);
@@ -871,9 +884,10 @@ class Page : IHaruObject {
    /**
     * Closes the current path. Then, it paints the path.
     *
-    * ## Graphics Mode
-    * Before - GMode.pathObject.<br />
-    * After - GMode.pageDescription.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD `GMode.pathObject`)
+    *   $(DT After) $(DD `GMode.pageDescription`)
+    * )
     */
    HPDF_STATUS closePathStroke() {
       return HPDF_Page_ClosePathStroke(this._page);
@@ -882,9 +896,10 @@ class Page : IHaruObject {
    /**
     * Closes the current path, fills the current path using the nonzero winding number rule, then paints the path.
     *
-    * ## Graphics Mode
-    * Before - GMode.pathObjec.
-    * After - GMode.pageDescription.
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before) $(DD `GMode.pathObject`)
+    *   $(DT After) $(DD `GMode.pageDescription`)
+    * )
     */
    HPDF_STATUS closePathFillStroke() {
       return HPDF_Page_ClosePathFillStroke(this._page);
@@ -978,10 +993,10 @@ class Page : IHaruObject {
     * Appends an ellipse to the current path.
     *
     * Params:
-    * x = The center point of the ellipse.
-    * y = The center point of the ellipse.
-    * xray = Horizontal and vertical radii of the ellipse.
-    * yray = Horizontal and vertical radii of the ellipse.
+    *  x = The center point of the ellipse.
+    *  y = The center point of the ellipse.
+    *  xray = Horizontal and vertical radii of the ellipse.
+    *  yray = Horizontal and vertical radii of the ellipse.
     *
     * ## Graphics Mode
     * Before and after - GMode.pathObject.
@@ -1079,24 +1094,25 @@ class Page : IHaruObject {
     * An application can invoke gSave() up to 28 (???) and can restore the saved parameter by invoking gRestore().
     *
     * The parameters that are saved by gSave() are:
-    * <li>Character Spacing</li>
-    * <li>Dash Mode</li>
-    * <li>Filling Color</li>
-    * <li>Flatness</li>
-    * <li>Font</li>
-    * <li>Font Size</li>
-    * <li>Horizontal Scalling</li>
-    * <li>Line Width</li>
-    * <li>Line Cap Style</li>
-    * <li>Line Join Style</li>
-    * <li>Miter Limit</li>
-    * <li>Rendering Mode</li>
-    * <li>Stroking Color</li>
-    * <li>Text Leading</li>
-    * <li>Text Rise</li>
-    * <li>Transformation Matrix</li>
-    * <li>Word Spacing</li>
-    *
+    * $(UL
+    *   $(LI Character Spacing)
+    *   $(LI Dash Mode)
+    *   $(LI Filling Color)
+    *   $(LI Flatness)
+    *   $(LI Font)
+    *   $(LI Font Size)
+    *   $(LI Horizontal Scalling)
+    *   $(LI Line Width)
+    *   $(LI Line Cap Style)
+    *   $(LI Line Join Style)
+    *   $(LI Miter Limit)
+    *   $(LI Rendering Mode)
+    *   $(LI Stroking Color)
+    *   $(LI Text Leading)
+    *   $(LI Text Rise)
+    *   $(LI Transformation Matrix)
+    *   $(LI Word Spacing)
+    * )
     * ## Graphics Mode
     * Before and after - GMode.pageDescription.
     */
@@ -1142,8 +1158,8 @@ class Page : IHaruObject {
     * moveTo() sets the start point for the path to the point (x, y).
     *
     * Params:
-    * x = The x coordinate of start point for drawing path
-    * y = The y coordinate of start point for drawing path
+    *  x = The x coordinate of start point for drawing path
+    *  y = The y coordinate of start point for drawing path
     *
     * ## Graphics Mode
     * Before - GMode.pageDescription or GMode.pathObject.
@@ -1343,10 +1359,6 @@ class Page : IHaruObject {
    /**
     * Prints the text inside the specified region.
     *
-    * $(DL $(B Graphics Mode)
-    *   $(DT Before and after) $(DD GMode.textObject)
-    * )
-    *
     * Params:
     *  left= Coordinates of corners of the region to output text.
     *  top= Coordinates of corners of the region to output text.
@@ -1355,6 +1367,10 @@ class Page : IHaruObject {
     *  text = The text to show.
     *  alignment = The alignment of the text.
     *  len = If not NULL, the number of characters printed in the area is returned.
+    *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.textObject)
+    * )
     */
    HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment alignment, uint* len) {
       return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), alignment, len);
