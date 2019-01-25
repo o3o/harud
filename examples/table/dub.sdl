@@ -1,0 +1,13 @@
+name "table"
+description "Simple example with tabel"
+targetType "executable"
+authors "Orfeo Da Viá"
+copyright "Copyright © 2015, o3o"
+license "Boost License"
+
+dependency "harud" path="../../"
+libs "hpdf" platform="posix"
+sourceFiles "../../lib/libhpdf.lib" platform="windows"
+sourceFiles "app.d"
+sourcePaths "."
+sourcePaths "../../lib/" platform="windows"

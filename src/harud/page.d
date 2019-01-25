@@ -195,7 +195,7 @@ class Page : IHaruObject {
     *  width = The width of the area to put the text.
     *  wordWrap = When there are three words of "ABCDE", "FGH", and "IJKL", and the substring until "J" can be included within the width,
     *    if wordWrap parameter is false it returns 12, and if word_wrap parameter is true, it returns 10 (the end of the previous word).
-    *    real_width = If this parameter is not null, the real widths of the text is set. An application can set it to null, if it is unnecessary.
+    *  realWidth = If this parameter is not null, the real widths of the text is set. An application can set it to null, if it is unnecessary.
     *
     * Returns:
     *  When succeed it returns the byte length which can be included within the specified width in current fontsize, character spacing and word spacing.
@@ -601,7 +601,7 @@ class Page : IHaruObject {
     * Sets the filling color.
     *
     * Params:
-    *  r = The level of red color element. They must be between 0 and 1. (See "Colors")
+    *  r = The level of red color element. They must be between 0 and 1. (See `Colors`)
     *  g = The level of green color element. They must be between 0 and 1. (See "Colors")
     *  b = The level of blue color element. They must be between 0 and 1. (See "Colors")
     *
@@ -1211,11 +1211,13 @@ class Page : IHaruObject {
    /**
     * Sets the filling color.
     *
+    * See $(LINK2 https://en.wikipedia.org/wiki/CMYK_color_model, CMYK color model)
+    *
     * Params:
-    *  c = The level of each color element. They must be between 0 and 1.
-    *  m = The level of each color element. They must be between 0 and 1.
-    *  y = The level of each color element. They must be between 0 and 1.
-    *  k = The level of each color element. They must be between 0 and 1.
+    *  c = The level of cyan color element. They must be between 0 and 1.
+    *  m = The level of magenta color element. They must be between 0 and 1.
+    *  y = The level of yellow color element. They must be between 0 and 1.
+    *  k = The level of key  element. They must be between 0 and 1.
     *
     * $(DL $(B Graphics Mode)
     *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
@@ -1374,18 +1376,21 @@ class Page : IHaruObject {
    /**
     * Prints the text inside the specified region.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD GMode.textObject)
+    * )
+    *
+    *
     * Params:
-    *  left= Coordinates of corners of the region to output text.
-    *  top= Coordinates of corners of the region to output text.
-    *  right= Coordinates of corners of the region to output text.
+    *  left = Coordinates of corners of the region to output text.
+    *  top = Coordinates of corners of the region to output text.
+    *  right = Coordinates of corners of the region to output text.
     *  bottom = Coordinates of corners of the region to output text.
     *  text = The text to show.
     *  alignment = The alignment of the text.
     *  len = If not NULL, the number of characters printed in the area is returned.
     *
-    * $(DL $(B Graphics Mode)
-    *   $(DT Before and after) $(DD GMode.textObject)
-    * )
+    *
     */
    HPDF_STATUS textRect(float left, float top, float right, float bottom, string text, HaruTextAlignment alignment, uint* len) {
       return HPDF_Page_TextRect(this._page, left, top, right, bottom, text.toStringz(), alignment, len);
