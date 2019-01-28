@@ -1,5 +1,5 @@
 /**
- * Describes a page
+ * Describes a page.
  */
 module harud.page;
 
@@ -1088,7 +1088,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Restore the graphics state which is saved by HPDF_Page_GSave().
+    * Restore (pop) the graphics state which is saved by `graphicSave`.
     *
     * $(DL $(B Graphics Mode)
     *   $(DT Before and after) $(DD `GMode.pageDescription`)
@@ -1099,10 +1099,10 @@ class Page : IHaruObject {
    }
 
    /**
-    * Saves the page's current graphics parameter to the stack.
+    * Saves (push) the page's current graphics parameter to the stack.
     * An application can invoke gSave() up to 28 (???) and can restore the saved parameter by invoking gRestore().
     *
-    * The parameters that are saved by gSave() are:
+    * The parameters that are saved by `graphicSave` are:
     * $(UL
     *   $(LI Character Spacing)
     *   $(LI Dash Mode)
@@ -1230,15 +1230,15 @@ class Page : IHaruObject {
    /**
     * Sets the stroking color.
     *
+    * $(DL $(B Graphics Mode)
+    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
+    * )
+    *
     * Params:
     *  c = The level of each color element. They must be between 0 and 1.
     *  m = The level of each color element. They must be between 0 and 1.
     *  y = The level of each color element. They must be between 0 and 1.
     *  k = The level of each color element. They must be between 0 and 1.
-    *
-    * $(DL $(B Graphics Mode)
-    *   $(DT Before and after) $(DD `GMode.pageDescription` or `GMode.textObject`)
-    * )
     */
    HPDF_STATUS setCMYKStroke(float c, float m, float y, float k) {
       return HPDF_Page_SetCMYKStroke(this._page, c, m, y, k);

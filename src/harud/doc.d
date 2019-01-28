@@ -1,5 +1,5 @@
 /**
- * Describes main document
+ * Describes main document.
  */
 module harud.doc;
 
@@ -10,7 +10,7 @@ import std.conv;
 import std.string;
 
 /**
- *  PDF Document Class
+ * PDF Document Class
  */
 class Doc : IHaruObject {
    protected HPDF_Doc _doc;
@@ -70,7 +70,7 @@ class Doc : IHaruObject {
    }
 
    /**
-    * Adds a page labeling range for the document
+    * Adds a page labeling range for the document.
     *
     * Params:
     *  pageNum = The first page that applies this labeling range
@@ -351,7 +351,7 @@ class Doc : IHaruObject {
     * Saves the document to a file.
     *
     * Params:
-    * filename = The name of the file to save
+    *  filename = The name of the file to save
     */
    HPDF_STATUS saveToFile(string filename) {
       return HPDF_SaveToFile(this._doc, filename.toStringz());
@@ -379,7 +379,7 @@ class Doc : IHaruObject {
     * An application cannot invoke setPageConfiguration() after a page is added to document
     *
     * Params:
-    * pagePerPages = Specify the numbers of pages that a "Pages" object can own
+    *  pagePerPages = Specify the numbers of pages that a "Pages" object can own
     */
    HPDF_STATUS setPagesConfiguration(uint pagePerPages) {
       return HPDF_SetPagesConfiguration(this._doc, pagePerPages);
@@ -644,12 +644,11 @@ class Doc : IHaruObject {
     * The formats that loadRawImageFromMem() can load is the same as loadRawImageFromFile()
     *
     * Params:
-    * buf = The pointer to the image data.
-    * width = The width of an image file.
-    * height = The height of an image file.
-    * colorSpace = the $(LINK2 harud/c/types/ColorSpace.html, ColorSpace).
-    * `deviceGrey`, `deviceRGB` or `deviceCMYK` are allowed.
-    * bitsPerComponent = The bit size of each color component. The valid value is either 1, 2, 4, 8.
+    *  buf = The pointer to the image data.
+    *  width = The width of an image file.
+    *  height = The height of an image file.
+    *  colorSpace = the $(LINK2 harud/c/types/ColorSpace.html, ColorSpace).  `deviceGrey`, `deviceRGB` or `deviceCMYK` are allowed.
+    *  bitsPerComponent = The bit size of each color component. The valid value is either 1, 2, 4, 8.
     *
     * Returns:
     * When loadRawImageFromMem() succeeds,
@@ -683,14 +682,13 @@ class Doc : IHaruObject {
     * Params:
     *  type = one of the following attributes:
     *  $(UL
-    *  $(LI HaruInfo.CREATION_DATE)
-    *  $(LI HaruInfo.MOD_DATE)
+    *    $(LI HaruInfo.CREATION_DATE)
+    *    $(LI HaruInfo.MOD_DATE)
     *  )
     *
     *  value = The new value for the attribute.
     *
-    * See_Also:
-    * HaruDate
+    * See_Also: HaruDate
     */
    HPDF_STATUS setInfoDateAttr(HaruInfoType type, HaruDate value) {
       return HPDF_SetInfoDateAttr(this._doc, type, value);
@@ -712,8 +710,7 @@ class Doc : IHaruObject {
     * Set the permission flags for the document
     *
     * Params:
-    * permission = One or more of the $(LINK2 harud/c/types/HaruPermission.html, HaruPermission) "ored" together
-    *
+    *  permission = One or more of the $(LINK2 harud/c/types/HaruPermission.html, HaruPermission) "ored" together
     */
    HPDF_STATUS setPermission(HaruPermission permission) {
       return HPDF_SetPermission(this._doc, permission);
@@ -723,10 +720,9 @@ class Doc : IHaruObject {
     * Set the encryption mode. As the side effect, ups the version of PDF to 1.4 when the mode is set to HaruEncryptMode.R3
     *
     * Params:
-    * mode = One  of the $(LINK2
-    * harud/c/types/HaruEncryptMode.html, HaruEncryptMode)
-    * keyLen = Specify the byte length of encryption key.
-    * Only valid for HaruEncryptMode.R3. Between 5 (40 bits) and 16 (128 bits) can be specified
+    *  mode = One  of the $(LINK2
+    *  harud/c/types/HaruEncryptMode.html, HaruEncryptMode)
+    *  keyLen = Specify the byte length of encryption key. Only valid for HaruEncryptMode.R3. Between 5 (40 bits) and 16 (128 bits) can be specified
     *
     */
    HPDF_STATUS setEncryptionMode(HaruEncryptMode mode, uint keyLen) {
@@ -737,7 +733,7 @@ class Doc : IHaruObject {
     * Set the mode of compression.
     *
     * Params:
-    * mode = Compression mode $(LINK2 harud/c/types/CompressionMode.html, CompressionMode)
+    *  mode = Compression mode $(LINK2 harud/c/types/CompressionMode.html, CompressionMode)
     */
    HPDF_STATUS setCompressionMode(CompressionMode mode) {
       return HPDF_SetCompressionMode(this._doc, mode);

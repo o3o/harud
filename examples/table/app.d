@@ -14,7 +14,7 @@ void main() {
       helvetica.printFontInfo;
 
       // col size = 516 /12 = 43
-      Table table = new Table(page, createRect(50, 800, 528 , 200));
+      Table table = new Table(page, createTopLeftRect(50, 800, 528 , 200));
 
       table.addRow(18);
       page.setFontAndSize(helveticaBold, 12);
@@ -24,7 +24,9 @@ void main() {
       table.addCol(Column(3, "Supply", HaruTextAlignment.left, CellBorder.all, 5, 0, 0, 0, HaruCMYKColor(0.47, 0., 0.47, 0.03)));
 
       page.setFontAndSize(helvetica, 12);
-      table.addCol(Column(1, "Set", HaruTextAlignment.center, CellBorder.all));
+      //table.addCol(Column(1, "Set", HaruTextAlignment.center, CellBorder.all));
+      Column c0 ={colSpan: 1, text:"Set", alignment: HaruTextAlignment.center, border:CellBorder.all, fillColor: HaruCMYKColor(0.47, 0.3, 0.47, 0.03)};
+      table.addCol(c0);
       table.addCol(Column(2, "Measure", HaruTextAlignment.center, CellBorder.all));
       page.setFontAndSize(helveticaBold, 12);
       table.addCol(Column(4, "Compressor power supply", HaruTextAlignment.left, CellBorder.all, 5));

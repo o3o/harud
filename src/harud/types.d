@@ -33,10 +33,36 @@ struct Point {
    float y;
 }
 
+/**
+ * Rectangle
+ *
+ * --------------------
+ *        ^
+ * top    |   +--------+
+ *        |   |        |
+ * bottom |   +--------+
+ *        +-------------->
+ *           left     right
+ *
+ * --------------------
+ */
 struct Rect {
+   /**
+    * The x-coordinates of bottom left corner
+    */
    float left;
+   /**
+    * The y-coordinates of bottom left corner
+    */
    float bottom;
+   /**
+    * The x-coordinates of top right corner
+    */
    float right;
+
+   /**
+    * The y-coordinates of top right corner
+    */
    float top;
 }
 

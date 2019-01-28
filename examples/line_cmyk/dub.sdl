@@ -1,0 +1,4 @@
+name "linecmyk"
+targetType "executable"
+dependency "harud" path="../../"
+sourceFiles "app.d"
