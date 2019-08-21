@@ -60,7 +60,7 @@ void main() {
       page.moveTextPos(60, height - 105);
 
       for (int i = 0; i < fontList.length -1 ; i++) {
-         enum string samp_text = "abcdefgABCDEFG12345!#$%&+-@?";
+         enum string SAMPLE_TEXT = "abcdefgABCDEFG12345!#$%&+-@?°C";
          Font font = pdf.getFont(fontList[i]);
 
          /* print a label of text */
@@ -70,7 +70,7 @@ void main() {
 
          /* print a sample text. */
          page.setFontAndSize(font, 20);
-         page.showText(samp_text);
+         page.showText(SAMPLE_TEXT);
          page.moveTextPos(0, -20);
       }
       pdf.useCNSFonts();

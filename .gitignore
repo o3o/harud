@@ -2,7 +2,6 @@
 *.o
 bin
 .dub
-dub.selections.json
 examples/encoding_list/encoding_list
 examples/error_handling/err
 examples/font/font

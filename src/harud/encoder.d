@@ -67,5 +67,4 @@ class Encoder : IHaruObject {
    public HPDF_HANDLE getHandle() {
       return _encoder;
    }
-
 }

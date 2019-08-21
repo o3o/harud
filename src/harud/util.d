@@ -1,3 +1,6 @@
+/**
+ * This module contains some common utilities used by harud
+ */
 module harud.util;
 
 import harud.doc : Doc;
@@ -43,17 +46,17 @@ unittest {
  *
  * Params:
  *  xLeft = X coordinates of left up corner
- *  yTop = Y coordinates of left up corner
+ *  yBottom = Y coordinates of left bottom corner
  *  width = Width of rectangle
  *  height = Height of rectangle
  *
  * Examples:
  * --------------------
- * (x, y)
- *    *----------+
- *    |          | height
- *    *----------+
- *       width
+ *             width
+ *         +----------+
+ *         |          | height
+ *         *----------+
+ * (left, bottom)
  * --------------------
  */
 Rect createPdfRect(float xLeft, float yBottom, float width, float height) {
@@ -128,52 +131,58 @@ HaruCMYKColor getColor(string c)() {
       case "red":
          return HaruCMYKColor(0, 0.73, 0.78, 0.04);
       case "pink":
-         case "#e91e63":
-         return HaruCMYKColor(0, 0.87, 0.58, 0.09);
+         return HaruCMYKColor(0, 0.87, 0.58, 0.09); //#e91e63":
       case "purple":
-         case "#9c27b0":
-         return HaruCMYKColor(0.11, 0.78, 0., 0.31);
-
+         return HaruCMYKColor(0.11, 0.78, 0., 0.31); //#9c27b0":
       case "grey":
-         goto case;
-      case "#9e9e9e":
          return HaruCMYKColor(0., 0., 0., 0.38);
       case "grey-lighten-5":
-         goto case;
-      case "#fafafa":
          return HaruCMYKColor(0., 0., 0., 0.02);
       case "grey-lighten-4":
-         goto case;
-      case "#f5f5f5":
          return HaruCMYKColor(0., 0., 0., 0.04);
       case "grey-lighten-3":
-         goto case;
-      case "#eeeeee":
          return HaruCMYKColor(0., 0., 0., 0.07);
       case "grey-lighten-2":
-         goto case;
-      case "#e0e0e0":
          return HaruCMYKColor(0., 0., 0., 0.12);
       case "grey-lighten-1":
-         goto case;
-      case "#bdbdbd":
          return HaruCMYKColor(0., 0., 0., 0.26);
       case "grey-darken-1":
-         goto case;
-      case "#757575":
          return HaruCMYKColor(0., 0., 0., 0.54);
       case "grey-darken-2":
-         goto case;
-      case "#616161":
          return HaruCMYKColor(0., 0., 0., 0.62);
       case "grey-darken-3":
-         goto case;
-      case "#424242":
          return HaruCMYKColor(0., 0., 0., 0.74);
       case "grey-darken-4":
-         goto case;
-      case "#212121":
          return HaruCMYKColor(0., 0., 0., 0.87);
+      case "blue":
+         return HaruCMYKColor(0.86, 0.71, 0.0, 0.05); //#2196F3,
+      case "blue-lighten-5":
+         return HaruCMYKColor(0.10, 0.04, 0.0, 0.01); //#E3F2FD,
+      case "blue-lighten-4":
+         return HaruCMYKColor(0.25, 0.12, 0.0, 0.02); //#BBDEFB,
+      case "blue-lighten-3":
+         return HaruCMYKColor(0.42, 0.19, 0.0, 0.02); //#90CAF9,
+      case "blue-lighten-2":
+         return HaruCMYKColor(0.59, 0.26, 0.0, 0.04); //#64B5F6,
+      case "blue-lighten-1":
+         return HaruCMYKColor(0.73, 0.33, 0.0, 0.04); //#42A5F5,
+      case "blue-darken-1":
+         return HaruCMYKColor(0.87, 0.41, 0.0, 0.10); //#1E88E5,
+      case "blue-darken-2":
+         return HaruCMYKColor(0.88, 0.44, 0.0, 0.18); //#1976D2,
+      case "blue-darken-3":
+         return HaruCMYKColor(0.89, 0.47, 0.0, 0.25); //#1565C0,
+      case "blue-darken-4":
+         return HaruCMYKColor(0.92, 0.56, 0.0, 0.37); //#0D47A1,
+      case "blue-accent-1":
+         return HaruCMYKColor(0.49, 0.31, 0.0, 0.0); //#82B1FF,
+      case "blue-accent-2":
+         return HaruCMYKColor(0.73, 0.46, 0.0, 0.0); //#448AFF
+      case "blue-accent-3":
+         return HaruCMYKColor(0.85, 0.53, 0.0, 0.0); //#2979FF
+      case "blue-accent-4":
+         return HaruCMYKColor(0.84, 0.62, 0.0, 0.0); //#2962FF
+
       default:
          assert(false);
    }
@@ -182,5 +191,4 @@ HaruCMYKColor getColor(string c)() {
 unittest {
    assert(getColor!("red").yellow == cast(float)0.78);
    assert(getColor!("grey-darken-2").key == cast(float)0.62);
-   assert(getColor!("#616161").key == cast(float)0.62);
 }

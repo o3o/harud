@@ -1,9 +1,17 @@
+/**
+ * Table support
+ */
 module harud.table;
 
 import harud.page: Page;
 import harud.types: Rect, HaruTextAlignment, HaruCMYKColor;
 
 
+/**
+ * Describe a table.
+ *
+ * A `Table` is a layout element that represents data in a two-dimensional grid
+ */
 class Table {
    private Page page;
    this(Page page, Rect rect) {
@@ -97,12 +105,9 @@ class Table {
    }
 }
 
-/+
-struct Row {
-   float height;
-}
-+/
-
+/**
+ * Describes a table colums (cell)
+ */
 struct Column {
    int colSpan;
    string text;
@@ -114,12 +119,13 @@ struct Column {
    float paddingRight   = 0;
    float paddingBottom  = 0;
 
-   HaruCMYKColor fillColor = HaruCMYKColor(0, 0, 0, 0); // bianco
-   HaruCMYKColor borderColor = HaruCMYKColor(0, 0, 0, 1); // nero
-   //HaruCMYKColor fillColor;
-   //HaruCMYKColor borderColor;
+   HaruCMYKColor fillColor = HaruCMYKColor(0, 0, 0, 0); // white
+   HaruCMYKColor borderColor = HaruCMYKColor(0, 0, 0, 1); // black
 }
 
+/**
+ * Cell border
+ */
 enum CellBorder {
    none = 0x0,
    top = 0x01,
