@@ -1,2 +1,2 @@
 module harud.semver;
-enum VERSION = "1.0.2";
+enum VERSION = "1.0.3";
