@@ -1,7 +1,7 @@
 name "hello"
 description "Simple example with harud"
 targetType "executable"
-authors "Orfeo Da Viá"
+authors "Orfeo Da Vià"
 copyright "Copyright © 2015, o3o"
 license "Boost License"
 

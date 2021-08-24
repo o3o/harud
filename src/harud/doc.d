@@ -389,7 +389,7 @@ class Doc : IHaruObject {
     * Set the first page to appear when a document is opened.
     *
     * Params:
-    *  openAction = a valid destination object.
+    *  openAction = A valid destination object.
     */
    HPDF_STATUS setOpenAction(HPDF_Destination openAction) {
       return HPDF_SetOpenAction(this._doc, openAction);
@@ -399,8 +399,8 @@ class Doc : IHaruObject {
     * Loads a Type1 font from an external file and registers it in the document object
     *
     * Params:
-    *  afmfilename = a path of an AFM file
-    *  pfmfilename = a path of a PFA/PFB file. If null, the glyph data of font file is not embedded to a PDF file
+    *  afmfilename = Path of an AFM file
+    *  pfmfilename = Path of a PFA/PFB file. If null, the glyph data of font file is not embedded to a PDF file
     *
     * Returns:
     *  it returns the name of a font. Otherwise, it returns null and error-handler is called
@@ -414,7 +414,7 @@ class Doc : IHaruObject {
     *
     * Params:
     *  filename = A path of a TrueType font file (.ttf)
-    *  embedding = if this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
+    *  embedding = If this parameter is true, the glyph data of the font is embedded, otherwise only the matrix data is included in PDF file
     *
     * Returns:
     *  when loadTTFontFromFile() succeeds, it returns the name of a font.
@@ -506,7 +506,6 @@ class Doc : IHaruObject {
     *    $(LI SimHei,Italic)
     *    $(LI SimHei,BoldItalic)
     * )
-    *
     */
    HPDF_STATUS useCNSFonts() {
       return HPDF_UseCNSFonts(this._doc);
@@ -622,15 +621,14 @@ class Doc : IHaruObject {
     * This function loads the data without any conversion. So it is usually faster than the other functions.
     *
     * Params:
-    * filename = A path to a image file.
-    * width = The width of an image file.
-    * height = The height of an image file.
-    * colorSpace = the $(LINK2 harud/c/types/ColorSpace.html, ColorSpace).
-    * `deviceGrey`, `deviceRGB` or `deviceCMYK` are allowed.
+    *  filename = A path to a image file.
+    *  width = The width of an image file.
+    *  height = The height of an image file.
+    *  colorSpace = the $(LINK2 harud/c/types/ColorSpace.html, ColorSpace). `deviceGrey`, `deviceRGB` or `deviceCMYK` are allowed.
     *
     * Returns:
-    * When loadRawImageFromFile() succeeds, it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
-    * Otherwise, it returns `null` and error-handler is called.
+    *  When loadRawImageFromFile() succeeds, it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
+    *  Otherwise, it returns `null` and error-handler is called.
     */
    Image loadRawImageFromFile(string filename, uint width, uint height, ColorSpace colorSpace) {
       HPDF_Image image = HPDF_LoadRawImageFromFile(this._doc, filename.toStringz(), width, height, colorSpace);
@@ -651,9 +649,9 @@ class Doc : IHaruObject {
     *  bitsPerComponent = The bit size of each color component. The valid value is either 1, 2, 4, 8.
     *
     * Returns:
-    * When loadRawImageFromMem() succeeds,
-    * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
-    * Otherwise, it returns `null` and error-handler is called.
+    *  When loadRawImageFromMem() succeeds,
+    *  it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
+    *  Otherwise, it returns `null` and error-handler is called.
     */
    Image loadRawImageFromMem(ubyte* buf, uint width, uint height, ColorSpace colorSpace, uint bitsPerComponent) {
       HPDF_Image image = HPDF_LoadRawImageFromMem(this._doc, buf, width, height, colorSpace, bitsPerComponent);
@@ -664,12 +662,12 @@ class Doc : IHaruObject {
     * Loads an external JPEG image file
     *
     * Params:
-    * filename = path to a JPEG image file
+    *  filename = path to a JPEG image file
     *
     * Returns:
-    * when loadJpegImageFromFile() succeeds,
-    * it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
-    * Otherwise, it returns `null` and error-handler is called.
+    *  when loadJpegImageFromFile() succeeds,
+    *  it returns an instance of a $(LINK2 harud/image/Image.html,Image) object.
+    *  Otherwise, it returns `null` and error-handler is called.
     */
    Image loadJpegImageFromFile(string filename) {
       HPDF_Image image = HPDF_LoadJpegImageFromFile(this._doc, filename.toStringz());
@@ -723,7 +721,6 @@ class Doc : IHaruObject {
     *  mode = One  of the $(LINK2
     *  harud/c/types/HaruEncryptMode.html, HaruEncryptMode)
     *  keyLen = Specify the byte length of encryption key. Only valid for HaruEncryptMode.R3. Between 5 (40 bits) and 16 (128 bits) can be specified
-    *
     */
    HPDF_STATUS setEncryptionMode(HaruEncryptMode mode, uint keyLen) {
       return HPDF_SetEncryptionMode(this._doc, mode, keyLen);

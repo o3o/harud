@@ -147,13 +147,12 @@ struct DashMode {
 * To apply a transformation, you use the cm operator, which takes six operands
 * that represent a standard 3x2 matrix.
 *
-* --------------
-* | Transformation | Operand                  |
-* | ---            | ---                      |
-* | Translation    | 1 0 0 1 tx ty            |
-* | Rotation       | cosQ sinQ -sinQ cosQ 0 0 |
-* | Skew           | 1 tanA tabB 1 0 0        |
-* --------------
+* $(TABLE Cheat Sheet,
+* $(TR $(TH Transformation) $(TH Operand))
+* $(TR $(TD Translation)    $(TD 1 0 0 1 tx ty            ))
+* $(TR $(TD Rotation   )    $(TD cosQ sinQ -sinQ cosQ 0 0 ))
+* $(TR $(TD Skew       )    $(TD 1 tanA tabB 1 0 0        ))
+* )
 */
 
 struct TransMatrix {

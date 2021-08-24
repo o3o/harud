@@ -107,16 +107,30 @@ class Table {
 
 /**
  * Describes a table colums (cell)
+ *
+ * Table divide horizontal space into indivisible units called "columns".
+ * All columns in a table must specify their width as proportion of the total available row width.
+ * harud uses 12 columns
  */
 struct Column {
+   /**
+    * Specifies the column width
+    */
    int colSpan;
+   /**
+    * Text
+    */
    string text;
    HaruTextAlignment alignment = HaruTextAlignment.left;
    CellBorder border = CellBorder.none;
 
+   /// padding left
    float paddingLeft    = 0;
+   /// padding top
    float paddingTop     = 0;
+   /// padding right
    float paddingRight   = 0;
+   /// padding bottom
    float paddingBottom  = 0;
 
    HaruCMYKColor fillColor = HaruCMYKColor(0, 0, 0, 0); // white

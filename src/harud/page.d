@@ -391,7 +391,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Sets the dash pattern to dash-dash-dot line
+    * Sets the dash pattern to dash dash dot line
     */
    HPDF_STATUS setDashDashDot() {
       enum ushort[] DASH_DASH_DOT = [2, 2, 2, 2, 8, 2];
@@ -399,7 +399,7 @@ class Page : IHaruObject {
    }
 
    /**
-    * Sets the dash pattern to dash-dot line
+    * Sets the dash pattern to dash dot line
     */
    HPDF_STATUS setDashDot() {
       enum ushort[] DASH_DOT = [2, 2, 8, 2];
