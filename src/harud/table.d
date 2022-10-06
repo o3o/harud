@@ -31,6 +31,9 @@ class Table {
    private float y;
    private float height;
    private float width;
+   /**
+    * Add a [Column] to table.
+    */
    void addCol(Column col) {
       import harud.extension: addTextRect, addRect, setFillColor, setStrokeColor;
       import harud.util: createTopLeftRect;
@@ -106,7 +109,7 @@ class Table {
 }
 
 /**
- * Describes a table colums (cell)
+ * Describes a table colums (cell).
  *
  * Table divide horizontal space into indivisible units called "columns".
  * All columns in a table must specify their width as proportion of the total available row width.
