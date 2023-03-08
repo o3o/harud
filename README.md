@@ -1,6 +1,6 @@
 # harud
 
-A D binding to libharu.
+A D binding to [libharu](http://libharu.org/) (library for generating PDF files)
 
 The project is a reactivation of the dharu project on [dsource repository](http://dsource.org/projects/aki/).
 
