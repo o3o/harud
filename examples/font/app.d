@@ -60,7 +60,8 @@ void main() {
       page.moveTextPos(60, height - 105);
 
       for (int i = 0; i < fontList.length -1 ; i++) {
-         enum string SAMPLE_TEXT = "abcdefgABCDEFG12345!#$%&+-@?°C";
+         enum string SAMPLE_TEXT = "abcdefghijklmnopqrstxyuwvz";
+         //enum string SAMPLE_TEXT = "abcdefgABCDEFGO12345!#$%&+-@?°C";
          Font font = pdf.getFont(fontList[i]);
 
          /* print a label of text */

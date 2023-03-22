@@ -7,7 +7,7 @@ import harud;
 import harud.c.capi;
 
 /**
-* Haru PDF Annotation Class.
+* Haru PDF Annotation class.
 */
 class Annotation : IHaruObject {
    protected HPDF_Annotation _annotation;
@@ -42,7 +42,7 @@ class Annotation : IHaruObject {
    * Defines the style of the annotation's icon
    *
    * Params:
-   *   icon = a AnnotationIcon value
+   *   icon = a [HaruAnnotIcon] value
    */
    HPDF_STATUS setIcon(HaruAnnotIcon icon) {
       return HPDF_TextAnnot_SetIcon(this._annotation, icon);

@@ -141,18 +141,58 @@ struct DashMode {
 
 
 /**
-* For certain types of drawing operations you may want to adjust (or transform, which is the proper term) the coordinates in some way
+* For certain types of drawing operations you may want to adjust (or transform, which is the proper term) the coordinates in some way.
 * The part of the graphic state that tracks this is called the current transformation matrix (CTM).
 *
 * To apply a transformation, you use the cm operator, which takes six operands
-* that represent a standard 3x2 matrix.
+* that represent a standard 3x2 matrix:
 *
-* $(TABLE Cheat Sheet,
-* $(TR $(TH Transformation) $(TH Operand))
-* $(TR $(TD Translation)    $(TD 1 0 0 1 tx ty            ))
-* $(TR $(TD Rotation   )    $(TD cosQ sinQ -sinQ cosQ 0 0 ))
-* $(TR $(TD Skew       )    $(TD 1 tanA tabB 1 0 0        ))
+* $(TABLE_ROWS
+* * - a
+*   - b
+*   - 0
+* * - c
+*   - d
+*   - 0
+* * - x
+*   - y
+*   - 1
 * )
+*
+* Some examples:
+* $(TABLE_ROWS
+* Translation
+* * - 1
+*   - 0
+*   - 0
+* * - 0
+*   - 1
+*   - 0
+* * - tx
+*   - ty
+*   - 1
+* )
+*
+* $(TABLE_ROWS
+* Rotation
+* * - cosQ
+*   - sinQ
+*   - 0
+* * - -sinQ
+*   - cosQ
+*   - 0
+* * - 0
+*   - 0
+*   - 1
+* )
+*
+* $(SMALL_TABLE
+* transformation | operand
+* Translation |    1     0     0      1     tx  ty
+* Rotation    |    cosQ  sinQ  -sinQ  cosQ  0   0
+* Skew        |    1     tanA  tan(B)   1     0   0
+* )
+*
 */
 
 struct TransMatrix {

@@ -11,6 +11,7 @@ void main() {
       Page page = pdf.addPage(); /// Add a new page to the document
 
       writeln("page width:", page.getWidth);
+      writeln("page height:", page.getHeight);
 
       auto status = page.setFontAndSize(helvetica, 60);   /// Set the current font and size for the page
       writeln("set font width:", 60, " status", status);
@@ -18,7 +19,7 @@ void main() {
       status = page.beginText(); /// Begin text mode
       writeln("begin ", status);
 
-      status = page.showText("Hello World"); /// Print text to the page
+      status = page.showText("Hello World Ω"); /// Print text to the page
       writeln("show ", status);
 
       page.endText(); /// End text mode
