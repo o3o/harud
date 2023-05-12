@@ -1,5 +1,4 @@
 /**
- *
  * Uniform Function Call Syntax (UFCS) extensions
  *
  */

@@ -291,7 +291,7 @@ class Doc : IHaruObject {
     * Returns the current setting for page layout
     *
     * Returns:
-    * the current setting for $(LINK2 harud/c/types/PageLayout.html, PageLayout)
+    * the current setting for [PageLayout]
     */
    PageLayout getPageLayout() {
       return HPDF_GetPageLayout(this._doc);
